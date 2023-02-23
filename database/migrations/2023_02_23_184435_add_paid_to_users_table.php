@@ -17,14 +17,16 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('id_companies');
-            $table->foreign(Company::getForeignKeyStatic())->references(Company::getKeyNameStatic())->on(Company::getTableStatic());
 
-            $table->unsignedBigInteger('id_seller');
-            $table->foreign(Seller::getForeignKeyStatic())->references(Seller::getKeyNameStatic())->on(Seller::getTableStatic());
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
 
-            $table->boolean('is_statu')->default(1);
+            $table->unsignedBigInteger('seller_id');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
 
+            $table->boolean('is_status')->default(1);
+
+            $table->softDeletes();
         });
     }
 

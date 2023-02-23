@@ -16,8 +16,11 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_companies');
-            $table->foreign(Company::getForeignKeyStatic())->references(Company::getKeyNameStatic())->on(Company::getTableStatic());
+
+
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+
 
             $table->string('name');
 
