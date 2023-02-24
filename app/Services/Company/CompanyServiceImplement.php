@@ -29,4 +29,42 @@ class CompanyServiceImplement extends Service implements CompanyService{
             return [];
         }
     }
+
+    public function find($id)
+    {
+        try {
+            return $this->mainRepository->find($id);
+        } catch (\Exception $exception) {
+            Log::debug($exception->getMessage());
+            return [];
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            return $this->mainRepository->delete($id);
+        } catch (\Exception $exception) {
+            Log::debug($exception->getMessage());
+            return [];
+        }
+    }
+    public function update($id,$data)
+    {
+        try {
+            return $this->mainRepository->update($id,$data);
+        } catch (\Exception $exception) {
+            Log::debug($exception->getMessage());
+            return [];
+        }
+    }
+    public function create($data)
+    {
+        try {
+            return $this->mainRepository->create($data);
+        } catch (\Exception $exception) {
+            Log::debug($exception->getMessage());
+            return [];
+        }
+    }
 }

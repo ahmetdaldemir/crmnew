@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Seller;
+namespace App\Services\Role;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use LaravelEasyRepository\Service;
-use App\Repositories\Seller\SellerRepository;
+use App\Repositories\Role\RoleRepository;
 
-class SellerServiceImplement extends Service implements SellerService{
+class RoleServiceImplement extends Service implements RoleService{
 
      /**
      * don't change $this->mainRepository variable name
@@ -15,20 +15,12 @@ class SellerServiceImplement extends Service implements SellerService{
      */
      protected $mainRepository;
 
-    public function __construct(SellerRepository $mainRepository)
+    public function __construct(RoleRepository $mainRepository)
     {
       $this->mainRepository = $mainRepository;
     }
 
-    public function all(): ?Collection
-    {
-        try {
-            return $this->mainRepository->all();
-        } catch (\Exception $exception) {
-            Log::debug($exception->getMessage());
-            return [];
-        }
-    }
+    // Define your custom methods :)
 
     public function get(): ?Collection
     {

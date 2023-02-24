@@ -6,5 +6,6 @@ use LaravelEasyRepository\Repository;
 
 interface SellerRepository extends Repository{
 
-    // Write something awesome :)
+    public function get();
+
 }

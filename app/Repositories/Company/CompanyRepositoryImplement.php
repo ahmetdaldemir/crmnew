@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Company;
 
+use Illuminate\Support\Collection;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Company;
 
@@ -19,5 +20,4 @@ class CompanyRepositoryImplement extends Eloquent implements CompanyRepository{
         $this->model = $model;
     }
 
-    // Write something awesome :)
 }

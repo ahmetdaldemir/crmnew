@@ -179,13 +179,13 @@
         </li>
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Ayarlar</span></li>
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{route('company.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Firmalar</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{route('seller.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Şubeler</div>
             </a>

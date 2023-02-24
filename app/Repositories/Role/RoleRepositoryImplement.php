@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Seller;
+namespace App\Repositories\Role;
 
 use Illuminate\Support\Facades\Auth;
 use LaravelEasyRepository\Implementations\Eloquent;
-use App\Models\Seller;
+use Spatie\Permission\Models\Role;
 
-class SellerRepositoryImplement extends Eloquent implements SellerRepository{
+class RoleRepositoryImplement extends Eloquent implements RoleRepository{
 
     /**
     * Model class to be used in this repository for the common methods inside Eloquent
@@ -15,14 +15,13 @@ class SellerRepositoryImplement extends Eloquent implements SellerRepository{
     */
     protected $model;
 
-    public function __construct(Seller $model)
+    public function __construct(Role $model)
     {
         $this->model = $model;
     }
 
-    // Write something awesome :)
     public function get()
     {
-       return $this->model->where('company_id',Auth::user()->company_id)->get();
+        return $this->model->where('company_id',Auth::user()->company_id)->get();
     }
 }
