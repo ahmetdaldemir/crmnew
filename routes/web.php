@@ -156,7 +156,10 @@ Route::middleware('companies')->group(function () {
         Route::get('movement', [App\Http\Controllers\StockCardController::class, 'movement'])->name('movement');
         Route::post('add_movement', [App\Http\Controllers\StockCardController::class, 'add_movement'])->name('add_movement');
         Route::get('showmovemnet', [App\Http\Controllers\StockCardController::class, 'showmovemnet'])->name('showmovemnet');
+        Route::get('show', [App\Http\Controllers\StockCardController::class, 'show'])->name('show');
         Route::post('sevk', [App\Http\Controllers\StockCardController::class, 'sevk'])->name('sevk');
+        Route::get('list', [App\Http\Controllers\StockCardController::class, 'list'])->name('list');
+        Route::post('priceupdate', [App\Http\Controllers\StockCardController::class, 'priceupdate'])->name('priceupdate');
     });
 
     Route::prefix('transfer')->name('transfer.')->middleware([])->group(function () {
@@ -193,6 +196,10 @@ Route::middleware('companies')->group(function () {
         Route::get('bank', [App\Http\Controllers\InvoiceController::class, 'bank'])->name('create.bank');
         Route::get('tax', [App\Http\Controllers\InvoiceController::class, 'tax'])->name('create.tax');
         Route::get('serialprint', [App\Http\Controllers\InvoiceController::class, 'serialprint'])->name('serialprint');
+        Route::get('sales', [App\Http\Controllers\InvoiceController::class, 'sales'])->name('sales');
+        Route::get('salesedit', [App\Http\Controllers\InvoiceController::class, 'salesedit'])->name('salesedit');
+        Route::post('salesstore', [App\Http\Controllers\InvoiceController::class, 'salesstore'])->name('salesstore');
+        Route::post('salesupdate', [App\Http\Controllers\InvoiceController::class, 'salesupdate'])->name('salesupdate');
 
     });
 
@@ -232,11 +239,17 @@ Route::middleware('companies')->group(function () {
         Route::get('create', [App\Http\Controllers\TechnicalServiceController::class, 'create'])->name('create');
         Route::post('store', [App\Http\Controllers\TechnicalServiceController::class, 'store'])->name('store');
         Route::post('update', [App\Http\Controllers\TechnicalServiceController::class, 'update'])->name('update');
+        Route::get('detail', [App\Http\Controllers\TechnicalServiceController::class, 'detail'])->name('detail');
+        Route::post('detailstore', [App\Http\Controllers\TechnicalServiceController::class, 'detailstore'])->name('detailstore');
+        Route::get('detaildelete', [App\Http\Controllers\TechnicalServiceController::class, 'detaildelete'])->name('detaildelete');
 
         Route::post('print', [App\Http\Controllers\TechnicalServiceController::class, 'print'])->name('print');
         Route::post('payment', [App\Http\Controllers\TechnicalServiceController::class, 'payment'])->name('payment');
         Route::post('sms', [App\Http\Controllers\TechnicalServiceController::class, 'sms'])->name('sms');
         Route::get('show', [App\Http\Controllers\TechnicalServiceController::class, 'show'])->name('show');
+        Route::get('category', [App\Http\Controllers\TechnicalServiceController::class, 'category'])->name('category');
+        Route::post('categorystore', [App\Http\Controllers\TechnicalServiceController::class, 'categorystore'])->name('categorystore');
+        Route::get('categorydelete', [App\Http\Controllers\TechnicalServiceController::class, 'categorydelete'])->name('categorydelete');
     });
 
     Route::prefix('settings')->name('settings.')->middleware([])->group(function () {
@@ -266,7 +279,13 @@ Route::get('/get_cities', [App\Http\Controllers\CustomController::class, 'get_ci
 Route::post('/custom_customerstore', [App\Http\Controllers\CustomController::class, 'customerstore'])->name('custom_customerstore');
 Route::post('/custom_customerget', [App\Http\Controllers\CustomController::class, 'customerget'])->name('custom_customerget');
 Route::post('/getStock', [App\Http\Controllers\CustomController::class, 'getStock'])->name('getStock');
+Route::get('/searchStockCard', [App\Http\Controllers\CustomController::class, 'searchStockCard'])->name('searchStockCard');
 Route::get('/get_version', [App\Http\Controllers\CustomController::class, 'get_version'])->name('get_version');
 Route::get('/getStockCard', [App\Http\Controllers\CustomController::class, 'getStockCard'])->name('getStockCard');
 Route::get('/customers', [App\Http\Controllers\CustomController::class, 'customers'])->name('customers');
 Route::get('/transferList', [App\Http\Controllers\CustomController::class, 'transferList'])->name('transferList');
+Route::post('/stockSearch', [App\Http\Controllers\CustomController::class, 'stockSearch'])->name('stockSearch');
+Route::get('/serialcheck', [App\Http\Controllers\CustomController::class, 'serialcheck'])->name('serialcheck');
+Route::get('/getStockCardCategory', [App\Http\Controllers\CustomController::class, 'getStockCardCategory'])->name('getStockCardCategory');
+Route::get('/getStockSeller', [App\Http\Controllers\CustomController::class, 'getStockSeller'])->name('getStockSeller');
+
