@@ -106,8 +106,8 @@
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">John Doe</span>
-                                                <small class="text-muted">Admin</small>
+                                                <span class="fw-semibold d-block">{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
+                                                <small class="text-muted">{{\Illuminate\Support\Facades\Auth::user()->getRoleNames()}}</small>
                                             </div>
                                         </div>
                                     </a>

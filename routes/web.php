@@ -55,7 +55,22 @@ Route::prefix('role')->name('role.')->middleware([])->group(function () {
 
 
 Route::prefix('user')->name('user.')->middleware([])->group(function () {
-    Route::get('/', function () {
-        // Uses first & second middleware...
-    });
+    Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\UserController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\UserController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\UserController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\UserController::class, 'update'])->name('update');
 });
+
+
+
+Route::prefix('category')->name('category.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\CategoryController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\CategoryController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\CategoryController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\CategoryController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\CategoryController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\CategoryController::class, 'update'])->name('update');
+});
+

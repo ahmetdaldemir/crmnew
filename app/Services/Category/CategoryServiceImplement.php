@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Services\User;
+namespace App\Services\Category;
 
+use App\Repositories\Category\CategoryRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use LaravelEasyRepository\Service;
-use App\Repositories\User\UserRepository;
 
-class UserServiceImplement extends Service implements UserService
-{
+class CategoryServiceImplement extends Service implements CategoryService{
+
 
     /**
      * don't change $this->mainRepository variable name
      * because used in extends service class
      */
-    protected UserRepository $mainRepository;
+    protected CategoryRepository $mainRepository;
 
-    public function __construct(UserRepository $mainRepository)
+    public function __construct(CategoryRepository $mainRepository)
     {
         $this->mainRepository = $mainRepository;
     }
@@ -30,7 +30,6 @@ class UserServiceImplement extends Service implements UserService
             return [];
         }
     }
-
 
     public function get(): ?Collection
     {
@@ -79,20 +78,5 @@ class UserServiceImplement extends Service implements UserService
             Log::debug($exception->getMessage());
             return [];
         }
-    }
-
-    public function role($id, $data)
-    {
-        try {
-            return $this->mainRepository->role($id,$data);
-        } catch (\Exception $exception) {
-            Log::debug($exception->getMessage());
-            return [];
-        }
-    }
-
-    public function lastInsertId()
-    {
-        return $this->mainRepository->lastInsertId();
     }
 }

@@ -5,7 +5,7 @@
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Firmalar /</span> @if(isset($companies)) {{$companies->name}} @endif</h4>
         <div class="card  mb-4">
             <h5 class="card-header">Firma Bilgileri</h5>
-            <form action="{{route('company.store')}}" method="post">
+            <form action="{{route('category.store')}}" method="post">
                 @csrf
                 <input type="hidden" name="id" @if(isset($companies)) value="{{$companies->id}}" @endif />
             <div class="card-body">

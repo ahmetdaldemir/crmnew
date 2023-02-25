@@ -6,5 +6,8 @@ use LaravelEasyRepository\Repository;
 
 interface UserRepository extends Repository{
 
-    // Write something awesome :)
+    public function get();
+    public function role($id,$data);
+    public function lastInsertId();
+
 }

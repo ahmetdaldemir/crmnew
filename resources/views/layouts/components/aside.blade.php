@@ -132,7 +132,7 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{route('category.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Kategoriler</div>
             </a>
@@ -153,7 +153,7 @@
         </li>
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Kullanıcı İşlemleri</span></li>
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{route('user.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Kullanıcılar</div>
             </a>
