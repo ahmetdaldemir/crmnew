@@ -111,3 +111,13 @@ Route::prefix('safe')->name('safe.')->middleware([])->group(function () {
     Route::post('store', [App\Http\Controllers\SafeController::class, 'store'])->name('store');
     Route::post('update', [App\Http\Controllers\SafeController::class, 'update'])->name('update');
 });
+
+Route::prefix('customer')->name('customer.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\CustomerController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\CustomerController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\CustomerController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\CustomerController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\CustomerController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\CustomerController::class, 'update'])->name('update');
+    Route::post('updateDanger', [App\Http\Controllers\CustomerController::class, 'updateDanger'])->name('updateDanger');
+});

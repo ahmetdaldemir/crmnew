@@ -27,4 +27,21 @@ function updateStatus(url, id, data) {
         });
 }
 
+function updateDanger(url, id, data) {
+
+
+    $.post(url,
+        {
+            id: id,
+            is_danger: data,
+        },
+        function (data, status) {
+            if (data == 1) {
+                $.MessageBox("Güncellendi");
+            } else {
+                $.MessageBox("Sorun Var");
+            }
+
+        });
+}
 
