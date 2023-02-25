@@ -74,3 +74,40 @@ Route::prefix('category')->name('category.')->middleware([])->group(function () 
     Route::post('update', [App\Http\Controllers\CategoryController::class, 'update'])->name('update');
 });
 
+
+Route::prefix('brand')->name('brand.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\BrandController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\BrandController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\BrandController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\BrandController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\BrandController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\BrandController::class, 'update'])->name('update');
+});
+
+
+Route::prefix('version')->name('version.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\VersionController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\VersionController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\VersionController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\VersionController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\VersionController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\VersionController::class, 'update'])->name('update');
+});
+
+Route::prefix('bank')->name('bank.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\BankController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\BankController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\BankController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\BankController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\BankController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\BankController::class, 'update'])->name('update');
+});
+
+Route::prefix('safe')->name('safe.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\SafeController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\SafeController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\SafeController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\SafeController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\SafeController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\SafeController::class, 'update'])->name('update');
+});

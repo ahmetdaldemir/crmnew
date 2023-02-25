@@ -11,7 +11,7 @@ class Category extends BaseModel
     use HasFactory,SoftDeletes;
 
     protected $fillable = [
-        'name', 'parent_id', 'is_status', 'company_id'
+        'name', 'parent_id', 'is_status', 'company_id','user_id'
     ];
 
 

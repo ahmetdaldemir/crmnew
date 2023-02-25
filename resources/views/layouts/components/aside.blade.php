@@ -96,13 +96,13 @@
         <!-- Components -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Muhasebe İşlemleri</span></li>
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{route('safe.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Kasa</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{route('bank.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Banka</div>
             </a>
@@ -120,13 +120,7 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Modeller</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{route('brand.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Markalar</div>
             </a>
