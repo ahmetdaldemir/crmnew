@@ -44,6 +44,16 @@ Route::prefix('company')->name('company.')->middleware([])->group(function () {
     Route::post('update', [App\Http\Controllers\CompanyController::class, 'update'])->name('update');
 });
 
+Route::prefix('role')->name('role.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\RoleController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\RoleController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\RoleController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\RoleController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\RoleController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\RoleController::class, 'update'])->name('update');
+});
+
+
 Route::prefix('user')->name('user.')->middleware([])->group(function () {
     Route::get('/', function () {
         // Uses first & second middleware...

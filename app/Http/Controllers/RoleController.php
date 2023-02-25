@@ -16,7 +16,7 @@ class RoleController extends Controller
 
     protected function index()
     {
-        $data['sellers'] = $this->roleService->get();
+        $data['roles'] = $this->roleService->get();
         return view('module.role.index',$data);
     }
 
@@ -26,7 +26,7 @@ class RoleController extends Controller
     }
     protected function edit(Request $request)
     {
-        $data['sellers'] = $this->roleService->find($request->id);
+        $data['roles'] = $this->roleService->find($request->id);
         return view('module.role.form',$data);
     }
 
@@ -38,7 +38,7 @@ class RoleController extends Controller
 
     protected function store(Request $request)
     {
-        $data = array('name' => $request->name,'phone' => $request->phone);
+        $data = array('name' => $request->name);
         if(empty($request->id))
         {
             $this->roleService->create($data);
@@ -49,9 +49,4 @@ class RoleController extends Controller
         return redirect()->route('role.index');
     }
 
-    protected function update(Request $request)
-    {
-        $data = array('is_status' => $request->is_status);
-        return $this->roleService->update($request->id,$data);
-    }
 }
