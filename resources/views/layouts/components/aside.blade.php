@@ -90,6 +90,18 @@
         <li class="menu-item">
             <a href="cards-basic.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Satış</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="cards-basic.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Sevk</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="cards-basic.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Raporlar</div>
             </a>
         </li>
@@ -123,6 +135,12 @@
             <a href="{{route('category.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Kategoriler</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{route('color.index')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Renkler</div>
             </a>
         </li>
         <!-- Forms & Tables -->

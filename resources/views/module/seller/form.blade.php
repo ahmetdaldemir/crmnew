@@ -10,14 +10,14 @@
                 <input type="hidden" name="id" @if(isset($sellers)) value="{{$sellers->id}}" @endif />
             <div class="card-body">
                 <div>
-                    <label for="defaultFormControlInput" class="form-label">Firma Adı</label>
+                    <label for="defaultFormControlInput" class="form-label">Şube Adı</label>
                     <input type="text" class="form-control" id="name"  @if(isset($sellers)) value="{{$sellers->name}}" @endif  name="name" aria-describedby="name">
                     <div id="name" class="form-text">
                         We'll never share your details with anyone else.
                     </div>
                 </div>
                 <div>
-                    <label for="defaultFormControlInput" class="form-label">Firma Telefon</label>
+                    <label for="defaultFormControlInput" class="form-label">Şube Telefon</label>
                     <input type="text" class="form-control" id="phone" @if(isset($sellers)) value="{{$sellers->phone}}" @endif  name="phone" aria-describedby="phone">
                     <div id="phone" class="form-text">
                         We'll never share your details with anyone else.

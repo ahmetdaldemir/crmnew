@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Seller\SellerService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SellerController extends Controller
 {
@@ -39,7 +40,7 @@ class SellerController extends Controller
 
     protected function store(Request $request)
     {
-        $data = array('name' => $request->name,'phone' => $request->phone);
+        $data = array('name' => $request->name,'phone' => $request->phone,'company_id' => Auth::user()->company_id);
         if(empty($request->id))
         {
             $this->sellerService->create($data);

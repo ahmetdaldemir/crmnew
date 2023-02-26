@@ -121,3 +121,13 @@ Route::prefix('customer')->name('customer.')->middleware([])->group(function () 
     Route::post('update', [App\Http\Controllers\CustomerController::class, 'update'])->name('update');
     Route::post('updateDanger', [App\Http\Controllers\CustomerController::class, 'updateDanger'])->name('updateDanger');
 });
+
+
+Route::prefix('color')->name('color.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\ColorController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\ColorController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\ColorController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\ColorController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\ColorController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\ColorController::class, 'update'])->name('update');
+});
