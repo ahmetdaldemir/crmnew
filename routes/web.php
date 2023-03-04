@@ -131,3 +131,13 @@ Route::prefix('color')->name('color.')->middleware([])->group(function () {
     Route::post('store', [App\Http\Controllers\ColorController::class, 'store'])->name('store');
     Route::post('update', [App\Http\Controllers\ColorController::class, 'update'])->name('update');
 });
+
+
+Route::prefix('warehouse')->name('warehouse.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\WarehouseController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\WarehouseController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\WarehouseController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\WarehouseController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\WarehouseController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\WarehouseController::class, 'update'])->name('update');
+});

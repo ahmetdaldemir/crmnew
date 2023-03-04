@@ -196,5 +196,11 @@
                 <div data-i18n="Basic">Şubeler</div>
             </a>
         </li>
+        <li class="menu-item">
+            <a href="{{route('warehouse.index')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Depolar</div>
+            </a>
+        </li>
     </ul>
 </aside>
