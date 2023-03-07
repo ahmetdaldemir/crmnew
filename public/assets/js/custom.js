@@ -45,3 +45,14 @@ function updateDanger(url, id, data) {
         });
 }
 
+function saveStockMovement(url) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: $("#stockmovementform").serialize(),
+        success: function (response) {
+            $("#result").empty().append(response);
+        }
+    });
+
+}

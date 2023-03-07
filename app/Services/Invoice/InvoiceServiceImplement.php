@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Services\StockCard;
+namespace App\Services\Invoice;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use LaravelEasyRepository\Service;
-use App\Repositories\StockCard\StockCardRepository;
+use App\Repositories\Invoice\InvoiceRepository;
 
-class StockCardServiceImplement extends Service implements StockCardService{
+class InvoiceServiceImplement extends Service implements InvoiceService{
 
      /**
      * don't change $this->mainRepository variable name
      * because used in extends service class
      */
-     protected StockCardRepository $mainRepository;
+     protected $mainRepository;
 
-    public function __construct(StockCardRepository $mainRepository)
+    public function __construct(InvoiceRepository $mainRepository)
     {
       $this->mainRepository = $mainRepository;
     }
@@ -71,7 +71,6 @@ class StockCardServiceImplement extends Service implements StockCardService{
     }
     public function create($data)
     {
-
         try {
             return $this->mainRepository->create($data);
         } catch (\Exception $exception) {

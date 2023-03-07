@@ -141,3 +141,44 @@ Route::prefix('warehouse')->name('warehouse.')->middleware([])->group(function (
     Route::post('store', [App\Http\Controllers\WarehouseController::class, 'store'])->name('store');
     Route::post('update', [App\Http\Controllers\WarehouseController::class, 'update'])->name('update');
 });
+
+
+Route::prefix('stockcard')->name('stockcard.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\StockCardController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\StockCardController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\StockCardController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\StockCardController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\StockCardController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\StockCardController::class, 'update'])->name('update');
+    Route::get('movement', [App\Http\Controllers\StockCardController::class, 'movement'])->name('movement');
+    Route::post('add_movement', [App\Http\Controllers\StockCardController::class, 'add_movement'])->name('add_movement');
+    Route::get('showmovemnet', [App\Http\Controllers\StockCardController::class, 'showmovemnet'])->name('showmovemnet');
+    Route::post('sevk', [App\Http\Controllers\StockCardController::class, 'sevk'])->name('sevk');
+});
+
+Route::prefix('transfer')->name('transfer.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\TransferController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\TransferController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\TransferController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\TransferController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\TransferController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\TransferController::class, 'update'])->name('update');
+});
+
+Route::prefix('reason')->name('reason.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\ReasonController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\ReasonController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\ReasonController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\ReasonController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\ReasonController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\ReasonController::class, 'update'])->name('update');
+});
+
+Route::prefix('invoice')->name('invoice.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\InvoiceController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\InvoiceController::class, 'edit'])->name('edit');
+    Route::get('delete', [App\Http\Controllers\InvoiceController::class, 'delete'])->name('delete');
+    Route::get('create', [App\Http\Controllers\InvoiceController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\InvoiceController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\InvoiceController::class, 'update'])->name('update');
+});

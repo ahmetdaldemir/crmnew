@@ -3,24 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Unit;
-use App\Models\StockCard;
-use App\Models\StockCardMovement;
 use App\Models\Transfer;
 use App\Services\Brand\BrandService;
 use App\Services\Category\CategoryService;
 use App\Services\Color\ColorService;
 use App\Services\Reason\ReasonService;
 use App\Services\Seller\SellerService;
-use App\Services\StockCard\StockCardService;
+use App\Services\Invoice\InvoiceService;
 use App\Services\Version\VersionService;
 use App\Services\Warehouse\WarehouseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class StockCardController extends Controller
+class InvoiceController extends Controller
 {
-
-    private StockCardService $stockcardService;
+    private InvoiceService $invoiceService;
     private SellerService $sellerService;
     private WarehouseService $warehouseService;
     private BrandService $brandService;
@@ -29,7 +26,7 @@ class StockCardController extends Controller
     private VersionService $versionService;
     private ReasonService $reasonService;
 
-    public function __construct(StockCardService $stockcardService,
+    public function __construct(InvoiceService $invoiceService,
                                 SellerService    $sellerService,
                                 WarehouseService $warehouseService,
                                 BrandService     $brandService,
@@ -39,7 +36,7 @@ class StockCardController extends Controller
                                 ReasonService    $reasonService
     )
     {
-        $this->stockcardService = $stockcardService;
+        $this->invoiceService = $invoiceService;
         $this->sellerService = $sellerService;
         $this->warehouseService = $warehouseService;
         $this->brandService = $brandService;
@@ -51,9 +48,9 @@ class StockCardController extends Controller
 
     protected function index()
     {
-        $data['stockcards'] = $this->stockcardService->get();
+        $data['invoices'] = $this->invoiceService->get();
         $data['sellers'] = $this->sellerService->get();
-        return view('module.stockcard.index', $data);
+        return view('module.invoice.index', $data);
     }
 
     protected function create()
@@ -63,14 +60,14 @@ class StockCardController extends Controller
         $data['versions'] = $this->versionService->get();
         $data['categories'] = $this->categoryService->get();
         $data['units'] = Unit::Unit()->value;
-        return view('module.stockcard.form', $data);
+        return view('module.invoice.form', $data);
     }
 
     protected function edit(Request $request)
     {
-        $data['stockcards'] = $this->stockcardService->find($request->id);
+        $data['invoices'] = $this->invoiceService->find($request->id);
         $data['sellers'] = $this->sellerService->get();
-        return view('module.stockcard.form', $data);
+        return view('module.invoice.form', $data);
     }
 
     protected function movement(Request $request)
@@ -80,13 +77,13 @@ class StockCardController extends Controller
         $data['colors'] = $this->colorService->get();
         $data['reasons'] = $this->reasonService->get();
         $data['stock_card_id'] = $request->id;
-        $data['movements'] = StockCardMovement::where('stock_card_id', $request->id)->get();
-        return view('module.stockcard.movement', $data);
+        $data['movements'] = InvoiceMovement::where('stock_card_id', $request->id)->get();
+        return view('module.invoice.movement', $data);
     }
 
     protected function sevk(Request $request)
     {
-        $serial_stock_card_movement = StockCardMovement::where('serial_number',$request->serial_number)->first();
+        $serial_stock_card_movement = InvoiceMovement::where('serial_number',$request->serial_number)->first();
 
         if(is_null($serial_stock_card_movement) || $serial_stock_card_movement->quantityCheck($request->serial_number) >= 0)
         {
@@ -110,7 +107,7 @@ class StockCardController extends Controller
 
     protected function delete(Request $request)
     {
-        $this->stockcardService->delete($request->id);
+        $this->invoiceService->delete($request->id);
         return redirect()->back();
     }
 
@@ -132,48 +129,19 @@ class StockCardController extends Controller
         );
 
         if (empty($request->id)) {
-            $this->stockcardService->create($data);
+            $this->invoiceService->create($data);
         } else {
-            $this->stockcardService->update($request->id, $data);
+            $this->invoiceService->update($request->id, $data);
         }
 
-        return redirect()->route('stockcard.index');
+        return redirect()->route('invoice.index');
     }
 
     protected function update(Request $request)
     {
         $data = array('is_status' => $request->is_status);
-        return $this->stockcardService->update($request->id, $data);
+        return $this->invoiceService->update($request->id, $data);
     }
 
-    protected function add_movement(Request $request)
-    {
-        foreach ($request->group_a as $item) {
-            $data = array(
-                'stock_card_id' => $request->stock_card_id,
-                'user_id' => Auth::user()->id,
-                'color_id' => $item['color_id'],
-                'warehouse_id' => $item['warehouse_id'],
-                'seller_id' => $item['seller_id'],
-                'reason_id' => $item['reason_id'],
-                'type' => $item['type'],
-                'quantity' => $item['quantity'],
-                'serial_number' => $item['serial'],
-                'tax' => $item['tax'],
-                'cost_price' => $item['cost_price'],
-                'base_cost_price' => $item['base_cost_price'],
-                'sale_price' => $item['sale_price'],
-                'description' => $item['description'],
-            );
 
-            if (empty($request->id)) {
-                StockCardMovement::create($data);
-            } else {
-                StockCardMovement::update($request->id, $data);
-            }
-        }
-
-
-        return response()->json("Kayıt Başarılı", 200);
-    }
 }

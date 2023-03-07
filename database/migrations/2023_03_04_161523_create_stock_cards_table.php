@@ -25,11 +25,6 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 
-            $table->unsignedBigInteger('warehouse_id')->nullable();
-            $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
-
-            $table->unsignedBigInteger('seller_id')->nullable();
-            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
 
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
@@ -37,15 +32,11 @@ return new class extends Migration
             $table->unsignedBigInteger('version_id')->nullable();
             $table->foreign('version_id')->references('id')->on('versions')->onDelete('cascade');
 
-            $table->unsignedBigInteger('color_id')->nullable();
-            $table->foreign('color_id')->references('id')->on('colors')->onDelete('cascade');
-
 
             $table->string('sku',20);
             $table->string('barcode',20);
             $table->boolean('tracking')->default(0);
             $table->string('unit',5)->nullable();
-            $table->boolean('status')->default(1);
             $table->tinyInteger('tracking_quantity')->default(1);
 
 

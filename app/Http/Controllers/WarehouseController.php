@@ -45,7 +45,7 @@ class WarehouseController extends Controller
 
     protected function store(Request $request)
     {
-        $data = array('name' => $request->name,'company_id' => Auth::user()->company_id,'user_id' => Auth::user()->id);
+        $data = array('name' => $request->name,'seller_id' => $request->seller_id,'company_id' => Auth::user()->company_id,'user_id' => Auth::user()->id);
         if(empty($request->id))
         {
             $this->warehouseService->create($data);

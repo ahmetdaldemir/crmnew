@@ -4,32 +4,44 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use function Symfony\Component\Translation\t;
 
-class StockCard extends BaseModel
+class StockCardMovement extends BaseModel
 {
 
-    protected $table = "stock_cards";
+    protected $table = "stock_card_movements";
     use HasFactory,SoftDeletes;
 
 
     protected $fillable = [
-        'company_id',
+        'stock_card_id',
         'user_id',
-        'category_id',
+        'color_id',
         'warehouse_id',
         'seller_id',
-        'brand_id',
-        'version_id',
-        'color_id',
-        'sku',
-        'barcode',
-        'tracking',
-        'unit',
-        'tracking_quantity',
-        'is_status',
-        'name'
+        'reason_id',
+        'type',
+        'quantity',
+        'serial_number',
+        'tax',
+        'cost_price',
+        'base_cost_price',
+        'sale_price',
+        'description',
     ];
+
+    public function stock(): BelongsTo
+    {
+        return $this->belongsTo(StockCard::class,'stock_card_id','id');
+    }
+    public function quantityCheck($serial_number)
+    {
+      $out =  StockCardMovement::where('serial_number',$serial_number)->where('type',1)->sum('quantity');
+      $in = StockCardMovement::where('serial_number',$serial_number)->where('type',2)->sum('quantity');
+      return $in - $out;
+    }
 
     public function hasSeller($id): string
     {
@@ -79,5 +91,10 @@ class StockCard extends BaseModel
     public function version()
     {
         return $this->hasOne(Version::class,'id','version_id');
+    }
+
+    public function transfer()
+    {
+        return $this->hasOne(Transfer::class,'stock_card_movement_id','id');
     }
 }
