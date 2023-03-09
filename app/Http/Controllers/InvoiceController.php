@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Unit;
+use App\Models\City;
 use App\Models\Transfer;
 use App\Services\Brand\BrandService;
 use App\Services\Category\CategoryService;
 use App\Services\Color\ColorService;
+use App\Services\Customer\CustomerService;
 use App\Services\Reason\ReasonService;
 use App\Services\Seller\SellerService;
 use App\Services\Invoice\InvoiceService;
+use App\Services\User\UserService;
 use App\Services\Version\VersionService;
 use App\Services\Warehouse\WarehouseService;
 use Illuminate\Http\Request;
@@ -25,6 +28,9 @@ class InvoiceController extends Controller
     private ColorService $colorService;
     private VersionService $versionService;
     private ReasonService $reasonService;
+    private CustomerService $customerService;
+    private UserService  $userService;
+
 
     public function __construct(InvoiceService $invoiceService,
                                 SellerService    $sellerService,
@@ -33,7 +39,9 @@ class InvoiceController extends Controller
                                 CategoryService  $categoryService,
                                 ColorService     $colorService,
                                 VersionService   $versionService,
-                                ReasonService    $reasonService
+                                ReasonService    $reasonService,
+                                CustomerService  $customerService,
+                                UserService      $userService
     )
     {
         $this->invoiceService = $invoiceService;
@@ -44,6 +52,8 @@ class InvoiceController extends Controller
         $this->colorService = $colorService;
         $this->categoryService = $categoryService;
         $this->reasonService = $reasonService;
+        $this->customerService = $customerService;
+        $this->userService = $userService;
     }
 
     protected function index()
@@ -56,10 +66,13 @@ class InvoiceController extends Controller
     protected function create()
     {
 
-        $data['brands'] = $this->brandService->get();
-        $data['versions'] = $this->versionService->get();
-        $data['categories'] = $this->categoryService->get();
-        $data['units'] = Unit::Unit()->value;
+        $data['warehouses'] = $this->warehouseService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['colors'] = $this->colorService->get();
+        $data['users'] = $this->userService->get();
+        $data['reasons'] = $this->reasonService->get();
+        $data['customers'] = $this->customerService->get();
+        $data['citys'] =  City::all();
         return view('module.invoice.form', $data);
     }
 

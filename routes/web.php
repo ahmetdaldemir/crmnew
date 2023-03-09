@@ -182,3 +182,10 @@ Route::prefix('invoice')->name('invoice.')->middleware([])->group(function () {
     Route::post('store', [App\Http\Controllers\InvoiceController::class, 'store'])->name('store');
     Route::post('update', [App\Http\Controllers\InvoiceController::class, 'update'])->name('update');
 });
+
+
+
+/**  Custom **/
+
+Route::get('/get_cities', [App\Http\Controllers\CustomController::class, 'get_cities'])->name('get_cities');
+Route::post('/custom_customerstore', [App\Http\Controllers\CustomController::class, 'customerstore'])->name('custom_customerstore');

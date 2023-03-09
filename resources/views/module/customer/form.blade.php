@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="d-flex align-items-start align-items-sm-center gap-4">
                         <img
-                            @if(isset($customers)) src="{{$customers->image}}" @else src="../assets/img/avatars/1.png" @endif
+                            @if(isset($customers)) src="{{$customers->image}}" @else src="{{asset('assets/img/identity.jpg')}}" @endif
                             alt="user-avatar"
                             class="d-block rounded"
                             height="100"

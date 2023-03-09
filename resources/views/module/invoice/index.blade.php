@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Stok Kartları /</span> Stok Kart listesi</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Faturalar /</span> Fatura listesi</h4>
 
         <div class="card">
             <div class="card-header">
-                <a href="{{route('invoice.create')}}" class="btn btn-primary float-end">Yeni Stok Kartı Ekle</a>
+                <a href="{{route('invoice.create')}}" class="btn btn-primary float-end">Yeni Fatura Ekle</a>
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">

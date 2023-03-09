@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/apex-charts/apex-charts.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-message-box@3.2.2/dist/messagebox.min.css"/>
     <script src="{{asset('assets/vendor/js/helpers.js')}}"></script>
     <script src="{{asset('assets/js/config.js')}}"></script>
@@ -173,11 +175,18 @@
 <script src="{{asset('assets/vendor/js/menu.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/i18n.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/cleave/cleave.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/cleave/cleave-phone.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js')}}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-message-box@3.2.2/dist/messagebox.min.js"></script>
 @yield('custom-js')
 
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="{{asset('assets/js/custom.js')}}"></script>
+<script src="{{asset('assets/js/forms-selects.js')}}"></script>
 <script src="{{asset('assets/js/dashboards-analytics.js')}}"></script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
