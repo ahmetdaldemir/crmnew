@@ -86,8 +86,7 @@ function customerSave() {
     }).done(function (data) {
 
         $(".customerinformation").html('<p className="mb-1">\'+data.address+\'</p>\n' +
-            '        <p className="mb-1">\'+data.phone1+\'</p>');
-
+            '<p className="mb-1">\'+data.phone1+\'</p>');
 
         var modalDiv = $("#editUser");
         modalDiv.modal('hide');

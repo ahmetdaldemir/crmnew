@@ -177,6 +177,7 @@ Route::prefix('reason')->name('reason.')->middleware([])->group(function () {
 Route::prefix('invoice')->name('invoice.')->middleware([])->group(function () {
     Route::get('/', [App\Http\Controllers\InvoiceController::class, 'index'])->name('index');
     Route::get('edit', [App\Http\Controllers\InvoiceController::class, 'edit'])->name('edit');
+    Route::get('show', [App\Http\Controllers\InvoiceController::class, 'show'])->name('show');
     Route::get('delete', [App\Http\Controllers\InvoiceController::class, 'delete'])->name('delete');
     Route::get('create', [App\Http\Controllers\InvoiceController::class, 'create'])->name('create');
     Route::post('store', [App\Http\Controllers\InvoiceController::class, 'store'])->name('store');
@@ -189,3 +190,4 @@ Route::prefix('invoice')->name('invoice.')->middleware([])->group(function () {
 
 Route::get('/get_cities', [App\Http\Controllers\CustomController::class, 'get_cities'])->name('get_cities');
 Route::post('/custom_customerstore', [App\Http\Controllers\CustomController::class, 'customerstore'])->name('custom_customerstore');
+Route::post('/custom_customerget', [App\Http\Controllers\CustomController::class, 'customerget'])->name('custom_customerget');

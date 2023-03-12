@@ -12,12 +12,9 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Stok Adı</th>
-                        <th>SKU</th>
-                        <th>Barkod</th>
-                        <th>Adet</th>
-                        <th>Marka</th>
-                        <th>Model</th>
+                        <th>Fatura No</th>
+                        <th>Cari</th>
+                        <th>Tipi</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -25,28 +22,51 @@
                     <tbody class="table-border-bottom-0">
                     @foreach($invoices as $invoice)
                         <tr>
-                            <td><strong>{{$invoice->name}}</strong></td>
-                            <td><strong>{{$invoice->sku}}</strong></td>
-                            <td><strong>{{$invoice->barcode}}</strong></td>
-                            <td><strong>0</strong></td>
-                            <td><strong>{{$invoice->brand->name}}</strong></td>
-                            <td><strong>{{$invoice->version->name}}</strong></td>
+                            <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number}}</a></td>
+                            <td><strong>{{$invoice->account->fullname}}</strong></td>
                             <td>
-                                <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox"
-                                           onclick="updateStatus('invoice/update',{{$invoice->id}},{{$invoice->is_status == 1 ? 0:1}})"
-                                           id="flexSwitchCheckChecked" {{$invoice->is_status == 1 ? 'checked':''}} />
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="avatar-wrapper">
+                                        <div class="avatar avatar-sm me-2">
+                                            <span class="avatar-initial rounded-circle bg-label-warning"><i class="bx bxs-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <span class="badge bg-label-{{$invoice->invoice_type_color($invoice->type)}}">{{$invoice->invoice_type($invoice->type)}}</span>
+                                    </div>
                                 </div>
+
                             </td>
                             <td>
-                                <button type="button" title="Sevk Et" onclick="openModal({{$invoice->id}})"
-                                        class="btn btn-icon btn-success">
-                                    <span class="bx bx-transfer"></span>
-                                </button>
-                                <a title="Hareket Ekle" href="{{route('invoice.movement',['id' => $invoice->id])}}"
-                                   class="btn btn-icon btn-success">
-                                    <span class="bx bxl-product-hunt"></span>
-                                </a>
+                                @if($invoice->is_status == 1)
+                                    <span data-bs-toggle="tooltip" data-bs-html="true"
+                                          data-bs-original-title="<span>Gönderilmedi<br> Fiyat: {{$invoice->total_price}}<br>
+                                           Fatura Tarihi: {{\Carbon\Carbon::parse($invoice->create_date)->format('d-m-Y')}}</span>"
+                                          aria-describedby="tooltip472596"><span
+                                            class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30"><i
+                                                class="bx bx-paper-plane bx-xs"></i></span></span>
+                                @endif
+                                @if($invoice->is_status == 2)
+                                    <span data-bs-toggle="tooltip" data-bs-html="true"
+                                          aria-label="<span>Partial Payment<br> Balance: 0<br> Due Date: 09/25/2020</span>"
+                                          data-bs-original-title="<span>Partial Payment<br> Balance: 0<br> Due Date: 09/25/2020</span>"
+                                          aria-describedby="tooltip478233"><span
+                                            class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30"><i
+                                                class="bx bx-adjust bx-xs"></i></span></span>
+                                @endif
+
+                                @if($invoice->is_status == 3)
+                                    <span data-bs-toggle="tooltip" data-bs-html="true"
+                                          aria-label="<span>Past Due<br> Balance: 0<br> Due Date: 08/01/2020</span>"
+                                          data-bs-original-title="<span>Past Due<br> Balance: 0<br> Due Date: 08/01/2020</span>"
+                                          aria-describedby="tooltip774099"><span
+                                            class="badge badge-center rounded-pill bg-label-danger w-px-30 h-px-30"><i
+                                                class="bx bx-info-circle bx-xs"></i></span></span>
+                                @endif
+
+
+                            </td>
+                            <td>
                                 <a title="Düzenle" href="{{route('invoice.edit',['id' => $invoice->id])}}"
                                    class="btn btn-icon btn-primary">
                                     <span class="bx bx-edit-alt"></span>

@@ -25,6 +25,7 @@ class StockCardMovement extends BaseModel
         'type',
         'quantity',
         'serial_number',
+        'invoice_id',
         'tax',
         'cost_price',
         'base_cost_price',
@@ -70,6 +71,16 @@ class StockCardMovement extends BaseModel
     public function hasColor($id): string
     {
         return $this->color_id == $id ? 'true':'false';
+    }
+
+    public function hasStock($id): string
+    {
+        return $this->stock_card_id == $id ? 'true':'false';
+    }
+
+    public function hasReason($id): string
+    {
+        return $this->reason_id == $id ? 'true':'false';
     }
 
 

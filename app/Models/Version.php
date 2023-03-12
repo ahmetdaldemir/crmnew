@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LaravelEasyRepository\Traits\FileUpload;
 
-class Version extends Model
+class Version extends BaseModel
 {
     use HasFactory,FileUpload,SoftDeletes;
 

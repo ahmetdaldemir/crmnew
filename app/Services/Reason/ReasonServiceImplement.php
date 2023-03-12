@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Services\Invoice;
+namespace App\Services\Reason;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use LaravelEasyRepository\Service;
-use App\Repositories\Invoice\InvoiceRepository;
+use App\Repositories\Reason\ReasonRepository;
 
-class InvoiceServiceImplement extends Service implements InvoiceService{
+class ReasonServiceImplement extends Service implements ReasonService{
 
      /**
      * don't change $this->mainRepository variable name
      * because used in extends service class
      */
-     protected InvoiceRepository $mainRepository;
+     protected $mainRepository;
 
-    public function __construct(InvoiceRepository $mainRepository)
+    public function __construct(ReasonRepository $mainRepository)
     {
       $this->mainRepository = $mainRepository;
     }
@@ -77,5 +77,4 @@ class InvoiceServiceImplement extends Service implements InvoiceService{
             Log::debug($exception->getMessage());
             return [];
         }
-    }
-}
+    }}

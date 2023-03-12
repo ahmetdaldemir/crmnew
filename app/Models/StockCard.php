@@ -60,6 +60,11 @@ class StockCard extends BaseModel
         return $this->color_id == $id ? 'true':'false';
     }
 
+    public function hasStock($id): string
+    {
+        return $this->id == $id ? 'true':'false';
+    }
+
 
     public function seller()
     {

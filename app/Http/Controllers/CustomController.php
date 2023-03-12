@@ -55,4 +55,12 @@ class CustomController extends Controller
         return $data;
     }
 
+    public function customerget(Request $request)
+    {
+        $data = $this->customerService->find($request->id);
+        return response()->json($data,200);
+
+     }
+
+
 }

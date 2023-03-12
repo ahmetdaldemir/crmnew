@@ -34,6 +34,9 @@ return new class extends Migration {
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
 
+            $table->unsignedBigInteger('staff_id');
+            $table->foreign('staff_id')->references('id')->on('users')->onDelete('cascade');
+
 
             $table->timestamps();
             $table->softDeletes();

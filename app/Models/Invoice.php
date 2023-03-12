@@ -4,8 +4,109 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Invoice extends Model
+class Invoice extends BaseModel
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $table = 'invoices';
+    protected $fillable = [
+        'type',
+        'number',
+        'create_date',
+        'payment_type',
+        'description',
+        'is_status',
+        'total_price',
+        'tax_total',
+        'discount_total',
+        'staff_id',
+        'customer_id',
+        'user_id',
+        'company_id'
+    ];
+
+    public const INVOICE_TYPE = [
+        '1' => 'Giden Fatura',
+        '2' => 'Gelen Fatura'
+    ];
+
+    public const INVOICE_TYPE_COLOR = [
+        '1' => 'success',
+        '2' => 'danger'
+    ];
+
+    public function invoice_type($type): string
+    {
+      return self::INVOICE_TYPE[$type];
+    }
+    public function invoice_type_color($type): string
+    {
+        return self::INVOICE_TYPE_COLOR[$type];
+    }
+
+    public function account(): HasOne
+    {
+        return $this->hasOne(Customer::class, 'id', 'customer_id');
+    }
+
+    public function detail(): hasMany
+    {
+        return $this->hasMany(StockCardMovement::class, 'invoice_id', 'id');
+    }
+
+    public function staff(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'staff_id');
+    }
+
+    public function hasSeller($id): string
+    {
+        return $this->seller_id == $id ? 'true':'false';
+    }
+
+    public function hasCategory($id): string
+    {
+        return $this->category_id == $id ? 'true':'false';
+    }
+
+    public function hasWarehouse($id): string
+    {
+        return $this->warehouse_id == $id ? 'true':'false';
+    }
+
+    public function hasBrand($id): string
+    {
+        return $this->brand_id == $id ? 'true':'false';
+    }
+    public function hasVersion($id): string
+    {
+        return $this->version_id == $id ? 'true':'false';
+    }
+
+    public function hasColor($id): string
+    {
+        return $this->color_id == $id ? 'true':'false';
+    }
+
+    public function hasStock($id): string
+    {
+        return $this->stock_card_id == $id ? 'true':'false';
+    }
+
+    public function hasReason($id): string
+    {
+        return $this->reason_id == $id ? 'true':'false';
+    }
+
+    public function hasStaff($id): string
+    {
+        return $this->staff_id == $id ? 'true':'false';
+    }
+
 }

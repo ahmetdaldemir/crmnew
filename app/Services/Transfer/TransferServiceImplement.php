@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Services\Invoice;
+namespace App\Services\Transfer;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use LaravelEasyRepository\Service;
-use App\Repositories\Invoice\InvoiceRepository;
+use App\Repositories\Transfer\TransferRepository;
 
-class InvoiceServiceImplement extends Service implements InvoiceService{
+class TransferServiceImplement extends Service implements TransferService{
 
      /**
      * don't change $this->mainRepository variable name
      * because used in extends service class
      */
-     protected InvoiceRepository $mainRepository;
+     protected $mainRepository;
 
-    public function __construct(InvoiceRepository $mainRepository)
+    public function __construct(TransferRepository $mainRepository)
     {
       $this->mainRepository = $mainRepository;
     }
@@ -71,6 +71,7 @@ class InvoiceServiceImplement extends Service implements InvoiceService{
     }
     public function create($data)
     {
+
         try {
             return $this->mainRepository->create($data);
         } catch (\Exception $exception) {

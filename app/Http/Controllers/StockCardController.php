@@ -146,34 +146,5 @@ class StockCardController extends Controller
         return $this->stockcardService->update($request->id, $data);
     }
 
-    protected function add_movement(Request $request)
-    {
-        foreach ($request->group_a as $item) {
-            $data = array(
-                'stock_card_id' => $request->stock_card_id,
-                'user_id' => Auth::user()->id,
-                'color_id' => $item['color_id'],
-                'warehouse_id' => $item['warehouse_id'],
-                'seller_id' => $item['seller_id'],
-                'reason_id' => $item['reason_id'],
-                'type' => $item['type'],
-                'quantity' => $item['quantity'],
-                'serial_number' => $item['serial'],
-                'tax' => $item['tax'],
-                'cost_price' => $item['cost_price'],
-                'base_cost_price' => $item['base_cost_price'],
-                'sale_price' => $item['sale_price'],
-                'description' => $item['description'],
-            );
 
-            if (empty($request->id)) {
-                StockCardMovement::create($data);
-            } else {
-                StockCardMovement::update($request->id, $data);
-            }
-        }
-
-
-        return response()->json("Kayıt Başarılı", 200);
-    }
 }
