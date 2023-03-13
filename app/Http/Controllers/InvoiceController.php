@@ -104,12 +104,12 @@ class InvoiceController extends Controller
 
     protected function movement(Request $request)
     {
-        $data['warehouses'] = $this->warehouseService->get();
-        $data['sellers'] = $this->sellerService->get();
-        $data['colors'] = $this->colorService->get();
-        $data['reasons'] = $this->reasonService->get();
+        $data['warehouses']    = $this->warehouseService->get();
+        $data['sellers']       = $this->sellerService->get();
+        $data['colors']        = $this->colorService->get();
+        $data['reasons']       = $this->reasonService->get();
         $data['stock_card_id'] = $request->id;
-        $data['movements'] = InvoiceMovement::where('stock_card_id', $request->id)->get();
+        $data['movements']     = InvoiceMovement::where('stock_card_id', $request->id)->get();
         return view('module.invoice.movement', $data);
     }
 
@@ -132,7 +132,6 @@ class InvoiceController extends Controller
         $transfer->is_status = 1;
         $transfer->save();
         return response()->json("Sevk Başlatıldı", 200);
-
     }
 
     protected function delete(Request $request)

@@ -14,9 +14,7 @@
                     <tr>
                         <th></th>
                         <th>Gönderici Bayi</th>
-                        <th>Tipi</th>
-                        <th>Barkod</th>
-                        <th>Miktar</th>
+                        <th>Oluşturma Zamanı</th>
                         <th>Alıcı Bayi</th>
                         <th>Gönderen</th>
                         <th>Teslim Alan</th>
@@ -28,14 +26,14 @@
                     <tbody class="table-border-bottom-0">
                     @foreach($transfers as $transfer)
                         <tr>
-                            <td><input type="checkbox" class="vs-checkbox--input" value=""></td>
-                            <td>Merkez Depo</td>
-                            <td>Aksesuar: APPLE IPHONE 14 PRO ANTİSTATİK HAYALET KORUYUCU CAM (4)</td>
-                            <td>801689</td>
-                            <td>Carrefour</td>
-                            <td>Erkan</td>
-                            <td>Mert G. (C)</td>
-                            <td>Tamamlandı</td>
+                            <td><a href="{{route('transfer.show',['id'=>$transfer->id])}}">{{$transfer->number}}</a></td>
+                            <td>{{$transfer->seller($transfer->main_seller_id)->name}}</td>
+                            <td>{{\Carbon\Carbon::parse($transfer->created_at)->format('d-m-Y')}}</td>
+                            <td>{{$transfer->seller($transfer->delivery_seller_id)->name}}</td>
+                            <td>{{$transfer->user($transfer->user_id)->name}}</td>
+                            <td>{{$transfer->user($transfer->delivery_id)->name}}</td>
+                            <td><span class="badge bg-label-{{\App\Models\Transfer::STATUS_COLOR[$transfer->is_status]}}">{{\App\Models\Transfer::STATUS[$transfer->is_status]}}</span></td>
+                            <td>{{$transfer->comfirm_date}}</td>
                             <td>
                                 <a href="{{route('transfer.delete',['id' => $transfer->id])}}"
                                    class="btn btn-icon btn-primary">

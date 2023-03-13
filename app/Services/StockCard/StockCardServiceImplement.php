@@ -85,7 +85,6 @@ class StockCardServiceImplement extends Service implements StockCardService{
 
     public function add_movement($request,$invoiceID,$type)
     {
-
         $stockmovents = StockCardMovement::where('invoice_id',$invoiceID->id)->first();
         if($stockmovents)
         {
@@ -116,7 +115,6 @@ class StockCardServiceImplement extends Service implements StockCardService{
                 StockCardMovement::update($request->id, $data);
             }
         }
-
         return response()->json("Kayıt Başarılı", 200);
     }
 }

@@ -163,6 +163,7 @@ Route::prefix('transfer')->name('transfer.')->middleware([])->group(function () 
     Route::get('create', [App\Http\Controllers\TransferController::class, 'create'])->name('create');
     Route::post('store', [App\Http\Controllers\TransferController::class, 'store'])->name('store');
     Route::post('update', [App\Http\Controllers\TransferController::class, 'update'])->name('update');
+    Route::get('show', [App\Http\Controllers\TransferController::class, 'show'])->name('show');
 });
 
 Route::prefix('reason')->name('reason.')->middleware([])->group(function () {
