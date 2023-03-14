@@ -108,9 +108,13 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6 col-12 mb-md-0 mb-3 ps-md-0">
-                                                    <p class="mb-2 repeater-title">Açıklama</p>
-                                                    <textarea class="form-control" rows="2" name="description">{{$item->description}}</textarea>
+                                                <div class="col-md-5 col-12 mb-md-0 mb-3 ps-md-0">
+                                                    <p class="mb-2 repeater-title">IMEI</p>
+                                                    <input class="form-control" name="imei" value="{{$item->imei}}" />
+                                                </div>
+                                                <div class="col-md-1 col-12 mb-md-0 mb-3 ps-md-0">
+                                                    <p class="mb-2 repeater-title">Temikli</p>
+                                                    <input class="form-check-input" type="checkbox" @if($item->assigned == 1) selected @endif name="assigned" />
                                                 </div>
                                                 <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Neden</p>
@@ -134,6 +138,10 @@
                                                          aria-labelledby="dropdownMenuButton">
 
                                                         <div class="row g-3">
+                                                            <div class="col-md-12">
+                                                                <p class="mb-2 repeater-title">Açıklama</p>
+                                                                <textarea class="form-control" rows="2" name="description">{{$item->description}}</textarea>
+                                                            </div>
                                                             <div class="col-12">
                                                                 <label for="discountInput"
                                                                        class="form-label">İndirim (%)</label>
@@ -219,9 +227,13 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6 col-12 mb-md-0 mb-3 ps-md-0">
-                                                    <p class="mb-2 repeater-title">Açıklama</p>
-                                                    <textarea class="form-control" rows="2" name="description">{{$item->description}}</textarea>
+                                                <div class="col-md-5 col-12 mb-md-0 mb-3 ps-md-0">
+                                                    <p class="mb-2 repeater-title">IMEI</p>
+                                                    <input class="form-control" name="imei" />
+                                                </div>
+                                                <div class="col-md-1 col-12 mb-md-0 mb-3 ps-md-0">
+                                                    <p class="mb-2 repeater-title">Temikli</p>
+                                                    <input class="form-check-input" type="checkbox" name="assigned" />
                                                 </div>
                                                 <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Neden</p>
@@ -245,6 +257,10 @@
                                                          aria-labelledby="dropdownMenuButton">
 
                                                         <div class="row g-3">
+                                                            <div class="col-12">
+                                                                <p class="mb-2 repeater-title">Açıklama</p>
+                                                                <textarea class="form-control" rows="2" name="description"></textarea>
+                                                            </div>
                                                             <div class="col-12">
                                                                 <label for="discountInput"
                                                                        class="form-label">İndirim (%)</label>

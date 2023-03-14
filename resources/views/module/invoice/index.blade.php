@@ -13,9 +13,9 @@
                     <thead>
                     <tr>
                         <th>Fatura No</th>
-                        <th>Cari</th>
-                        <th>Tipi</th>
-                        <th>Status</th>
+                        <th style="text-align: center">Cari</th>
+                        <th style="text-align: center">Tipi</th>
+                        <th style="text-align: center">Status</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -23,8 +23,8 @@
                     @foreach($invoices as $invoice)
                         <tr>
                             <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number}}</a></td>
-                            <td><strong>{{$invoice->account->fullname}}</strong></td>
-                            <td>
+                            <td style="text-align: center;"><strong>{{$invoice->account->fullname}}</strong></td>
+                            <td style="text-align: center;">
                                 <div class="d-flex justify-content-start align-items-center">
                                     <div class="avatar-wrapper">
                                         <div class="avatar avatar-sm me-2">
@@ -37,7 +37,7 @@
                                 </div>
 
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 @if($invoice->is_status == 1)
                                     <span data-bs-toggle="tooltip" data-bs-html="true"
                                           data-bs-original-title="<span>Gönderilmedi<br> Fiyat: {{$invoice->total_price}}<br>
