@@ -18,6 +18,7 @@ use App\Services\User\UserService;
 use App\Services\Version\VersionService;
 use App\Services\Warehouse\WarehouseService;
 use Carbon\Carbon;
+use elogo_api\elogo_api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -194,5 +195,27 @@ class InvoiceController extends Controller
         return $this->invoiceService->update($request->id, $data);
     }
 
+
+    public function einvoice()
+    {
+        $elogo_username = '3600330874';
+        $elogo_password = 'Erktelekom123*';
+
+        $elogo = new elogo_api($elogo_username, $elogo_password, false);
+        $elogo->invoce_prefix = 'ERK'; //FATURA NUMARASI OLUŞTURMASI İÇİN EN FAZLA 3 KARAKTER
+
+        $result = $elogo->get_documents_list();
+        dd($result['message']->Document);
+        //E-ARŞİV FATURASI BİLGİSİ ALMA
+       // $result = $elogo->get_document_info('1dfe9cfa-2c86-4e28-b7f5-5104faf00197', 'EARCHIVE');
+       // print_r($result);
+       // //E-ARŞİV FATURASI BİLGİSİ ALMA
+
+       // //E-FATURA BİLGİSİ ALMA
+       // $result = $elogo->get_document_info('1dfe9cfa-2c86-4e28-b7f5-5104faf00197', 'EINVOICE');
+       // print_r($result);
+       // //E-FATURA BİLGİSİ ALMA
+
+    }
 
 }

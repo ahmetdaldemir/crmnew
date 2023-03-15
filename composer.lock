@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96ed3e3851f4aa6cada5d48bae36a61a",
+    "content-hash": "25d80e864f0ddccd2088396c9d53c3a9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1255,6 +1255,54 @@
                 }
             ],
             "time": "2022-06-20T21:43:11+00:00"
+        },
+        {
+            "name": "hasokeyk/elogo",
+            "version": "1.0.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Hasokeyk/elogo-php.git",
+                "reference": "8e0c34bf8754b728ed9db946630eda350fed5362"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Hasokeyk/elogo-php/zipball/8e0c34bf8754b728ed9db946630eda350fed5362",
+                "reference": "8e0c34bf8754b728ed9db946630eda350fed5362",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0.1"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/elogo_api.php",
+                    "src/elogo_src/autoload.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hasan Yüksektepe",
+                    "email": "hasanhasokeyk@hotmail.com",
+                    "homepage": "https://hayatikodla.net",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "https://hayatikodla.net",
+            "keywords": [
+                "efatura",
+                "elogo",
+                "elogo muhasebe"
+            ],
+            "support": {
+                "issues": "https://github.com/Hasokeyk/elogo-php/issues",
+                "source": "https://github.com/Hasokeyk/elogo-php/tree/1.0.16"
+            },
+            "time": "2022-01-26T20:10:52+00:00"
         },
         {
             "name": "laminas/laminas-code",

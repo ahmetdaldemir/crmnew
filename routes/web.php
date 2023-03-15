@@ -183,6 +183,7 @@ Route::prefix('invoice')->name('invoice.')->middleware([])->group(function () {
     Route::get('create', [App\Http\Controllers\InvoiceController::class, 'create'])->name('create');
     Route::post('store', [App\Http\Controllers\InvoiceController::class, 'store'])->name('store');
     Route::post('update', [App\Http\Controllers\InvoiceController::class, 'update'])->name('update');
+    Route::get('einvoice', [App\Http\Controllers\InvoiceController::class, 'einvoice'])->name('einvoice');
 });
 
 
