@@ -9,10 +9,14 @@
                         <div class="col-sm-12">
                             <div class="card-body">
                                 <h5 class="card-title text-primary">SATIŞ! 🎉</h5>
+                                <form action="{{route('e_invoice.create')}}" method="post">
+                                    @csrf
                                 <input class="form-control" name="sell">
                                 <div class="col-12 mt-4">
-                                    <a href="javascript:;" class="btn btn-sm btn-outline-primary">Satış Yap</a>
+                                    <button type="button" class="btn btn-sm btn-outline-primary">Satış Yap</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Fatura Kes</button>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>

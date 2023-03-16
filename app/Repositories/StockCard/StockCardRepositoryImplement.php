@@ -2,6 +2,7 @@
 
 namespace App\Repositories\StockCard;
 
+use App\Models\StockCardMovement;
 use Illuminate\Support\Facades\Auth;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\StockCard;
@@ -22,5 +23,12 @@ class StockCardRepositoryImplement extends Eloquent implements StockCardReposito
     public function get()
     {
         return $this->model->where('company_id',Auth::user()->company_id)->get();
+    }
+
+    public function filter($arg)
+    {
+       $stock_card_movement = StockCardMovement::where('serial_number',$arg)->orderBy('id','desc')->first();
+       $stock_card  = $this->model->find($stock_card_movement->stock_card_id);
+       return ['stock_card_movement' => $stock_card_movement,'stock_card' => $stock_card];
     }
 }

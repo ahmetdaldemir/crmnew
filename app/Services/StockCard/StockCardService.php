@@ -10,4 +10,5 @@ interface StockCardService extends BaseService{
     public function all(): ?Collection;
     public function get(): ?Collection;
     public function add_movement(array $request, $invoiceID, $type);
+    public function filter($arg);
 }

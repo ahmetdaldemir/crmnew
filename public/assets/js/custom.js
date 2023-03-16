@@ -100,3 +100,16 @@ function customerSave() {
     });
 
 }
+
+
+function saveEInvoice(url) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: $("#sellForm").serialize(),
+        success: function (response) {
+           console.log(response);
+        }
+    });
+
+}

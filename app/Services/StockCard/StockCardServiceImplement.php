@@ -119,4 +119,9 @@ class StockCardServiceImplement extends Service implements StockCardService{
         }
         return response()->json("Kayıt Başarılı", 200);
     }
+
+    public function filter($arg)
+    {
+        return $this->mainRepository->filter($arg);
+    }
 }

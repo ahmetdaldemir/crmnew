@@ -81,6 +81,5 @@ class Elogoinvoice extends Command
             Log::info("Fatura Bulunamadı");
         }
 
-
     }
 }

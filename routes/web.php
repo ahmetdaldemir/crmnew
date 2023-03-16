@@ -186,7 +186,16 @@ Route::prefix('invoice')->name('invoice.')->middleware([])->group(function () {
     Route::get('einvoice', [App\Http\Controllers\InvoiceController::class, 'einvoice'])->name('einvoice');
 });
 
-
+Route::prefix('e_invoice')->name('e_invoice.')->middleware([])->group(function () {
+    Route::get('/', [App\Http\Controllers\EInvoiceController::class, 'index'])->name('index');
+    Route::get('edit', [App\Http\Controllers\EInvoiceController::class, 'edit'])->name('edit');
+    Route::get('show', [App\Http\Controllers\EInvoiceController::class, 'show'])->name('show');
+    Route::get('delete', [App\Http\Controllers\EInvoiceController::class, 'delete'])->name('delete');
+    Route::post('create', [App\Http\Controllers\EInvoiceController::class, 'create'])->name('create');
+    Route::post('store', [App\Http\Controllers\EInvoiceController::class, 'store'])->name('store');
+    Route::post('update', [App\Http\Controllers\EInvoiceController::class, 'update'])->name('update');
+    Route::get('e_invoice_create', [App\Http\Controllers\EInvoiceController::class, 'e_invoice_create'])->name('e_invoice_create');
+});
 
 /**  Custom **/
 
