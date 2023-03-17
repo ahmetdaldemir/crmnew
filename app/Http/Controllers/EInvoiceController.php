@@ -71,7 +71,7 @@ class EInvoiceController extends Controller
         $data['citys'] = City::all();
         $data['stocks'] = $this->stockCardService->all();
         $data['request'] = $request;
-        $data['stocks'] = $this->stockCardService->filter($request->sell);
+        $data['product'] = $this->stockCardService->filter($request->sell);
        return view('module.einvoice.form',$data);
     }
 
