@@ -32,13 +32,11 @@ return new class extends Migration
             $table->unsignedBigInteger('version_id')->nullable();
             $table->foreign('version_id')->references('id')->on('versions')->onDelete('cascade');
 
-
             $table->string('sku',20);
             $table->string('barcode',20);
             $table->boolean('tracking')->default(0);
             $table->string('unit',5)->nullable();
             $table->tinyInteger('tracking_quantity')->default(1);
-
 
             $table->boolean('is_status')->default(1);
             $table->timestamps();

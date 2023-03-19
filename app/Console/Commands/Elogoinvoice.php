@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Abstract\Elogo;
 use App\Models\EInvoice;
+use App\Services\Modules\Elogo\CreateInvoice;
 use elogo_api\elogo_api;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,6 @@ class Elogoinvoice extends Command
      */
     protected $signature = 'invoice:elogo {type} {sort} {company}';
 
-
     /**
      * The console command description.
      *
@@ -27,7 +27,6 @@ class Elogoinvoice extends Command
      */
     protected $description = 'Command description';
     public $connector;
-
 
     /**
      * Execute the console command.
@@ -48,34 +47,8 @@ class Elogoinvoice extends Command
             $document = $result['message']->Document;
             foreach ($document as $item) {
                 $x = json_decode($item->docInfo->string, true);
-                $user = EInvoice::firstOrCreate(
-                    ['company_id' => $company, 'Uuid' => $x['Uuid']],
-                    [
-                        'user_id' => 1,
-                        'InvoiceType' => $x['InvoiceType'],
-                        'IssueDate' => $x['IssueDate'],
-                        'ElementId' => $x['ElementId'],
-                        'InvoiceTotal' => $x['InvoiceTotal'],
-                        'SupplierVknTckn' => $x['SupplierVknTckn'],
-                        'SupplierPartyName' => $x['SupplierPartyName'],
-                        'CustomerPartyName' => $x['CustomerPartyName'],
-                        'CustomerVknTckn' => $x['CustomerVknTckn'],
-                        'Description' => $x['Description'],
-                        'ProfileID' => $x['ProfileID'],
-                        'CurrencyUnit' => $x['CurrencyUnit'],
-                        'TaxAmount' => $x['TaxAmount'],
-                        'PayableAmount' => $x['PayableAmount'],
-                        'AllowanceTotalAmount' => $x['AllowanceTotalAmount'],
-                        'TaxInclusiveAmount' => $x['TaxInclusiveAmount'],
-                        'TaxExclusiveAmount' => $x['TaxExclusiveAmount'],
-                        'LineExtensionAmount' => $x['LineExtensionAmount'],
-                        'PKAlias' => $x['PKAlias'],
-                        'GBAlias' => $x['GBAlias'],
-                        'EnvelopeId' => $x['EnvelopeId'],
-                        'CurrentDate' => $x['CurrentDate'],
-                    ]
-                );
-
+                $createinvoice = new CreateInvoice();
+                $createinvoice->store($x,$company,1,$type);
             }
         } else {
             Log::info("Fatura Bulunamadı");

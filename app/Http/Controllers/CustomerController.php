@@ -47,8 +47,12 @@ class CustomerController extends Controller
     protected function store(Request $request)
     {
         $data = array(
-            'fullname' => $request->fullname,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'fullname' => $request->firstname.' '.$request->lastname,
             'iban' => $request->iban,
+            'company_type' => $request->company_type,
+            'web_sites' => $request->web_sites,
             'code' => Str::uuid(),
             'tc' => $request->tc,
             'phone1' => $request->phone1,

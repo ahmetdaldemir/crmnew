@@ -108,8 +108,24 @@ function saveEInvoice(url) {
         url: url,
         data: $("#sellForm").serialize(),
         success: function (response) {
-           console.log(response);
+            console.log(response);
         }
+    });
+
+}
+
+function getStock() {
+    var postUrl = window.location.origin + '/getStock';   // Returns base URL (https://example.com)
+    var formData = $("#stockForm").serialize();
+    $.ajax({
+        type: "POST",
+        url: postUrl,
+        data: formData,
+        dataType: "json",
+        encode: true,
+    }).done(function (data) {
+        console.log(data);
+
     });
 
 }

@@ -145,10 +145,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-primary" data-repeater-create="">Add Item
-                                    </button>
-                                    <button type="button" id="dataRepeater" class="btn btn-danger">HESAPLA
-                                    </button>
+                                    <button type="button" class="btn btn-primary" data-repeater-create="">Stok Ekle</button>
+                                    <button type="button" id="dataRepeater" class="btn btn-danger">HESAPLA</button>
                                 </div>
                             </div>
                             <hr class="my-4 mx-n4">
@@ -171,22 +169,18 @@
                                 <div class="col-md-6 d-flex justify-content-end">
                                     <div class="invoice-calculations">
                                         <div class="d-flex justify-content-between mb-2">
-                                            <span class="w-px-100">Aratoplam:</span>
-                                            <span class="fw-semibold"></span>
-                                        </div>
-                                        <div class="d-flex justify-content-between mb-2">
                                             <span class="w-px-100">İndirim:</span>
-                                            <span class="fw-semibold"></span>
+                                            <span class="fw-semibold">{{$product['stock_card_movement']->discount ?? 0}} %</span>
                                         </div>
                                         <div class="d-flex justify-content-between mb-2">
                                             <span class="w-px-100">Kdv:</span>
-                                            <span class="fw-semibold"></span>
+                                            <span class="fw-semibold">{{($product['stock_card_movement']->sale_price * $product['stock_card_movement']->tax) / 100}}</span>
                                         </div>
                                         <hr>
                                         <div class="d-flex justify-content-between">
                                             <span class="w-px-100">Toplam:</span>
-                                            <span class="fw-semibold"> @if(isset($invoices))
-                                                    {{ $invoices->total_price}}
+                                            <span class="fw-semibold"> @if(isset($product))
+                                                    {{$product['stock_card_movement']->sale_price}}
                                                 @endif</span>
                                         </div>
                                     </div>
@@ -214,12 +208,8 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <button onclick="save()" type="button" class="btn btn-primary d-grid w-100 mb-3">
-                            <span class="d-flex align-items-center justify-content-center text-nowrap"><i
-                                    class="bx bx-paper-plane bx-xs me-1"></i>Send Invoice</span>
+                                <i class="bx bx-paper-plane bx-xs me-1"></i>Fatura Gönder
                             </button>
-                            <a href="#"
-                               class="btn btn-label-secondary d-grid w-100 mb-3">Preview</a>
-                            <button type="button" class="btn btn-label-secondary d-grid w-100">Save</button>
                         </div>
                     </div>
                     <div>
@@ -234,13 +224,13 @@
                             <label class="switch switch-primary me-0">
                                 <input type="checkbox" class="switch-input" id="payment-terms" checked="">
                                 <span class="switch-toggle-slider">
-            <span class="switch-on">
-              <i class="bx bx-check"></i>
-            </span>
-            <span class="switch-off">
-              <i class="bx bx-x"></i>
-            </span>
-          </span>
+                                    <span class="switch-on">
+                                      <i class="bx bx-check"></i>
+                                    </span>
+                                    <span class="switch-off">
+                                      <i class="bx bx-x"></i>
+                                    </span>
+                                  </span>
                                 <span class="switch-label"></span>
                             </label>
                         </div>
@@ -250,13 +240,13 @@
                             <label class="switch switch-primary me-0">
                                 <input type="checkbox" class="switch-input" id="payment-stub">
                                 <span class="switch-toggle-slider">
-            <span class="switch-on">
-              <i class="bx bx-check"></i>
-            </span>
-            <span class="switch-off">
-              <i class="bx bx-x"></i>
-            </span>
-          </span>
+                            <span class="switch-on">
+                              <i class="bx bx-check"></i>
+                            </span>
+                            <span class="switch-off">
+                              <i class="bx bx-x"></i>
+                            </span>
+                          </span>
                                 <span class="switch-label"></span>
                             </label>
                         </div>
@@ -334,13 +324,16 @@
         }
 
         function save() {
-            var postUrl = window.location.origin + '/invoice/store';   // Returns base URL (https://example.com)
+            var postUrl = window.location.origin + '/e_invoice/e_invoice_create';   // Returns base URL (https://example.com)
             $.ajax({
                 type: "POST",
                 url: postUrl,
                 data: $("#invoiceForm").serialize(),
                 dataType: "json",
                 encode: true,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
                 beforeSend: function () {
                     $('#loader').removeClass('display-none')
                 },

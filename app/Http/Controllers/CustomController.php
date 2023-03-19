@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\StockCardMovement;
 use App\Models\Town;
 use App\Services\Customer\CustomerService;
 use App\Services\Seller\SellerService;
@@ -15,22 +16,30 @@ class CustomController extends Controller
     private CustomerService $customerService;
     private SellerService $sellerService;
 
-    public function __construct(CustomerService $customerService,SellerService $sellerService)
+    protected StockCardMovement $stockCardMovement;
+
+    public function __construct(CustomerService $customerService, SellerService $sellerService)
     {
         $this->customerService = $customerService;
         $this->sellerService = $sellerService;
+        $this->stockCardMovement = new StockCardMovement();
     }
-   public function get_cities(Request $request)
-   {
-       $town =  Town::where('city_id',$request->id)->get();
-       return response()->json($town,200);
-   }
+
+    public function get_cities(Request $request)
+    {
+        $town = Town::where('city_id', $request->id)->get();
+        return response()->json($town, 200);
+    }
 
     public function customerstore(Request $request)
     {
         $data = array(
-            'fullname' => $request->fullname,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'fullname' => $request->firstname . ' ' . $request->lastname,
             'iban' => $request->iban,
+            'company_type' => $request->company_type,
+            'web_sites' => $request->web_sites,
             'code' => Str::uuid(),
             'tc' => $request->tc,
             'phone1' => $request->phone1,
@@ -45,11 +54,10 @@ class CustomController extends Controller
             'company_id' => Auth::user()->company_id,
             'user_id' => Auth::id()
         );
-        if(empty($request->id))
-        {
+        if (empty($request->id)) {
             $this->customerService->create($data);
-        }else{
-            $this->customerService->update($request->id,$data);
+        } else {
+            $this->customerService->update($request->id, $data);
         }
 
         return $data;
@@ -58,9 +66,14 @@ class CustomController extends Controller
     public function customerget(Request $request)
     {
         $data = $this->customerService->find($request->id);
-        return response()->json($data,200);
+        return response()->json($data, 200);
 
-     }
+    }
+
+    public function getStock(Request $request)
+    {
+      return $this->stockCardMovement->quantityCheck($request->serialCode);
+    }
 
 
 }

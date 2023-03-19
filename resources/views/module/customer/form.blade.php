@@ -45,14 +45,25 @@
                 <hr class="my-0" />
                 <div class="card-body">
                         <div class="row">
-                            <div class="mb-3 col-md-6">
-                                <label for="fullname" class="form-label">İsim Soyisim</label>
+                            <div class="mb-3 col-md-3">
+                                <label for="firstname" class="form-label">İsim</label>
                                 <input
                                     class="form-control"
                                     type="text"
-                                    id="fullname"
-                                    name="fullname"
-                                    @if(isset($customers)) value="{{$customers->fullname}}" @endif
+                                    id="firstname"
+                                    name="firstname"
+                                    @if(isset($customers)) value="{{$customers->firstname}}" @endif
+                                    autofocus required
+                                />
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label for="lastname" class="form-label">Soyisim</label>
+                                <input
+                                    class="form-control"
+                                    type="text"
+                                    id="lastname"
+                                    name="lastname"
+                                    @if(isset($customers)) value="{{$customers->lastname}}" @endif
                                     autofocus required
                                 />
                             </div>
@@ -125,7 +136,7 @@
                                 <label for="zipCode" class="form-label">İlçe</label>
                                 <input class="form-control" type="text" id="district" name="district" @if(isset($customers)) value="{{$customers->district}}" @endif />
                             </div>
-                            <div class="mb-3 col-md-12">
+                            <div class="mb-3 col-md-4">
                                 <label for="zipCode" class="form-label">Şube</label>
                                 <select id="seller" name="seller_id" class="select2 form-select">
                                     @foreach($sellers as $seller)
@@ -133,6 +144,23 @@
                                     @endforeach
 
                                 </select>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="zipCode" class="form-label">Firma Türü</label>
+                                <select id="seller" name="company_type" class="select2 form-select">
+                                  <option value="sahis">Şahıs</option>
+                                  <option value="firma">Firma</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="zipCode" class="form-label">Web Sitesi</label>
+                                <input
+                                    type="text"
+                                    id="web_sites"
+                                    name="web_sites"
+                                    class="form-control"
+
+                                />
                             </div>
                         </div>
                 </div>
