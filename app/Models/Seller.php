@@ -9,5 +9,5 @@ class Seller extends BaseModel
 {
     use HasFactory;
 
-    protected $fillable = ['name','is_status','phone','company_id'];
+    protected $fillable = ['name','is_status','phone','company_id','user_id'];
 }

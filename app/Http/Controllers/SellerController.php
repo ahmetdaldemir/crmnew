@@ -40,7 +40,7 @@ class SellerController extends Controller
 
     protected function store(Request $request)
     {
-        $data = array('name' => $request->name,'phone' => $request->phone,'company_id' => Auth::user()->company_id);
+        $data = array('name' => $request->name,'phone' => $request->phone,'company_id' => Auth::user()->company_id,'user_id' => Auth::user()->id);
         if(empty($request->id))
         {
             $this->sellerService->create($data);

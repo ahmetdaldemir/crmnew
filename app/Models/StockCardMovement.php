@@ -39,8 +39,8 @@ class StockCardMovement extends BaseModel
     }
     public function quantityCheck($serial_number)
     {
-      $out =  StockCardMovement::where('serial_number',$serial_number)->where('type',1)->sum('quantity');
-      $in = StockCardMovement::where('serial_number',$serial_number)->where('type',2)->sum('quantity');
+      $in =  StockCardMovement::where('serial_number',$serial_number)->where('type',1)->sum('quantity');
+      $out = StockCardMovement::where('serial_number',$serial_number)->where('type',2)->sum('quantity');
       return $in - $out;
     }
 

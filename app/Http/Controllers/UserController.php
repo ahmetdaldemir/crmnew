@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\Seller\SellerService;
 use App\Services\User\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -48,7 +49,11 @@ class UserController extends Controller
 
     protected function store(Request $request)
     {
-        $data = array('name' => $request->name, 'email' => $request->email);
+        $data = array('name' => $request->name, 'email' => $request->email,
+            'company_id' => Auth::user()->company_id,
+            'user_id' => Auth::user()->id,
+            'seller_id' =>$request->seller_id,
+            'is_status' => 1,'password' => bcrypt($request->password));
         if (empty($request->id)) {
             $this->userService->create($data);
             $user_id = $this->userService->lastInsertId();
@@ -57,7 +62,7 @@ class UserController extends Controller
             $user_id = $request->id;
         }
 
-         $this->userService->role($user_id, $request->role);
+        $this->userService->role($user_id, $request->role);
         return redirect()->route('user.index');
     }
 
