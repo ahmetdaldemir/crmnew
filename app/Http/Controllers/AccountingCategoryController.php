@@ -39,7 +39,8 @@ class AccountingCategoryController extends Controller
 
     protected function store(Request $request)
     {
-        $data = array('name' => $request->name,'iban' => $request->iban,'company_id' => Auth::user()->company_id,'user_id' => Auth::id());
+        $data = array('name' => $request->name,'category' => $request->category,
+            'company_id' => Auth::user()->company_id,'user_id' => Auth::id());
         if(empty($request->id))
         {
             $this->accountingCategory->create($data);

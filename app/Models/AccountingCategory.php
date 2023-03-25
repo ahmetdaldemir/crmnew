@@ -10,5 +10,5 @@ class AccountingCategory extends BaseModel
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['name','is_status','company_id','user_id'];
+    protected $fillable = ['name','is_status','category','company_id','user_id'];
 }

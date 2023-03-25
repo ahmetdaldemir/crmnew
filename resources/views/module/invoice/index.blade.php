@@ -13,7 +13,6 @@
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Diğer</button>
                     <ul class="dropdown-menu" style="">
                         <li><a class="dropdown-item" href="{{route('invoice.create.personal')}}">Personel Gideri Ekle</a></li>
-                        <li><a class="dropdown-item" href="{{route('invoice.create.accomodation')}}">Konaklama Gideri Ekle</a></li>
                         <li><a class="dropdown-item" href="{{route('invoice.create.bank')}}">Banka Gideri Ekle</a></li>
                         <li><a class="dropdown-item" href="{{route('invoice.create.tax')}}">Vergi / SGK Gideri Ekle</a></li>
                         <li>

@@ -109,4 +109,9 @@ class Invoice extends BaseModel
         return $this->staff_id == $id ? 'true':'false';
     }
 
+    public function hasSafe($id): string
+    {
+        return $this->safe_id == $id ? 'true':'false';
+    }
+
 }

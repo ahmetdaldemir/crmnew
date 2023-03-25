@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Unit;
+use App\Enums\Tax;
 use App\Models\City;
-use App\Models\StockCardMovement;
+use App\Models\Currency;
 use App\Models\Transfer;
+use App\Services\AccountingCategory\AccountingCategoryService;
 use App\Services\Brand\BrandService;
 use App\Services\Category\CategoryService;
 use App\Services\Color\ColorService;
 use App\Services\Customer\CustomerService;
 use App\Services\Reason\ReasonService;
+use App\Services\Safe\SafeService;
 use App\Services\Seller\SellerService;
 use App\Services\Invoice\InvoiceService;
 use App\Services\StockCard\StockCardService;
@@ -35,19 +37,25 @@ class InvoiceController extends Controller
     private CustomerService $customerService;
     private UserService $userService;
     private StockCardService $stockCardService;
+    private Currency $currency;
+    private AccountingCategoryService $accountingCategoryService;
+    private SafeService $safeService;
 
 
-    public function __construct(InvoiceService   $invoiceService,
-                                SellerService    $sellerService,
-                                WarehouseService $warehouseService,
-                                BrandService     $brandService,
-                                CategoryService  $categoryService,
-                                ColorService     $colorService,
-                                VersionService   $versionService,
-                                ReasonService    $reasonService,
-                                CustomerService  $customerService,
-                                UserService      $userService,
-                                StockCardService $stockCardService
+    public function __construct(InvoiceService            $invoiceService,
+                                SellerService             $sellerService,
+                                WarehouseService          $warehouseService,
+                                BrandService              $brandService,
+                                CategoryService           $categoryService,
+                                ColorService              $colorService,
+                                VersionService            $versionService,
+                                ReasonService             $reasonService,
+                                CustomerService           $customerService,
+                                UserService               $userService,
+                                StockCardService          $stockCardService,
+                                Currency                  $currency,
+                                AccountingCategoryService $accountingCategoryService,
+                                SafeService               $safeService
     )
     {
         $this->invoiceService = $invoiceService;
@@ -61,6 +69,11 @@ class InvoiceController extends Controller
         $this->customerService = $customerService;
         $this->userService = $userService;
         $this->stockCardService = $stockCardService;
+        $this->currency = $currency;
+        $this->accountingCategoryService = $accountingCategoryService;
+        $this->safeService = $safeService;
+        setlocale(LC_TIME, 'Turkish');  // ya da tr_TR.utf8
+
     }
 
     protected function index()
@@ -80,6 +93,10 @@ class InvoiceController extends Controller
         $data['customers'] = $this->customerService->get();
         $data['citys'] = City::all();
         $data['stocks'] = $this->stockCardService->all();
+        $data['categories'] = $this->accountingCategoryService->all();
+        $data['safes'] = $this->safeService->all();
+        $data['taxs'] = Tax::Tax;
+
         return view('module.invoice.form', $data);
     }
 
@@ -92,7 +109,10 @@ class InvoiceController extends Controller
         $data['reasons'] = $this->reasonService->get();
         $data['customers'] = $this->customerService->get();
         $data['citys'] = City::all();
-        $data['stocks'] = $this->stockCardService->all();
+        $data['currencies'] = $this->currency->all();
+        $data['taxs'] = Tax::Tax;
+        $data['categories'] = $this->accountingCategoryService->all();
+        $data['safes'] = $this->safeService->all();
         return view('module.invoice.fast', $data);
     }
 
@@ -106,22 +126,11 @@ class InvoiceController extends Controller
         $data['reasons'] = $this->reasonService->get();
         $data['customers'] = $this->customerService->get();
         $data['citys'] = City::all();
-        $data['stocks'] = $this->stockCardService->all();
+        $data['currencies'] = $this->currency->all();
+        $data['taxs'] = Tax::Tax;
+        $data['categories'] = $this->accountingCategoryService->all();
+        $data['safes'] = $this->safeService->all();
         return view('module.invoice.personal', $data);
-    }
-
-
-    protected function accomodation()
-    {
-        $data['warehouses'] = $this->warehouseService->get();
-        $data['sellers'] = $this->sellerService->get();
-        $data['colors'] = $this->colorService->get();
-        $data['users'] = $this->userService->get();
-        $data['reasons'] = $this->reasonService->get();
-        $data['customers'] = $this->customerService->get();
-        $data['citys'] = City::all();
-        $data['stocks'] = $this->stockCardService->all();
-        return view('module.invoice.accomodation', $data);
     }
 
 
@@ -131,10 +140,9 @@ class InvoiceController extends Controller
         $data['sellers'] = $this->sellerService->get();
         $data['colors'] = $this->colorService->get();
         $data['users'] = $this->userService->get();
-        $data['reasons'] = $this->reasonService->get();
-        $data['customers'] = $this->customerService->get();
-        $data['citys'] = City::all();
-        $data['stocks'] = $this->stockCardService->all();
+        $data['categories'] = $this->accountingCategoryService->all();
+        $data['safes'] = $this->safeService->all();
+        $data['currencies'] = $this->currency->all();
         return view('module.invoice.bank', $data);
     }
 
@@ -145,10 +153,10 @@ class InvoiceController extends Controller
         $data['sellers'] = $this->sellerService->get();
         $data['colors'] = $this->colorService->get();
         $data['users'] = $this->userService->get();
-        $data['reasons'] = $this->reasonService->get();
-        $data['customers'] = $this->customerService->get();
-        $data['citys'] = City::all();
-        $data['stocks'] = $this->stockCardService->all();
+        $data['currencies'] = $this->currency->all();
+        $data['taxs'] = Tax::Tax;
+        $data['categories'] = $this->accountingCategoryService->all();
+        $data['safes'] = $this->safeService->all();
         return view('module.invoice.tax', $data);
     }
 
@@ -170,17 +178,17 @@ class InvoiceController extends Controller
     protected function show(Request $request)
     {
         $data['invoice'] = $this->invoiceService->find($request->id);
-        return view('module.invoice.show',$data);
+        return view('module.invoice.show', $data);
     }
 
     protected function movement(Request $request)
     {
-        $data['warehouses']    = $this->warehouseService->get();
-        $data['sellers']       = $this->sellerService->get();
-        $data['colors']        = $this->colorService->get();
-        $data['reasons']       = $this->reasonService->get();
+        $data['warehouses'] = $this->warehouseService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['colors'] = $this->colorService->get();
+        $data['reasons'] = $this->reasonService->get();
         $data['stock_card_id'] = $request->id;
-        $data['movements']     = InvoiceMovement::where('stock_card_id', $request->id)->get();
+        $data['movements'] = InvoiceMovement::where('stock_card_id', $request->id)->get();
         return view('module.invoice.movement', $data);
     }
 
@@ -215,7 +223,7 @@ class InvoiceController extends Controller
     {
         $data = array(
             'type' => $request->type,
-            'number' => $request->number,
+            'number' => $request->number ?? null,
             'create_date' => Carbon::parse($request->create_date)->format('Y-m-d'),
             'payment_type' => $request->payment_type,
             'description' => $request->description,
@@ -233,7 +241,7 @@ class InvoiceController extends Controller
             $invoiceID = $this->invoiceService->create($data);
         } else {
             $this->invoiceService->update($request->id, $data);
-            $invoiceID =  $this->invoiceService->find($request->id);
+            $invoiceID = $this->invoiceService->find($request->id);
         }
 
         $this->stockCardService->add_movement($request->group_a, $invoiceID, $request->type);
@@ -242,11 +250,11 @@ class InvoiceController extends Controller
         $discount_total = 0;
 
         foreach ($request->group_a as $item) {
-            $total += $item['cost_price'] + (($item['cost_price'] *  $item['tax']) /100) * $item['quantity'];
-            $taxtotal   += (($item['cost_price'] *  $item['tax']) /100) * $item['quantity'];
-            $discount_total  +=  (($item['cost_price'] *  $item['discount'] ?? 0) /100) * $item['quantity'];
+            $total += $item['cost_price'] + (($item['cost_price'] * $item['tax']) / 100) * $item['quantity'];
+            $taxtotal += (($item['cost_price'] * $item['tax']) / 100) * $item['quantity'];
+            $discount_total += (($item['cost_price'] * $item['discount'] ?? 0) / 100) * $item['quantity'];
         }
-         $totalprice = $total-$discount_total;
+        $totalprice = $total - $discount_total;
 
         $newdata = array(
             'total_price' => $totalprice,
@@ -256,7 +264,7 @@ class InvoiceController extends Controller
 
         $this->invoiceService->update($invoiceID->id, $newdata);
 
-        return response()->json('Kaydedildi',200);
+        return response()->json('Kaydedildi', 200);
     }
 
     protected function update(Request $request)
@@ -277,14 +285,14 @@ class InvoiceController extends Controller
         $result = $elogo->get_documents_list();
         dd($result['message']->Document);
         //E-ARŞİV FATURASI BİLGİSİ ALMA
-       // $result = $elogo->get_document_info('1dfe9cfa-2c86-4e28-b7f5-5104faf00197', 'EARCHIVE');
-       // print_r($result);
-       // //E-ARŞİV FATURASI BİLGİSİ ALMA
+        // $result = $elogo->get_document_info('1dfe9cfa-2c86-4e28-b7f5-5104faf00197', 'EARCHIVE');
+        // print_r($result);
+        // //E-ARŞİV FATURASI BİLGİSİ ALMA
 
-       // //E-FATURA BİLGİSİ ALMA
-       // $result = $elogo->get_document_info('1dfe9cfa-2c86-4e28-b7f5-5104faf00197', 'EINVOICE');
-       // print_r($result);
-       // //E-FATURA BİLGİSİ ALMA
+        // //E-FATURA BİLGİSİ ALMA
+        // $result = $elogo->get_document_info('1dfe9cfa-2c86-4e28-b7f5-5104faf00197', 'EINVOICE');
+        // print_r($result);
+        // //E-FATURA BİLGİSİ ALMA
 
     }
 
