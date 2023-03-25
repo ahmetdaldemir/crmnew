@@ -83,6 +83,76 @@ class InvoiceController extends Controller
         return view('module.invoice.form', $data);
     }
 
+    protected function fast()
+    {
+        $data['warehouses'] = $this->warehouseService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['colors'] = $this->colorService->get();
+        $data['users'] = $this->userService->get();
+        $data['reasons'] = $this->reasonService->get();
+        $data['customers'] = $this->customerService->get();
+        $data['citys'] = City::all();
+        $data['stocks'] = $this->stockCardService->all();
+        return view('module.invoice.fast', $data);
+    }
+
+
+    protected function personal()
+    {
+        $data['warehouses'] = $this->warehouseService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['colors'] = $this->colorService->get();
+        $data['users'] = $this->userService->get();
+        $data['reasons'] = $this->reasonService->get();
+        $data['customers'] = $this->customerService->get();
+        $data['citys'] = City::all();
+        $data['stocks'] = $this->stockCardService->all();
+        return view('module.invoice.personal', $data);
+    }
+
+
+    protected function accomodation()
+    {
+        $data['warehouses'] = $this->warehouseService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['colors'] = $this->colorService->get();
+        $data['users'] = $this->userService->get();
+        $data['reasons'] = $this->reasonService->get();
+        $data['customers'] = $this->customerService->get();
+        $data['citys'] = City::all();
+        $data['stocks'] = $this->stockCardService->all();
+        return view('module.invoice.accomodation', $data);
+    }
+
+
+    protected function bank()
+    {
+        $data['warehouses'] = $this->warehouseService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['colors'] = $this->colorService->get();
+        $data['users'] = $this->userService->get();
+        $data['reasons'] = $this->reasonService->get();
+        $data['customers'] = $this->customerService->get();
+        $data['citys'] = City::all();
+        $data['stocks'] = $this->stockCardService->all();
+        return view('module.invoice.bank', $data);
+    }
+
+
+    protected function tax()
+    {
+        $data['warehouses'] = $this->warehouseService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['colors'] = $this->colorService->get();
+        $data['users'] = $this->userService->get();
+        $data['reasons'] = $this->reasonService->get();
+        $data['customers'] = $this->customerService->get();
+        $data['citys'] = City::all();
+        $data['stocks'] = $this->stockCardService->all();
+        return view('module.invoice.tax', $data);
+    }
+
+
     protected function edit(Request $request)
     {
         $data['invoices'] = $this->invoiceService->find($request->id);

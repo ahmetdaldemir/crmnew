@@ -96,6 +96,12 @@
                 <div data-i18n="Basic">Renkler</div>
             </a>
         </li>
+        <li class="menu-item">
+            <a href="{{route('accounting_category.index')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Muhasebe Kategorileri</div>
+            </a>
+        </li>
         <!-- Forms & Tables -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Teknik Servis İşlemleri</span></li>
         <li class="menu-item">

@@ -186,6 +186,12 @@ Route::middleware('companies')->group(function () {
         Route::post('store', [App\Http\Controllers\InvoiceController::class, 'store'])->name('store');
         Route::post('update', [App\Http\Controllers\InvoiceController::class, 'update'])->name('update');
         Route::get('einvoice', [App\Http\Controllers\InvoiceController::class, 'einvoice'])->name('einvoice');
+        Route::get('fast', [App\Http\Controllers\InvoiceController::class, 'fast'])->name('create.fast');
+        Route::get('personal', [App\Http\Controllers\InvoiceController::class, 'personal'])->name('create.personal');
+        Route::get('accomodation', [App\Http\Controllers\InvoiceController::class, 'accomodation'])->name('create.accomodation');
+        Route::get('bank', [App\Http\Controllers\InvoiceController::class, 'bank'])->name('create.bank');
+        Route::get('tax', [App\Http\Controllers\InvoiceController::class, 'tax'])->name('create.tax');
+
     });
 
     Route::prefix('e_invoice')->name('e_invoice.')->middleware([])->group(function () {
@@ -197,6 +203,16 @@ Route::middleware('companies')->group(function () {
         Route::post('store', [App\Http\Controllers\EInvoiceController::class, 'store'])->name('store');
         Route::post('update', [App\Http\Controllers\EInvoiceController::class, 'update'])->name('update');
         Route::post('e_invoice_create', [App\Http\Controllers\EInvoiceController::class, 'e_invoice_create'])->name('e_invoice_create');
+    });
+
+
+    Route::prefix('accounting_category')->name('accounting_category.')->middleware([])->group(function () {
+        Route::get('/', [App\Http\Controllers\AccountingCategoryController::class, 'index'])->name('index');
+        Route::get('edit', [App\Http\Controllers\AccountingCategoryController::class, 'edit'])->name('edit');
+        Route::get('delete', [App\Http\Controllers\AccountingCategoryController::class, 'delete'])->name('delete');
+        Route::get('create', [App\Http\Controllers\AccountingCategoryController::class, 'create'])->name('create');
+        Route::post('store', [App\Http\Controllers\AccountingCategoryController::class, 'store'])->name('store');
+        Route::post('update', [App\Http\Controllers\AccountingCategoryController::class, 'update'])->name('update');
     });
 });
 /**  Custom **/

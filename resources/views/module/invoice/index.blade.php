@@ -6,7 +6,22 @@
 
         <div class="card">
             <div class="card-header">
-                <a href="{{route('invoice.create')}}" class="btn btn-primary float-end">Yeni Fatura Ekle</a>
+
+                <div class="btn-group demo-inline-spacing float-end">
+                    <a href="{{route('invoice.create.fast')}}" class="btn btn-primary float-end">Hızlı Fiş Fatura Ekle</a>
+                    <a href="{{route('invoice.create')}}" class="btn btn-danger float-end">Yeni Fatura Ekle</a>
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Diğer</button>
+                    <ul class="dropdown-menu" style="">
+                        <li><a class="dropdown-item" href="{{route('invoice.create.personal')}}">Personel Gideri Ekle</a></li>
+                        <li><a class="dropdown-item" href="{{route('invoice.create.accomodation')}}">Konaklama Gideri Ekle</a></li>
+                        <li><a class="dropdown-item" href="{{route('invoice.create.bank')}}">Banka Gideri Ekle</a></li>
+                        <li><a class="dropdown-item" href="{{route('invoice.create.tax')}}">Vergi / SGK Gideri Ekle</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="javascript:void(0);">Separated link</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">
