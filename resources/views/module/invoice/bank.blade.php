@@ -64,9 +64,13 @@
                                         <div class=" input-group">
                                             <input type="text" class="form-control" id="total_price"
                                                    @if(isset($invoices)) value="{{$invoices->total_price}}"
-                                                   @endif  name="total_price" aria-describedby="name">
-                                            <span class="input-group-text">1.00</span>
-                                            <button type="button" class="btn btn-outline-primary"> <span style="font-weight: 800;margin-right: 10px;">₺</span> Döviz</button>
+                                                   @endif  name="total_price"
+                                                   aria-describedby="name"
+                                                   aria-label="Text input with segmented dropdown button" required>
+                                            <input name="exchange" id="exchange" value="1" type="hidden">
+                                            <input name="currency" id="currency" value="1" type="hidden">
+                                            <span class="input-group-text" id="exchange_text">1.00</span>
+                                            <button type="button" class="btn btn-outline-primary"> <span id="currencySymbol" style="font-weight: 800;margin-right: 10px;">₺</span> Döviz</button>
                                             <button type="button"
                                                     class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,7 +78,7 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 @foreach($currencies as $currency)
-                                                    <li><a class="dropdown-item" data-id="{{$currency->id}}" data-exchange="{{$currency->exchange_rate}}" href="javascript:void(0);">{{$currency->name}}</a></li>
+                                                    <li><a class="dropdown-item" onclick="currencyCalculate('{{$currency->symbol}}',{{$currency->id}},{{$currency->exchange_rate}})" data-id="{{$currency->id}}" data-exchange="{{$currency->exchange_rate}}" href="javascript:void(0);">{{$currency->name}}</a></li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -249,6 +253,24 @@
                 $("#safeArea").html(' ');
             }
         })
+
+        function currencyCalculate(symbol,currency,exchange)
+        {
+            var price = $("#total_price").val();
+            $("input[name='exchange']").text(exchange);
+            $("input[name='currency']").text(currency);
+            $("#exchange_text").text(parseFloat(exchange, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+            $("#currencySymbol").text(symbol);
+            if(price == '')
+            {
+                $("#total_price").val(null);
+            }else{
+                var total_price = (price * exchange);
+                $("#total_price").val(total_price);
+            }
+
+        }
+
     </script>
 @endsection
 

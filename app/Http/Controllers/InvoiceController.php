@@ -221,20 +221,32 @@ class InvoiceController extends Controller
 
     protected function store(Request $request)
     {
+
         $data = array(
             'type' => $request->type,
             'number' => $request->number ?? null,
-            'create_date' => Carbon::parse($request->create_date)->format('Y-m-d'),
+            'create_date' => Carbon::parse($request->create_date)->format('Y-m-d') ?? null,
             'payment_type' => $request->payment_type,
-            'description' => $request->description,
+            'description' => $request->description ?? null,
             'is_status' => 1,
             'total_price' => 1,
             'tax_total' => 1,
             'discount_total' => 1,
-            'staff_id' => $request->staff_id,
-            'customer_id' => $request->customer_id,
+            'staff_id' => $request->staff_id ?? null,
+            'customer_id' => $request->customer_id ?? null,
             'user_id' => Auth::user()->id,
             'company_id' => Auth::user()->company_id,
+            'exchange' => $request->exchange ?? null,
+            'tax' => $request->tax ?? null,
+            'file' => $request->file ?? null,
+            'paymentStatus' => $request->paymentStatus ?? null,
+            'paymentDate' => $request->paymentDate ?? null,
+            'paymentStaff' => $request->paymentStaff ?? null,
+            'periodMounth' => $request->periodMounth ?? null,
+            'periodYear' => $request->periodYear ?? null,
+            'accounting_category_id' => $request->accounting_category_id ?? null,
+            'currency' => $request->currency ?? null,
+            'safe_id' => $request->safe_id ?? null,
         );
 
         if (empty($request->id)) {
@@ -244,26 +256,29 @@ class InvoiceController extends Controller
             $invoiceID = $this->invoiceService->find($request->id);
         }
 
-        $this->stockCardService->add_movement($request->group_a, $invoiceID, $request->type);
-        $total = 0;
-        $taxtotal = 0;
-        $discount_total = 0;
+        if (isset($request->group_a)) {
 
-        foreach ($request->group_a as $item) {
-            $total += $item['cost_price'] + (($item['cost_price'] * $item['tax']) / 100) * $item['quantity'];
-            $taxtotal += (($item['cost_price'] * $item['tax']) / 100) * $item['quantity'];
-            $discount_total += (($item['cost_price'] * $item['discount'] ?? 0) / 100) * $item['quantity'];
+
+            $this->stockCardService->add_movement($request->group_a, $invoiceID, $request->type);
+            $total = 0;
+            $taxtotal = 0;
+            $discount_total = 0;
+
+            foreach ($request->group_a as $item) {
+                $total += $item['cost_price'] + (($item['cost_price'] * $item['tax']) / 100) * $item['quantity'];
+                $taxtotal += (($item['cost_price'] * $item['tax']) / 100) * $item['quantity'];
+                $discount_total += (($item['cost_price'] * $item['discount'] ?? 0) / 100) * $item['quantity'];
+            }
+            $totalprice = $total - $discount_total;
+
+            $newdata = array(
+                'total_price' => $totalprice,
+                'discount_total' => $discount_total,
+                'taxtotal' => $taxtotal,
+            );
+
+            $this->invoiceService->update($invoiceID->id, $newdata);
         }
-        $totalprice = $total - $discount_total;
-
-        $newdata = array(
-            'total_price' => $totalprice,
-            'discount_total' => $discount_total,
-            'taxtotal' => $taxtotal,
-        );
-
-        $this->invoiceService->update($invoiceID->id, $newdata);
-
         return response()->json('Kaydedildi', 200);
     }
 

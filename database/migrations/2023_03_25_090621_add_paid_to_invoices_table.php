@@ -16,16 +16,6 @@ return new class extends Migration
         Schema::table('invoices', function (Blueprint $table) {
             $table->unsignedBigInteger('safe_id');
             $table->foreign('safe_id')->references('id')->on('safes')->onDelete('cascade');
-
-            $table->string('pay_to')->nullable();
-            $table->string('number')->nullable()->change();
-
-
-            $table->double('exchange',10,2)->nullable()->change();
-            $table->double('tax',10,2)->nullable()->change();
-            $table->string('file')->nullable()->change();
-
-
         });
     }
 

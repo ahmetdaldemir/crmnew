@@ -15,10 +15,6 @@
                         <li><a class="dropdown-item" href="{{route('invoice.create.personal')}}">Personel Gideri Ekle</a></li>
                         <li><a class="dropdown-item" href="{{route('invoice.create.bank')}}">Banka Gideri Ekle</a></li>
                         <li><a class="dropdown-item" href="{{route('invoice.create.tax')}}">Vergi / SGK Gideri Ekle</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:void(0);">Separated link</a></li>
                     </ul>
                 </div>
             </div>
@@ -37,7 +33,7 @@
                     @foreach($invoices as $invoice)
                         <tr>
                             <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number}}</a></td>
-                            <td style="text-align: center;"><strong>{{$invoice->account->fullname}}</strong></td>
+                            <td style="text-align: center;"><strong>{{$invoice->account->fullname ?? NULL}}</strong></td>
                             <td style="text-align: center;">
                                 <div class="d-flex justify-content-start align-items-center">
                                     <div class="avatar-wrapper">

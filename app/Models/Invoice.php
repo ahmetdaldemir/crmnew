@@ -28,7 +28,18 @@ class Invoice extends BaseModel
         'staff_id',
         'customer_id',
         'user_id',
-        'company_id'
+        'company_id',
+        'safe_id',
+        'exchange',
+        'tax',
+        'file',
+        'paymentStatus',
+        'paymentDate',
+        'paymentStaff',
+        'periodMounth',
+        'periodYear',
+        'accounting_category_id',
+        'currency',
     ];
 
     public const INVOICE_TYPE = [

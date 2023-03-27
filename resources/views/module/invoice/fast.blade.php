@@ -90,9 +90,11 @@
                                                        @if(isset($invoices)) value="{{$invoices->total_price}}"
                                                        @endif  name="total_price"
                                                        aria-describedby="name"
-                                                       aria-label="Text input with segmented dropdown button">
-                                                       <span class="input-group-text">1.00</span>
-                                                <button type="button" class="btn btn-outline-primary"> <span style="font-weight: 800;margin-right: 10px;">₺</span> Döviz</button>
+                                                       aria-label="Text input with segmented dropdown button" required>
+                                                    <input name="exchange" id="exchange" value="1" type="hidden">
+                                                    <input name="currency" id="currency" value="1" type="hidden">
+                                                       <span class="input-group-text" id="exchange_text">1.00</span>
+                                                <button type="button" class="btn btn-outline-primary"> <span id="currencySymbol" style="font-weight: 800;margin-right: 10px;">₺</span> Döviz</button>
                                                 <button type="button"
                                                         class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
                                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -100,7 +102,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     @foreach($currencies as $currency)
-                                                    <li><a class="dropdown-item" data-id="{{$currency->id}}" data-exchange="{{$currency->exchange_rate}}" href="javascript:void(0);">{{$currency->name}}</a></li>
+                                                    <li><a class="dropdown-item" onclick="currencyCalculate('{{$currency->symbol}}',{{$currency->id}},{{$currency->exchange_rate}})" data-id="{{$currency->id}}" data-exchange="{{$currency->exchange_rate}}" href="javascript:void(0);">{{$currency->name}}</a></li>
                                                     @endforeach
                                                 </ul>
                                                 </div>
@@ -116,7 +118,8 @@
                                                        @endif  name="tax_total"
                                                        aria-describedby="tax_total"
                                                        aria-label="Text input with segmented dropdown button">
-                                                <button type="button" class="btn btn-outline-primary"> <span style="font-weight: 800;margin-right: 10px;">%</span> 18</button>
+                                                <input name="tax" id="tax" value="18" type="hidden">
+                                                <button type="button" class="btn btn-outline-primary"> <span style="font-weight: 800;margin-right: 10px;">%</span> <span id="tax_text">18</span></button>
                                                 <button type="button"
                                                         class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
                                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -124,7 +127,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     @foreach($taxs as $key => $value)
-                                                        <li><a class="dropdown-item" data-id="{{$key}}" <?php if($key=='18') { ?> data-select="selected" <?php } ?> data-exchange="{{$key}}" href="javascript:void(0);">{{$value}}</a></li>
+                                                        <li><a class="dropdown-item" onclick="taxCalculate({{$key}})" data-id="{{$key}}" <?php if($key=='18') { ?> data-select="selected" <?php } ?> data-exchange="{{$key}}" href="javascript:void(0);">{{$value}}</a></li>
                                                     @endforeach
                                                 </ul>
                                             </div>
@@ -133,7 +136,6 @@
                                 </div>
                             </div>
                             <hr class="my-4 mx-n4">
-
                             <div class="row py-sm-3">
                                 <div class="col-md-6 mb-md-0 mb-3">
                                     <div class="d-flex align-items-center mb-3">
@@ -151,9 +153,7 @@
                                 </div>
                                 <div class="col-md-6 mb-md-0 mb-3" id="safeArea"></div>
                             </div>
-
                             <hr class="my-4">
-
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
@@ -167,7 +167,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-3 col-12 invoice-actions">
                     <div class="card mb-4 ">
                         <div class="card-body">
@@ -328,6 +327,46 @@
                 $("#safeArea").html(' ');
             }
         })
+
+
+        $("#total_price").keyup(function () {
+            var price = $(this).val();
+            var tax = $("input[name='tax']").val();
+            var tax_total = (price * tax)/100;
+            $("#tax_total").val(tax_total);
+        })
+
+
+        function taxCalculate(tax)
+        {
+            var price = $("#total_price").val();
+            $("#tax_text").text(tax);
+            if(price == '')
+            {
+                $("#tax_total").val(null);
+            }else{
+                var tax_total = (price * tax)/100;
+                $("#tax_total").val(tax_total);
+            }
+
+        }
+        function currencyCalculate(symbol,currency,exchange)
+        {
+            var price = $("#total_price").val();
+            $("input[name='exchange']").text(exchange);
+            $("input[name='currency']").text(currency);
+            $("#exchange_text").text(parseFloat(exchange, 10).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString());
+            $("#currencySymbol").text(symbol);
+            if(price == '')
+            {
+                $("#total_price").val(null);
+            }else{
+                var total_price = (price * exchange);
+                $("#total_price").val(total_price);
+            }
+
+        }
+
     </script>
 @endsection
 

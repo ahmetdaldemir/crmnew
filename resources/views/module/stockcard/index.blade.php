@@ -43,10 +43,10 @@
                                         class="btn btn-icon btn-success">
                                     <span class="bx bx-transfer"></span>
                                 </button>
-                                <a title="Hareket Ekle" href="{{route('stockcard.movement',['id' => $stockcard->id])}}"
+                                <!-- a title="Hareket Ekle" href="{{route('stockcard.movement',['id' => $stockcard->id])}}"
                                    class="btn btn-icon btn-success">
                                     <span class="bx bxl-product-hunt"></span>
-                                </a>
+                                </a -->
                                 <a title="Düzenle" href="{{route('stockcard.edit',['id' => $stockcard->id])}}"
                                    class="btn btn-icon btn-primary">
                                     <span class="bx bx-edit-alt"></span>
