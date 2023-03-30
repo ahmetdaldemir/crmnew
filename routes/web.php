@@ -214,6 +214,15 @@ Route::middleware('companies')->group(function () {
         Route::post('store', [App\Http\Controllers\AccountingCategoryController::class, 'store'])->name('store');
         Route::post('update', [App\Http\Controllers\AccountingCategoryController::class, 'update'])->name('update');
     });
+
+    Route::prefix('technical_service')->name('technical_service.')->middleware([])->group(function () {
+        Route::get('/', [App\Http\Controllers\TechnicalServiceController::class, 'index'])->name('index');
+        Route::get('edit', [App\Http\Controllers\TechnicalServiceController::class, 'edit'])->name('edit');
+        Route::get('delete', [App\Http\Controllers\TechnicalServiceController::class, 'delete'])->name('delete');
+        Route::get('create', [App\Http\Controllers\TechnicalServiceController::class, 'create'])->name('create');
+        Route::post('store', [App\Http\Controllers\TechnicalServiceController::class, 'store'])->name('store');
+        Route::post('update', [App\Http\Controllers\TechnicalServiceController::class, 'update'])->name('update');
+    });
 });
 /**  Custom **/
 

@@ -105,7 +105,7 @@
         <!-- Forms & Tables -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Teknik Servis İşlemleri</span></li>
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="{{route('technical_service.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Teknik Servis</div>
             </a>
