@@ -129,3 +129,20 @@ function getStock() {
     });
 
 }
+
+
+function getVersion(sel) {
+    var postUrl = window.location.origin + '/get_version?id=' + sel + '';   // Returns base URL (https://example.com)
+    $.ajax({
+        type: "GET",
+        url: postUrl,
+        success: function (response) {
+            $.each(response, function (index, value) {
+                $('#version_id').append($('<option>', {
+                    value: value.id,
+                    text: value.name
+                }));
+            });
+        }
+    });
+}

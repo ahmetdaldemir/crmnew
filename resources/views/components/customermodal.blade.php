@@ -37,7 +37,35 @@
                                         <i class="bx bx-reset d-block d-sm-none"></i>
                                         <span class="d-none d-sm-block">Reset</span>
                                     </button>
+                                    <!-- div class="container-fluid" id='camcam'>
+                                        <a class='btn btn-block btn-primary text-white' id='open'> Open cam</a>
+                                        <div class="row">
+                                            <div class="col-md- offset-1">
+                                                <div id="wrap">
+                                                    <div id='cont'>
+                                                        <div id="vid" class='son' >
+                                                            <video id='video'></video>
+                                                        </div>
+                                                        <div id="capture" class='son'>
+                                                            <canvas id='canvas'></canvas>
+                                                            <canvas id='blank' style='display:none;'></canvas>
+                                                        </div>
 
+                                                        <div id="control">
+                                                            <div class="container">
+                                                                <div class="row">
+                                                                    <div class="col-md-4"><a id='retake' class='btn btn-block m-1 hov'><i class="fas fa-sync-alt"></i></a></div>
+                                                                    <div class="col-md-4"><a id='snap' class='btn btn-block m-1 hov'><i class="fas fa-camera"></i></a></div>
+                                                                    <div class="col-md-4"><a id='close' class='btn btn-block m-1 hov'><i class="fas fa-times"></i></a></div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div -->
                                     <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
                                 </div>
                             </div>
@@ -180,6 +208,61 @@
 </div>
 @section('custom-css')
     <style>
+        #cont{
+            position: relative;
+
+        }
+        .son{
+            position: absolute;
+            top:0;
+            left:0;
+
+        }
+
+
+
+
+        #control{
+            position:absolute;
+
+            left:0;
+
+            z-index: 50;
+            background: HoneyDew ;
+            opacity:0.7;
+            color:#fff;
+            text-align: center;
+
+        }
+        #snap{
+            background-color: dimgray ;
+
+        }
+        #retake{
+            background-color: coral ;
+
+        }
+
+        #close{
+            background-color: lightcoral ;
+
+        }
+        .hov{
+            opacity:.8;
+            transition: all .5s;
+        }
+        .hov:hover{
+            opacity:1;
+
+            font-weight: bolder;
+        }
+        /*#canvas{
+          z-index: 1;
+        }
+        #video{
+          z-index: 3;
+        }*/
+
         html:not([dir=rtl]) .modal-simple .btn-close {
             right: -2rem;
         }

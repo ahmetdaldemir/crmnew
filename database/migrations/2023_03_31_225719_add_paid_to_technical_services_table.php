@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('technical_services', function (Blueprint $table) {
-            $table->text('products')->nullable();
+            $table->unsignedBigInteger('seller_id');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+
         });
     }
 

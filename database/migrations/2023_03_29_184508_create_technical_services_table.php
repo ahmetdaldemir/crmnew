@@ -42,12 +42,12 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->double('total_price',10,2)->nullable();
             $table->double('customer_price',10,2)->nullable();
-            $table->string('process_type',5);
-            $table->text('process');
-            $table->text('physical_condition');
-            $table->text('fault_information');
-            $table->text('accessories');
-            $table->string('device_password');
+            $table->string('process_type',5)->nullable();
+            $table->text('process')->nullable();
+            $table->text('physical_condition')->nullable();
+            $table->text('fault_information')->nullable();
+            $table->text('accessories')->nullable();
+            $table->string('device_password')->nullable();
 
             $table->unsignedBigInteger('delivery_staff')->nullable();
             $table->foreign('delivery_staff')->references('id')->on('users')->onDelete('cascade');

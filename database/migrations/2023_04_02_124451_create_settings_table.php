@@ -13,8 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('technical_services', function (Blueprint $table) {
-            $table->text('products')->nullable();
+        Schema::create('settings', function (Blueprint $table) {
+            $table->unsignedBigInteger('id');
+            $table->string('key');
+            $table->string('value');
+            $table->string('type');
+            $table->string('category');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,8 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('technical_services', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('settings');
     }
 };

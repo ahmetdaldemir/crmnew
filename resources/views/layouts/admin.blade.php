@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-message-box@3.2.2/dist/messagebox.min.css"/>
     <script src="{{asset('assets/vendor/js/helpers.js')}}"></script>
     <script src="{{asset('assets/js/config.js')}}"></script>
@@ -127,7 +128,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{route('settings.index')}}">
                                         <i class="bx bx-cog me-2"></i>
                                         <span class="align-middle">Settings</span>
                                     </a>
@@ -184,6 +185,7 @@
 <script src="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/moment/moment.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/tagify/tagify.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-message-box@3.2.2/dist/messagebox.min.js"></script>
 @yield('custom-js')
 
@@ -191,6 +193,7 @@
 <script src="{{asset('assets/js/custom.js')}}"></script>
 <script src="{{asset('assets/js/forms-selects.js')}}"></script>
 <script src="{{asset('assets/js/dashboards-analytics.js')}}"></script>
+<script src="{{asset('assets/js/forms-tagify.js')}}"></script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>

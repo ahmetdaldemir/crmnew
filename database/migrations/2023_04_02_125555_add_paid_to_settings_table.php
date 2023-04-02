@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('technical_services', function (Blueprint $table) {
-            $table->text('products')->nullable();
+        Schema::table('settings', function (Blueprint $table) {
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -25,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('technical_services', function (Blueprint $table) {
+        Schema::table('settings', function (Blueprint $table) {
             //
         });
     }

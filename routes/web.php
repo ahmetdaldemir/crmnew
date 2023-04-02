@@ -222,6 +222,20 @@ Route::middleware('companies')->group(function () {
         Route::get('create', [App\Http\Controllers\TechnicalServiceController::class, 'create'])->name('create');
         Route::post('store', [App\Http\Controllers\TechnicalServiceController::class, 'store'])->name('store');
         Route::post('update', [App\Http\Controllers\TechnicalServiceController::class, 'update'])->name('update');
+
+        Route::post('print', [App\Http\Controllers\TechnicalServiceController::class, 'print'])->name('print');
+        Route::post('payment', [App\Http\Controllers\TechnicalServiceController::class, 'payment'])->name('payment');
+        Route::post('sms', [App\Http\Controllers\TechnicalServiceController::class, 'sms'])->name('sms');
+        Route::post('show', [App\Http\Controllers\TechnicalServiceController::class, 'show'])->name('show');
+    });
+
+    Route::prefix('settings')->name('settings.')->middleware([])->group(function () {
+        Route::get('/', [App\Http\Controllers\SettingController::class, 'index'])->name('index');
+        Route::get('edit', [App\Http\Controllers\SettingController::class, 'edit'])->name('edit');
+        Route::get('delete', [App\Http\Controllers\SettingController::class, 'delete'])->name('delete');
+        Route::get('create', [App\Http\Controllers\SettingController::class, 'create'])->name('create');
+        Route::post('store', [App\Http\Controllers\SettingController::class, 'store'])->name('store');
+        Route::post('update', [App\Http\Controllers\SettingController::class, 'update'])->name('update');
     });
 });
 /**  Custom **/
@@ -230,3 +244,5 @@ Route::get('/get_cities', [App\Http\Controllers\CustomController::class, 'get_ci
 Route::post('/custom_customerstore', [App\Http\Controllers\CustomController::class, 'customerstore'])->name('custom_customerstore');
 Route::post('/custom_customerget', [App\Http\Controllers\CustomController::class, 'customerget'])->name('custom_customerget');
 Route::post('/getStock', [App\Http\Controllers\CustomController::class, 'getStock'])->name('getStock');
+Route::get('/get_version', [App\Http\Controllers\CustomController::class, 'get_version'])->name('get_version');
+Route::get('/getStockCard', [App\Http\Controllers\CustomController::class, 'getStockCard'])->name('getStockCard');
