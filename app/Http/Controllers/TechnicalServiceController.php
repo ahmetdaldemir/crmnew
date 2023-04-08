@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Setting;
 use App\Services\Brand\BrandService;
 use App\Services\Customer\CustomerService;
 use App\Services\Seller\SellerService;
@@ -42,6 +43,7 @@ class TechnicalServiceController extends Controller
     protected function index()
     {
         $data['technical_services'] = $this->technicalService->get();
+        $data['sms'] = Setting::where('category','sms')->get();
         return view('module.technical_service.index', $data);
     }
 

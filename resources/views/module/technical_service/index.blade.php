@@ -25,8 +25,7 @@
                     <tbody class="table-border-bottom-0">
                     @foreach($technical_services as $technical_service)
                         <tr>
-                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                <strong>{{$technical_service->seller->name}}</td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>{{$technical_service->seller->name}}</td>
                             <td>{{$technical_service->customer->fullname}}</td>
                             <td>{{$technical_service->brand->name}}/{{$technical_service->version->name ?? "Bulunamadı"}}</span></td>
                             <td><span class="badge bg-label-primary me-1">{{$technical_service->process_type}}</span></td>
@@ -34,22 +33,21 @@
                             <td>{{$technical_service->created_at}}</td>
                             <td>{{$technical_service->delivery->name}}</td>
                             <td>
-                                <a href="{{route('technical_service.print',['id' => $technical_service->id])}}"
+                                <a href="#"
                                    class="btn btn-icon btn-danger"
                                    data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                   data-bs-original-title="Form Yazdır">
+                                   data-bs-original-title="Form Yazdır" onclick="technicalServiceOpen()">
                                     <span class="bx bxs-printer"></span>
                                 </a>
-                                <a href="{{route('technical_service.payment',['id' => $technical_service->id])}}"
-                                   class="btn btn-icon btn-success"
+                                <a  class="btn btn-icon btn-success"
                                    data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                   data-bs-original-title="Ödeme İşlemi">
+                                   data-bs-original-title="Ödeme İşlemi" onclick="checkoutModalOpen()">
                                     <span class="bx bxs-dollar-circle"></span>
                                 </a>
-                                <a href="{{route('technical_service.sms',['id' => $technical_service->id])}}"
+                                <a
                                    class="btn btn-icon btn-warning"
                                    data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                   data-bs-original-title="Sms Gönder">
+                                   data-bs-original-title="Sms Gönder" onclick="smsModalOpen()">
                                     <span class="bx bxs-message-add"></span>
                                 </a>
                                 <a href="{{route('technical_service.show',['id' => $technical_service->id])}}"
@@ -80,3 +78,25 @@
         <hr class="my-5">
     </div>
 @endsection
+@include('components.technical_service_modal')
+@include('components.smsmodal')
+@include('components.technical_service_checkout_modal')
+@section('custom-js')
+    <script>
+        function technicalServiceOpen() {
+            $("#technicalServiceModal").modal('show');
+        }
+    </script>
+    <script>
+        function smsModalOpen() {
+          $("#smsModal").modal('show');
+        }
+    </script>
+    <script>
+        function checkoutModalOpen() {
+            $("#checkoutModal").modal('show');
+        }
+    </script>
+@endsection
+<!-- route('technical_service.print',['id' => $technical_service->id])  -->
+

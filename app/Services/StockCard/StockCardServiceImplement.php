@@ -102,7 +102,7 @@ class StockCardServiceImplement extends Service implements StockCardService{
                 'type' => $type,
                 'quantity' => $item['quantity'],
                 'imei' => $item['imei'],
-                'assigned' => $item['assigned'] == 'on' ? 1:0,
+                'assigned' => isset($item['assigned']) and  $item['assigned'] == 'on' ? 1:0,
                 'serial_number' => $item['serial'] ?? rand(111111,99999999),
                 'tax' => $item['tax'],
                 'cost_price' => $item['cost_price'],
