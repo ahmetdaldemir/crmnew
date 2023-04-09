@@ -62,7 +62,6 @@ class SettingController extends Controller
             }
 
             $key = preg_replace('/^' . Str::slug($setting->category) . './i', '', $setting->key);
-            dd($request->category);
 
             $setting->category = [Str::slug($setting->category), $key][0];
             $setting->key = [Str::slug($setting->category), $key][1];

@@ -58,7 +58,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
+                                                    <!-- div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Maliyet</p>
                                                         <input type="text" class="form-control invoice-item-price" name="cost_price"/>
                                                     </div>
@@ -69,7 +69,7 @@
                                                     <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Satış Fiyatı</p>
                                                         <input type="text" class="form-control invoice-item-price" name="sale_price"/>
-                                                    </div>
+                                                    </div -->
                                                     <div class="col-md-1 col-12 mb-md-0 mb-3">
                                                         <p class="mb-2 repeater-title">Qty</p>
                                                         <input type="number" class="form-control invoice-item-qty" name="quantity"  min="1" max="50">
@@ -83,7 +83,7 @@
                                     <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item="">
                                         <div class="d-flex border rounded position-relative pe-0">
                                             <div class="row w-100 m-0 p-3">
-                                                <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <div class="col-md-7 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Stok</p>
                                                     <select name="stock_card_id" class="form-select item-details mb-2">
                                                         @foreach($stocks as $stock)
@@ -99,7 +99,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <!--div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Maliyet</p>
                                                     <input type="text" class="form-control invoice-item-price" name="cost_price"/>
                                                 </div>
@@ -110,9 +110,9 @@
                                                 <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Satış Fiyatı</p>
                                                     <input type="text" class="form-control invoice-item-price" name="sale_price"/>
-                                                </div>
-                                                <div class="col-md-1 col-12 mb-md-0 mb-3">
-                                                    <p class="mb-2 repeater-title">Qty</p>
+                                                </div -->
+                                                <div class="col-md-3 col-12 mb-md-0 mb-3">
+                                                    <p class="mb-2 repeater-title">Adet</p>
                                                     <input type="number" class="form-control invoice-item-qty" name="quantity"  min="1" max="50">
                                                 </div>
                                             </div>
@@ -123,7 +123,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-primary" data-repeater-create="">Add Item
+                                    <button type="button" class="btn btn-primary" data-repeater-create="">Yeni Ürün Ekle
                                     </button>
                                 </div>
                             </div>

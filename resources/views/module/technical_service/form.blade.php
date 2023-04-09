@@ -24,7 +24,7 @@
                                         <option value="1" data-tokens="ketchup mustard">Genel Müşteri</option>
                                         @foreach($customers as $customer)
                                             <option value="{{$customer->id}}"
-                                                    @if(isset($technical_services) && $customer->id == $invoices->customer_id) selected
+                                                    @if(isset($technical_services) && $customer->id == $technical_services->customer_id) selected
                                                     @endif data-value="{{$customer->id}}">{{$customer->fullname}}</option>
                                         @endforeach
                                     </select>

@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\Setting;
 use App\Services\Brand\BrandService;
 use App\Services\Customer\CustomerService;
+use App\Services\Modules\Sms\SendSms;
 use App\Services\Seller\SellerService;
 use App\Services\StockCard\StockCardService;
 use App\Services\Technical\TechnicalService;
@@ -61,6 +62,12 @@ class TechnicalServiceController extends Controller
     protected function edit(Request $request)
     {
         $data['technical_services'] = $this->technicalService->find($request->id);
+        $data['stocks'] = $this->stockCardService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['customers'] = $this->customerService->get();
+        $data['brands'] = $this->brandService->get();
+        $data['users'] = $this->userService->get();
+        $data['citys'] = City::all();
         return view('module.technical_service.form', $data);
     }
 
@@ -101,5 +108,12 @@ class TechnicalServiceController extends Controller
     {
         $data = array('is_status' => $request->is_status);
         return $this->technicalService->update($request->id, $data);
+    }
+
+
+    protected function sms(Request $request)
+    {
+        new SendSms($request);
+        return redirect()->back();
     }
 }

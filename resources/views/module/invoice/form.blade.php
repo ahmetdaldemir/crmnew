@@ -12,13 +12,13 @@
                             <div class="row p-sm-3 p-0">
                                 <div class="col-md-6 mb-md-0 mb-4">
                                     <div class="row mb-4">
-                                        <label for="selectpickerLiveSearch" class="form-label">Müşteri Seçiniz</label>
+                                        <label for="selectpickerLiveSearch" class="form-label">Cari Seçiniz</label>
                                         <div class="col-md-9">
                                             <select id="selectpickerLiveSearch" class="selectpicker w-100"
                                                     data-style="btn-default" name="customer_id"
                                                     onchange="getCustomer(this.value)" id="customer_id"
                                                     data-live-search="true">
-                                                <option value="1" data-tokens="ketchup mustard">Genel Müşteri</option>
+                                                <option value="1" data-tokens="ketchup mustard">Genel Cari</option>
                                                 @foreach($customers as $customer)
                                                     <option value="{{$customer->id}}"
                                                             @if(isset($invoices) && $customer->id == $invoices->customer_id) selected
@@ -137,7 +137,7 @@
                                                     </div>
                                                     <div class="col-md-5 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">IMEI</p>
-                                                        <input class="form-control" name="imei"
+                                                        <input minlength="15" maxlength="15" class="form-control" name="imei"
                                                                value="{{$item->imei}}"/>
                                                     </div>
                                                     <div class="col-md-1 col-12 mb-md-0 mb-3 ps-md-0">

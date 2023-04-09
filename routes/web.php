@@ -226,7 +226,7 @@ Route::middleware('companies')->group(function () {
         Route::post('print', [App\Http\Controllers\TechnicalServiceController::class, 'print'])->name('print');
         Route::post('payment', [App\Http\Controllers\TechnicalServiceController::class, 'payment'])->name('payment');
         Route::post('sms', [App\Http\Controllers\TechnicalServiceController::class, 'sms'])->name('sms');
-        Route::post('show', [App\Http\Controllers\TechnicalServiceController::class, 'show'])->name('show');
+        Route::get('show', [App\Http\Controllers\TechnicalServiceController::class, 'show'])->name('show');
     });
 
     Route::prefix('settings')->name('settings.')->middleware([])->group(function () {

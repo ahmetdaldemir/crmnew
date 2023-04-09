@@ -22,6 +22,6 @@ class InvoiceRepositoryImplement extends Eloquent implements InvoiceRepository{
 
     public function get()
     {
-        return $this->model->where('company_id',Auth::user()->company_id)->get();
+        return $this->model->where('company_id',Auth::user()->company_id)->orderBy('id','desc')->get();
     }
 }

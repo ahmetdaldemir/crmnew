@@ -95,7 +95,7 @@ class InvoiceController extends Controller
         $data['stocks'] = $this->stockCardService->all();
         $data['categories'] = $this->accountingCategoryService->all();
         $data['safes'] = $this->safeService->all();
-        $data['taxs'] = Tax::Tax;
+        $data['taxs'] = ['0' => '%0','1' => '%1','8' => '%8','18' => '%18'];
 
         return view('module.invoice.form', $data);
     }
@@ -110,7 +110,7 @@ class InvoiceController extends Controller
         $data['customers'] = $this->customerService->get();
         $data['citys'] = City::all();
         $data['currencies'] = $this->currency->all();
-        $data['taxs'] = Tax::Tax;
+        $data['taxs'] = ['0' => '%0','1' => '%1','8' => '%8','18' => '%18'];
         $data['categories'] = $this->accountingCategoryService->all();
         $data['safes'] = $this->safeService->all();
         return view('module.invoice.fast', $data);
@@ -127,7 +127,7 @@ class InvoiceController extends Controller
         $data['customers'] = $this->customerService->get();
         $data['citys'] = City::all();
         $data['currencies'] = $this->currency->all();
-        $data['taxs'] = Tax::Tax;
+        $data['taxs'] = ['0' => '%0','1' => '%1','8' => '%8','18' => '%18'];
         $data['categories'] = $this->accountingCategoryService->all();
         $data['safes'] = $this->safeService->all();
         return view('module.invoice.personal', $data);
@@ -154,7 +154,7 @@ class InvoiceController extends Controller
         $data['colors'] = $this->colorService->get();
         $data['users'] = $this->userService->get();
         $data['currencies'] = $this->currency->all();
-        $data['taxs'] = Tax::Tax;
+        $data['taxs'] = ['0' => '%0','1' => '%1','8' => '%8','18' => '%18'];
         $data['categories'] = $this->accountingCategoryService->all();
         $data['safes'] = $this->safeService->all();
         return view('module.invoice.tax', $data);
@@ -172,6 +172,9 @@ class InvoiceController extends Controller
         $data['customers'] = $this->customerService->get();
         $data['citys'] = City::all();
         $data['stocks'] = $this->stockCardService->all();
+        $data['categories'] = $this->accountingCategoryService->all();
+        $data['safes'] = $this->safeService->all();
+        $data['taxs'] = ['0' => '%0','1' => '%1','8' => '%8','18' => '%18'];
         return view('module.invoice.form', $data);
     }
 

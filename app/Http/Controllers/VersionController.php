@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Version;
 use App\Services\Version\VersionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,11 +24,13 @@ class VersionController extends Controller
     protected function create(Request $request)
     {
         $data['brand_id'] = $request->id;
+        $data['versionlist'] = Version::where('brand_id',$request->id)->get();
         return view('module.version.form',$data);
     }
     protected function edit(Request $request)
     {
         $data['versions'] = $this->versionService->find($request->id);
+        $data['versionlist'] = Version::where('brand_id',$data['versions']->brand_id)->get();
         return view('module.version.form',$data);
     }
 

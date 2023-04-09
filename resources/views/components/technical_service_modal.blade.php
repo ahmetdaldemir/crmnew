@@ -160,7 +160,7 @@
                                         </tbody>
                                     </table>
                                 </td>
-                                <td style="height: 30px;"></td>
+                                <td style="height: 30px;">{{setting('adwords')}}</td>
                             </tr>
                             <tr>
                                 <td colspan="3"><button style="width: 100%" class="btn btn-danger">Yazdır</button></td>

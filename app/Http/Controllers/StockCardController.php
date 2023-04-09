@@ -70,6 +70,10 @@ class StockCardController extends Controller
     {
         $data['stockcards'] = $this->stockcardService->find($request->id);
         $data['sellers'] = $this->sellerService->get();
+        $data['brands'] = $this->brandService->get();
+        $data['versions'] = $this->versionService->get();
+        $data['categories'] = $this->categoryService->get();
+        $data['units'] = Unit::Unit()->value;
         return view('module.stockcard.form', $data);
     }
 

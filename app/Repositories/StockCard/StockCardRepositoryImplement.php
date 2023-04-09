@@ -22,7 +22,7 @@ class StockCardRepositoryImplement extends Eloquent implements StockCardReposito
     }
     public function get()
     {
-        return $this->model->where('company_id',Auth::user()->company_id)->get();
+        return $this->model->where('company_id',Auth::user()->company_id)->orderBy('id','desc')->get();
     }
 
     public function filter($arg)

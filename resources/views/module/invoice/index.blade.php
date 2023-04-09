@@ -22,7 +22,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Fatura No</th>
+                        <th>Fatura No / Tarih</th>
                         <th style="text-align: center">Cari</th>
                         <th style="text-align: center">Tipi</th>
                         <th style="text-align: center">Status</th>
@@ -32,8 +32,8 @@
                     <tbody class="table-border-bottom-0">
                     @foreach($invoices as $invoice)
                         <tr>
-                            <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number}}</a></td>
-                            <td style="text-align: center;"><strong>{{$invoice->account->fullname ?? NULL}}</strong></td>
+                            <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number}}</a> / {{$invoice->created_at}}</td>
+                            <td style="text-align: center;"><strong>{{$invoice->account->fullname ?? "Genel Cari"}}</strong></td>
                             <td style="text-align: center;">
                                 <div class="d-flex justify-content-start align-items-center">
                                     <div class="avatar-wrapper">

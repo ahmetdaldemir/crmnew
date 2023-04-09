@@ -88,7 +88,7 @@
                                 <select name="brand_id" class="form-control">
                                     @foreach($brands as $brand)
                                         <option @if(isset($stockcards))
-                                                    {{ $stockcards->hasBrand($seller->id) ? 'selected' : '' }}
+                                                    {{ $stockcards->hasBrand($brand->id) ? 'selected' : '' }}
                                                 @endif  value="{{$brand->id}}">{{$brand->name}}</option>
                                     @endforeach
                                 </select>
@@ -101,7 +101,7 @@
                                 <select name="version_id" class="form-control">
                                     @foreach($versions as $version)
                                         <option @if(isset($stockcards))
-                                                    {{ $stockcards->hasVersion($seller->id) ? 'selected' : '' }}
+                                                    {{ $stockcards->hasVersion($version->id) ? 'selected' : '' }}
                                                 @endif  value="{{$version->id}}">{{$version->name}}</option>
                                     @endforeach
                                 </select>
