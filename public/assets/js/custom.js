@@ -133,6 +133,7 @@ function getStock() {
 
 function getVersion(sel) {
     var postUrl = window.location.origin + '/get_version?id=' + sel + '';   // Returns base URL (https://example.com)
+    $("#version_id").html('');
     $.ajax({
         type: "GET",
         url: postUrl,
@@ -146,3 +147,28 @@ function getVersion(sel) {
         }
     });
 }
+
+
+$(document).ready(function() {
+    var sel = $('#brand_id').val();
+    var postUrl = window.location.origin + '/get_version?id=' + sel + '';   // Returns base URL (https://example.com)
+    $.ajax({
+        type: "GET",
+        url: postUrl,
+        success: function (response) {
+            $.each(response, function (index, value) {
+                $('#version_id').append($('<option>', {
+                    value: value.id,
+                    text: value.name,
+                    selected:getSelect(value.id),
+                }));
+            });
+        }
+    });
+
+    function getSelect(id)
+    {
+        var version = $('#version_id').data('version');
+         if(version.search(id) != -1){ return true; }
+    }
+});

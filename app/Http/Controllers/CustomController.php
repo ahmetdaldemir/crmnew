@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\City;
 use App\Models\StockCardMovement;
 use App\Models\Town;
@@ -81,7 +82,7 @@ class CustomController extends Controller
 
     public function get_version(Request $request)
     {
-        $version = Version::where('brand_id', $request->id)->where('company_id', Auth::user()->company_id)->get();
+        $version = Brand::where('brand', $request->id)->where('company_id', Auth::user()->company_id)->get();
         return $version;
     }
 

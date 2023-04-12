@@ -37,30 +37,21 @@
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Fiziksel Durumu</label>
-                                <textarea class="form-control" id="physical_condition" name="physical_condition"
-                                          aria-describedby="physical_condition">@if(isset($technical_services))
-                                        {{$technical_services->physical_condition}}
-                                    @endif </textarea>
+                                <textarea class="form-control" id="physical_condition" name="physical_condition" aria-describedby="physical_condition">@if(isset($technical_services)) {{$technical_services->physical_condition}} @endif </textarea>
                                 <div id="physical_condition" class="form-text">
                                     We'll never share your details with anyone else.
                                 </div>
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Aksesuar</label>
-                                <textarea class="form-control" id="accessories" name="accessories"
-                                          aria-describedby="accessories">@if(isset($technical_services))
-                                        {{$technical_services->accessories}}
-                                    @endif</textarea>
+                                <textarea class="form-control" id="accessories" name="accessories" aria-describedby="accessories">@if(isset($technical_services))  {{$technical_services->accessories}} @endif</textarea>
                                 <div id="accessories" class="form-text">
                                     We'll never share your details with anyone else.
                                 </div>
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Arıza Açıklaması</label>
-                                <textarea class="form-control" id="fault_information" name="fault_information"
-                                          aria-describedby="fault_information">@if(isset($technical_services))
-                                        {{$technical_services->fault_information}}
-                                    @endif</textarea>
+                                <textarea class="form-control" id="fault_information" name="fault_information" aria-describedby="fault_information">@if(isset($technical_services)) {{$technical_services->fault_information}} @endif</textarea>
                                 <div id="fault_information" class="form-text">
                                     We'll never share your details with anyone else.
                                 </div>
@@ -139,10 +130,10 @@
                                 <select id="brand_id" name="brand_id" class="select2 form-select"
                                         onchange="getVersion(this.value)" required>
                                     <option>Seçiniz</option>
-                                    @foreach($brands as $brand)
+                                    @foreach($brands as $key => $value)
                                         <option
-                                            @if(isset($technical_services) && $technical_services->brand_id == $brand->id) selected
-                                            @endif  value="{{$brand->id}}">{{$brand->name}}</option>
+                                            @if(isset($technical_services) && $technical_services->brand_id == $key) selected
+                                            @endif  value="{{$key}}">{{$key}}</option>
                                     @endforeach
                                 </select>
                                 <div id="brand_id" class="form-text">

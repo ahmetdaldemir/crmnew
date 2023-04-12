@@ -29,8 +29,7 @@ return new class extends Migration
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
 
-            $table->unsignedBigInteger('version_id')->nullable();
-            $table->foreign('version_id')->references('id')->on('versions')->onDelete('cascade');
+            $table->text('version_id')->nullable();
 
             $table->string('sku',20);
             $table->string('barcode',20);

@@ -27,7 +27,14 @@
                         <tr>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>{{$technical_service->seller->name}}</td>
                             <td>{{$technical_service->customer->fullname}}</td>
-                            <td>{{$technical_service->brand->name}}/{{$technical_service->version->name ?? "Bulunamadı"}}</span></td>
+                            <td>    {{$technical_service->brand}} /
+                                    <?php
+                                    $datas = json_decode($technical_service->version(), TRUE);
+                                    foreach ($datas as $mykey => $myValue) {
+                                        echo "$myValue</br>";
+                                    }
+                                    ?>
+                            </span></td>
                             <td><span class="badge bg-label-primary me-1">{{$technical_service->process_type}}</span></td>
                             <td><span class="badge bg-label-primary me-1">{{$technical_service->status}}</span></td>
                             <td>{{$technical_service->created_at}}</td>

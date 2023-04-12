@@ -88,6 +88,7 @@ class TechnicalServiceController extends Controller
            'products' => json_encode($request->group_a),
            'seller_id' => $request->seller_id,
            'brand_id' => $request->brand_id,
+           'version_id' => $request->version_id,
            'total_price' => $request->total_price,
            'customer_price' => $request->customer_price,
            'process_type' => $request->process_type,

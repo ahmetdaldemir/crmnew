@@ -29,8 +29,15 @@
                             <td><strong>{{$stockcard->sku}}</strong></td>
                             <td><strong>{{$stockcard->barcode}}</strong></td>
                             <td><strong>0</strong></td>
-                            <td><strong>{{$stockcard->brand->name}}</strong></td>
-                            <td><strong>{{$stockcard->version->name}}</strong></td>
+                            <td><strong>{{$stockcard->brand->brand?? "Bulunamadı"}}</strong></td>
+                            <td><strong>
+                                        <?php
+                                        $datas = json_decode($stockcard->version(), TRUE);
+                                        foreach ($datas as $mykey => $myValue) {
+                                            echo "$myValue</br>";
+                                        }
+                                        ?>
+                           </strong></td>
                             <td>
                                 <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox"

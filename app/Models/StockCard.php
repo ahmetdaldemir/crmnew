@@ -30,6 +30,7 @@ class StockCard extends BaseModel
         'is_status',
         'name'
     ];
+    protected $casts = ['version_id' => 'array'];
 
     public function hasSeller($id): string
     {
@@ -46,9 +47,9 @@ class StockCard extends BaseModel
         return $this->warehouse_id == $id ? 'true':'false';
     }
 
-    public function hasBrand($id): string
+    public function hasBrand($brand): string
     {
-        return $this->brand_id == $id ? 'true':'false';
+        return ''.$this->brand_id.'' == ''.$brand.'' ? 'true':'false';
     }
     public function hasVersion($id): string
     {
@@ -78,11 +79,18 @@ class StockCard extends BaseModel
 
     public function brand()
     {
-        return $this->hasOne(Brand::class,'id','brand_id');
+        return $this->hasOne(Brand::class,'brand','brand_id');
     }
 
     public function version()
     {
-        return $this->hasOne(Version::class,'id','version_id');
+        $array = $this->version_id;
+        $names = collect($array)->map(function($name, $key) {
+            return Brand::find($name)->name;
+        });
+       return $names->toJson();
+
+
+        //return $this->hasOne(Brand::class,'id','version_id');
     }
 }

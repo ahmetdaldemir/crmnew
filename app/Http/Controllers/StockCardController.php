@@ -58,7 +58,6 @@ class StockCardController extends Controller
 
     protected function create()
     {
-
         $data['brands'] = $this->brandService->get();
         $data['versions'] = $this->versionService->get();
         $data['categories'] = $this->categoryService->get();
