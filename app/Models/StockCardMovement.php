@@ -31,6 +31,8 @@ class StockCardMovement extends BaseModel
         'base_cost_price',
         'sale_price',
         'description',
+        'assigned_accessory',
+        'assigned_device'
     ];
 
     public function stock(): BelongsTo

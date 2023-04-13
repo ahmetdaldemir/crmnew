@@ -126,7 +126,7 @@
                                                                name="quantity" value="{{$item->quantity}}" min="1"
                                                                max="50">
                                                     </div>
-                                                    <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
+                                                    <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Renk</p>
                                                         <select name="color_id" class="form-select item-details mb-2">
                                                             @foreach($colors as $color)
@@ -135,16 +135,22 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-5 col-12 mb-md-0 mb-3 ps-md-0">
+                                                    <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">IMEI</p>
                                                         <input minlength="15" maxlength="15" class="form-control" name="imei"
                                                                value="{{$item->imei}}"/>
                                                     </div>
                                                     <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0" style="text-align: center">
-                                                        <p class="mb-2 repeater-title">Temikli</p>
+                                                        <p class="mb-2 repeater-title">Temikli Cihaz</p>
                                                         <input class="form-check-input" type="checkbox"
-                                                               @if($item->assigned == 1) selected
-                                                               @endif name="assigned"/>
+                                                               @if($item->assigned_device == 1) selected
+                                                               @endif name="assigned_device"/>
+                                                    </div>
+                                                    <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0" style="text-align: center">
+                                                        <p class="mb-2 repeater-title">Temikli Aksesuar</p>
+                                                        <input class="form-check-input" type="checkbox"
+                                                               @if($item->assigned_accessory == 1) selected
+                                                               @endif name="assigned_accessory"/>
                                                     </div>
                                                     <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Neden</p>
@@ -285,7 +291,7 @@
                                                            name="quantity" min="1" max="50">
                                                 </div>
 
-                                                <div class="col-md-6 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">IMEI</p>
                                                     <input minlength="13"  maxlength="13" class="form-control" name="imei"/>
                                                 </div>
@@ -299,8 +305,12 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0" style="text-align: center;">
-                                                    <p class="mb-2 repeater-title">Temikli</p>
-                                                    <input class="form-check-input" type="checkbox" name="assigned"/>
+                                                    <p class="mb-2 repeater-title">Temikli Cihaz</p>
+                                                    <input class="form-check-input" type="checkbox" name="assigned_device"/>
+                                                </div>
+                                                <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0" style="text-align: center;">
+                                                    <p class="mb-2 repeater-title">Temikli Aksesuar</p>
+                                                    <input class="form-check-input" type="checkbox" name="assigned_accessory"/>
                                                 </div>
                                             </div>
                                             <div

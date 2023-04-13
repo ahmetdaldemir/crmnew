@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::table('stock_card_movements', function (Blueprint $table) {
             $table->string('imei')->nullable();
-            $table->boolean('assigned')->default(0);
+            $table->boolean('assigned_accessory')->default(0);
+            $table->boolean('assigned_device')->default(0);
         });
     }
 

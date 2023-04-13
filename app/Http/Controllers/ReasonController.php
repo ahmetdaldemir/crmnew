@@ -39,15 +39,14 @@ class ReasonController extends Controller
 
     protected function store(Request $request)
     {
-        $data = array('name' => $request->name,'type' => $request->type,'company_id' => Auth::user()->company_id);
-        if(empty($request->id))
-        {
-            $this->reasonService->create($data);
-        }else{
-            $this->reasonService->update($request->id,$data);
-        }
-
-        return redirect()->route('reason.index');
+       $data = array('name' => $request->name,'type' => $request->type,'company_id' => Auth::user()->company_id);
+       if(empty($request->id))
+       {
+           $this->reasonService->create($data);
+       }else{
+           $this->reasonService->update($request->id,$data);
+       }
+       return redirect()->route('reason.index');
     }
 
     protected function update(Request $request)

@@ -23,7 +23,7 @@
                     @foreach($reasons as $reason)
                         <tr>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                <strong>{{$reason->type}}</strong></td>
+                                <strong>{{ \App\Models\Reason::ReasonList[$reason->type]}}</strong></td>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                 <strong>{{$reason->name}}</strong></td>
                             <td><span class="badge bg-label-primary me-1">{{$reason->created_at}}</span></td>
