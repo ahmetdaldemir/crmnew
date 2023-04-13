@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,10 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logout'])->name('logout');
+
 
 Auth::routes();
 
@@ -191,6 +192,7 @@ Route::middleware('companies')->group(function () {
         Route::get('accomodation', [App\Http\Controllers\InvoiceController::class, 'accomodation'])->name('create.accomodation');
         Route::get('bank', [App\Http\Controllers\InvoiceController::class, 'bank'])->name('create.bank');
         Route::get('tax', [App\Http\Controllers\InvoiceController::class, 'tax'])->name('create.tax');
+        Route::get('serialprint', [App\Http\Controllers\InvoiceController::class, 'serialprint'])->name('serialprint');
 
     });
 

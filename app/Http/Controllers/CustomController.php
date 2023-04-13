@@ -82,7 +82,7 @@ class CustomController extends Controller
 
     public function get_version(Request $request)
     {
-        $version = Brand::where('brand', $request->id)->where('company_id', Auth::user()->company_id)->get();
+        $version = Version::where('brand_id', $request->id)->where('company_id', Auth::user()->company_id)->get();
         return $version;
     }
 

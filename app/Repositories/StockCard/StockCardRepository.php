@@ -8,5 +8,6 @@ interface StockCardRepository extends Repository{
 
     public function get();
     public function filter($arg);
+    public function getInvoiceForSerial($arg);
 
 }

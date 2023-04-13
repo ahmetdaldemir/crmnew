@@ -23,7 +23,10 @@ use Carbon\Carbon;
 use elogo_api\elogo_api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Milon\Barcode\DNS1D;
+use Milon\Barcode\DNS2D;
+use Picqer\Barcode\BarcodeGeneratorHTML;
+use SN;
 class InvoiceController extends Controller
 {
     private InvoiceService $invoiceService;
@@ -261,7 +264,6 @@ class InvoiceController extends Controller
 
         if (isset($request->group_a)) {
 
-
             $this->stockCardService->add_movement($request->group_a, $invoiceID, $request->type);
             $total = 0;
             $taxtotal = 0;
@@ -312,6 +314,16 @@ class InvoiceController extends Controller
         // print_r($result);
         // //E-FATURA BİLGİSİ ALMA
 
+    }
+
+
+    public function serialprint(Request $request)
+    {
+       $movement =  $this->stockCardService->getInvoiceForSerial($request->id)->pluck('serial_number');
+       foreach ($movement as $item => $value)
+       {
+          return view('module.stockcard.print',compact('value'));
+       }
     }
 
 }

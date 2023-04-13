@@ -77,6 +77,10 @@
 
                             </td>
                             <td>
+                                <a title="Seri Numarası Yazdır" href="{{route('invoice.serialprint',['id' => $invoice->id])}}"
+                                   class="btn btn-icon btn-primary">
+                                    <span class="bx bx-barcode-reader"></span>
+                                </a>
                                 <a title="Düzenle" href="{{route('invoice.edit',['id' => $invoice->id])}}"
                                    class="btn btn-icon btn-primary">
                                     <span class="bx bx-edit-alt"></span>

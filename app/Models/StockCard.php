@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StockCard extends BaseModel
 {
 
     protected $table = "stock_cards";
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
 
     protected $fillable = [
@@ -34,63 +35,63 @@ class StockCard extends BaseModel
 
     public function hasSeller($id): string
     {
-        return $this->seller_id == $id ? 'true':'false';
+        return $this->seller_id == $id ? 'true' : 'false';
     }
 
     public function hasCategory($id): string
     {
-        return $this->category_id == $id ? 'true':'false';
+        return $this->category_id == $id ? 'true' : 'false';
     }
 
     public function hasWarehouse($id): string
     {
-        return $this->warehouse_id == $id ? 'true':'false';
+        return $this->warehouse_id == $id ? 'true' : 'false';
     }
 
-    public function hasBrand($brand): string
+    public function hasBrand($id): string
     {
-        return ''.$this->brand_id.'' == ''.$brand.'' ? 'true':'false';
+        return $this->brand_id == $id ? 'true':'false';
     }
+
     public function hasVersion($id): string
     {
-        return $this->version_id == $id ? 'true':'false';
+        return $this->version_id == $id ? 'true' : 'false';
     }
 
     public function hasColor($id): string
     {
-        return $this->color_id == $id ? 'true':'false';
+        return $this->color_id == $id ? 'true' : 'false';
     }
 
     public function hasStock($id): string
     {
-        return $this->id == $id ? 'true':'false';
+        return $this->id == $id ? 'true' : 'false';
     }
 
 
-    public function seller()
+    public function seller(): HasOne
     {
-        return $this->hasOne(Seller::class,'id','seller_id');
+        return $this->hasOne(Seller::class, 'id', 'seller_id');
     }
 
-    public function warehouse()
+    public function warehouse(): HasOne
     {
-        return $this->hasOne(Warehouse::class,'id','warehouse_id');
+        return $this->hasOne(Warehouse::class, 'id', 'warehouse_id');
     }
 
-    public function brand()
+    public function brand(): HasOne
     {
-        return $this->hasOne(Brand::class,'brand','brand_id');
+        return $this->hasOne(Brand::class, 'id', 'brand_id');
     }
 
     public function version()
     {
+
         $array = $this->version_id;
         $names = collect($array)->map(function($name, $key) {
-            return Brand::find($name)->name;
+            return Version::find($name)->name;
         });
-       return $names->toJson();
-
-
-        //return $this->hasOne(Brand::class,'id','version_id');
+        return $names->toJson();
+        //return $this->hasOne(Version::class, 'id', 'version_id');
     }
 }

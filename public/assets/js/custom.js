@@ -150,7 +150,8 @@ function getVersion(sel) {
 
 
 $(document).ready(function() {
-    var sel = $('#brand_id').val();
+    var sel = $('#brand_id').find(":selected").val();
+    console.log(sel);
     var postUrl = window.location.origin + '/get_version?id=' + sel + '';   // Returns base URL (https://example.com)
     $.ajax({
         type: "GET",
@@ -169,6 +170,13 @@ $(document).ready(function() {
     function getSelect(id)
     {
         var version = $('#version_id').data('version');
-         if(version.search(id) != -1){ return true; }
+        var type = typeof version;
+        if(type === "number")
+        {
+            var newversion = version.toString();
+            if(newversion.search(id) !== -1){ return true; }
+        }else{
+            if(version.search(id) !== -1){ return true; }
+        }
     }
 });

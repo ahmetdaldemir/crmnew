@@ -84,11 +84,11 @@
                         </div>
                         <div class="col-md-6">
                             <div>
-                                <label for="defaultFormControlInput" class="form-label">Marka</label>
-                                <select name="brand_id" id="brand_id" onchange="getVersion(this.value)" onload="getVersion(this.value)"  class="form-control" required>
+                                <label for="brand_id" class="form-label">Marka</label>
+                                <select name="brand_id" id="brand_id" onchange="getVersion(this.value)" class="form-control" required>
                                     <option value="">Seçiniz</option>
-                                @foreach($brands as $key => $value)
-                                        <option @if(isset($stockcards)) {{ $key == $stockcards->brand_id ? 'selected' : '' }}  @endif  value="{{$key}}">{{$key}}</option>
+                                    @foreach($brands as $brand)
+                                        <option  @if(isset($stockcards) and ($brand->id == $stockcards->brand_id))  selected  @endif value="{{$brand->id}}">{{$brand->name}}</option>
                                     @endforeach
                                 </select>
                                 <div id="brand_id" class="form-text">
@@ -97,7 +97,7 @@
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Model</label>
-                                <select name="version_id[]"  @if(isset($stockcards)) data-version="{{implode(",",$stockcards->version_id)}}"  @endif id="version_id"  class="form-control select2" required multiple></select>
+                                <select name="version_id[]"  @if(isset($stockcards)) @if(!is_null($stockcards->version_id)) data-version="{{implode(",",$stockcards->version_id)}}" @endif  @endif id="version_id"  class="form-control select2" required multiple></select>
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Birim</label>

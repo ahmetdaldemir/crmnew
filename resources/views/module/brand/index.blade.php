@@ -33,7 +33,7 @@
                             </td>
                             <td>
                                 <a href="{{route('brand.delete',['id' => $brand->id])}}"
-                                   class="btn btn-icon btn-primary">
+                                   class="btn btn-icon btn-danger">
                                     <span class="bx bxs-trash"></span>
                                 </a>
                                 <a href="{{route('brand.edit',['id' => $brand->id])}}"
@@ -41,7 +41,7 @@
                                     <span class="bx bx-edit-alt"></span>
                                 </a>
                                 <a href="{{route('version.create',['id' => $brand->id])}}"
-                                   class="btn btn-icon btn-primary">
+                                   class="btn btn-icon btn-success">
                                     <span class="bx bxl-ok-ru"></span>
                                 </a>
                             </td>

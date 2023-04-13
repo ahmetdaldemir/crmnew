@@ -4,23 +4,24 @@ namespace App\Services\StockCard;
 
 use App\Models\StockCardMovement;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use SN;
 use LaravelEasyRepository\Service;
 use App\Repositories\StockCard\StockCardRepository;
 
-class StockCardServiceImplement extends Service implements StockCardService{
+class StockCardServiceImplement extends Service implements StockCardService
+{
 
-     /**
+    /**
      * don't change $this->mainRepository variable name
      * because used in extends service class
      */
-     protected StockCardRepository $mainRepository;
+    protected StockCardRepository $mainRepository;
 
     public function __construct(StockCardRepository $mainRepository)
     {
-      $this->mainRepository = $mainRepository;
+        $this->mainRepository = $mainRepository;
     }
 
     public function all(): ?Collection
@@ -63,15 +64,17 @@ class StockCardServiceImplement extends Service implements StockCardService{
             return [];
         }
     }
-    public function update($id,$data)
+
+    public function update($id, $data)
     {
         try {
-            return $this->mainRepository->update($id,$data);
+            return $this->mainRepository->update($id, $data);
         } catch (\Exception $exception) {
             Log::debug($exception->getMessage());
             return [];
         }
     }
+
     public function create($data)
     {
 
@@ -83,39 +86,41 @@ class StockCardServiceImplement extends Service implements StockCardService{
         }
     }
 
-    public function add_movement($request,$invoiceID,$type)
+    public function add_movement($request, $invoiceID, $type)
     {
-        $stockmovents = StockCardMovement::where('invoice_id',$invoiceID->id)->first();
-        if($stockmovents)
-        {
-            StockCardMovement::where('invoice_id',$invoiceID->id)->delete();
+        $stockmovents = StockCardMovement::where('invoice_id', $invoiceID->id)->first();
+        if ($stockmovents) {
+            StockCardMovement::where('invoice_id', $invoiceID->id)->delete();
         }
         foreach ($request as $item) {
-            $data = array(
-                'stock_card_id' => $item['stock_card_id'],
-                'user_id' => Auth::user()->id,
-                'invoice_id' => $invoiceID->id,
-                'color_id' => $item['color_id'],
-                'warehouse_id' => $item['warehouse_id'],
-                'seller_id' => $item['seller_id'],
-                'reason_id' => $item['reason_id'],
-                'type' => $type,
-                'quantity' => $item['quantity'],
-                'imei' => $item['imei'],
-                'assigned' => isset($item['assigned']) and  $item['assigned'] == 'on' ? 1:0,
-                'serial_number' => $item['serial'] ?? rand(111111,99999999),
-                'tax' => $item['tax'],
-                'cost_price' => $item['cost_price'],
-                'base_cost_price' => $item['base_cost_price'],
-                'sale_price' => $item['sale_price'],
-                'description' => $item['description'],
-                'discount' => $item['discount'],
-            );
-            if (empty($request->id) || isset($request->id)) {
-                StockCardMovement::create($data);
-            } else {
-                StockCardMovement::update($request->id, $data);
+            for ($i = 0; $i < $item['quantity']; $i++) {
+                $data = array(
+                    'stock_card_id' => $item['stock_card_id'],
+                    'user_id' => Auth::user()->id,
+                    'invoice_id' => $invoiceID->id,
+                    'color_id' => $item['color_id'],
+                    'warehouse_id' => $item['warehouse_id'],
+                    'seller_id' => $item['seller_id'],
+                    'reason_id' => $item['reason_id'],
+                    'type' => $type,
+                    'quantity' => 1,
+                    'imei' => $item['imei'],
+                    'assigned' => isset($item['assigned']) and $item['assigned'] == 'on' ? 1 : 0,
+                    'serial_number' => $item['serial'] ??  SN::generate(),
+                    'tax' => $item['tax'],
+                    'cost_price' => $item['cost_price'],
+                    'base_cost_price' => $item['base_cost_price'],
+                    'sale_price' => $item['sale_price'],
+                    'description' => $item['description'],
+                    'discount' => $item['discount'],
+                );
+                if (empty($request->id) || isset($request->id)) {
+                    StockCardMovement::create($data);
+                } else {
+                    StockCardMovement::update($request->id, $data);
+                }
             }
+
         }
         return response()->json("Kayıt Başarılı", 200);
     }
@@ -124,4 +129,11 @@ class StockCardServiceImplement extends Service implements StockCardService{
     {
         return $this->mainRepository->filter($arg);
     }
+
+    public function getInvoiceForSerial($arg)
+    {
+        return $this->mainRepository->getInvoiceForSerial($arg);
+    }
+
+
 }

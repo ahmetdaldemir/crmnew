@@ -168,6 +168,8 @@ return [
          * Package Service Providers...
          */
         Spatie\Permission\PermissionServiceProvider::class,
+        Irfa\SerialNumber\SerialNumberGeneratorSeviceProvider::class,
+        Milon\Barcode\BarcodeServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -191,8 +193,11 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
-        // ...
-    ])->toArray(),
+    'aliases' =>[
+        'SN' => Irfa\SerialNumber\Facades\SerialNumber::class,
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
+        'Route'     => "Illuminate\Support\Facades\Route",
+    ],
 
 ];

@@ -28,8 +28,7 @@
                             <td><strong>{{$stockcard->name}}</strong></td>
                             <td><strong>{{$stockcard->sku}}</strong></td>
                             <td><strong>{{$stockcard->barcode}}</strong></td>
-                            <td><strong>0</strong></td>
-                            <td><strong>{{$stockcard->brand->brand?? "Bulunamadı"}}</strong></td>
+                            <td><strong>{{$stockcard->brand->name}}</strong></td>
                             <td><strong>
                                         <?php
                                         $datas = json_decode($stockcard->version(), TRUE);
