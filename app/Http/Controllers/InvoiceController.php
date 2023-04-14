@@ -319,10 +319,10 @@ class InvoiceController extends Controller
 
     public function serialprint(Request $request)
     {
-       $movement =  $this->stockCardService->getInvoiceForSerial($request->id)->pluck('serial_number');
-       foreach ($movement as $item => $value)
+       $movement =  $this->stockCardService->getInvoiceForSerial($request->id);
+       foreach ($movement as  $value)
        {
-          return view('module.stockcard.print',compact('value'));
+           return view('module.stockcard.print',compact('value'));
        }
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\City;
+use App\Models\Customer;
 use App\Models\StockCardMovement;
 use App\Models\Town;
 use App\Models\Version;
@@ -65,7 +66,7 @@ class CustomController extends Controller
             $this->customerService->update($request->id, $data);
         }
 
-        return $data;
+        return Customer::latest()->first();
     }
 
     public function customerget(Request $request)
@@ -104,6 +105,13 @@ class CustomController extends Controller
                     'bestCostPrice' => $item->best_cost_price,
                 );
         }
+        return response()->json($data,200);
+    }
+
+
+    public function customers()
+    {
+        $data =  $this->customerService->get();
         return response()->json($data,200);
     }
 }

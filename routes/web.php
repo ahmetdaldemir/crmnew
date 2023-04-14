@@ -256,3 +256,4 @@ Route::post('/custom_customerget', [App\Http\Controllers\CustomController::class
 Route::post('/getStock', [App\Http\Controllers\CustomController::class, 'getStock'])->name('getStock');
 Route::get('/get_version', [App\Http\Controllers\CustomController::class, 'get_version'])->name('get_version');
 Route::get('/getStockCard', [App\Http\Controllers\CustomController::class, 'getStockCard'])->name('getStockCard');
+Route::get('/customers', [App\Http\Controllers\CustomController::class, 'customers'])->name('customers');

@@ -94,4 +94,6 @@ class StockCard extends BaseModel
         return $names->toJson();
         //return $this->hasOne(Version::class, 'id', 'version_id');
     }
+
+
 }

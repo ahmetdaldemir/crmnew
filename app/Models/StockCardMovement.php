@@ -110,4 +110,9 @@ class StockCardMovement extends BaseModel
     {
         return $this->hasOne(Transfer::class,'stock_card_movement_id','id');
     }
+
+    public function stockcard()
+    {
+        return StockCard::find($this->stock_card_id);
+    }
 }

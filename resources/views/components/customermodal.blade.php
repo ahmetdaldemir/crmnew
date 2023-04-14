@@ -190,7 +190,7 @@
                         </div>
                         <hr class="my-5">
                         <div>
-                            <button onclick="customerSave()" type="button" class="btn btn-danger btn-buy-now">Kaydet</button>
+                            <button ng-click="customerSave()" type="button" class="btn btn-danger btn-buy-now">Kaydet</button>
                         </div>
                     </div>
                 </form>

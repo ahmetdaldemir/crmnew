@@ -12,18 +12,17 @@
                             <div class="row p-sm-3 p-0">
                                 <div class="col-md-6 mb-md-0 mb-4">
                                     <div class="row mb-4">
-                                        <label for="selectpickerLiveSearch" class="form-label">Cari Seçiniz</label>
+                                        <label for="selectCustomer" class="form-label">Cari Seçiniz</label>
                                         <div class="col-md-9">
-                                            <select id="selectpickerLiveSearch" class="selectpicker w-100"
-                                                    data-style="btn-default" name="customer_id"
-                                                    onchange="getCustomer(this.value)" id="customer_id"
-                                                    data-live-search="true">
+                                            <select id="selectCustomer" class="w-100 select2"
+                                                    data-style="btn-default" name="customer_id" ng-init="getCustomers()"
+                                                    onchange="getCustomer(this.value)">
                                                 <option value="1" data-tokens="ketchup mustard">Genel Cari</option>
-                                                @foreach($customers as $customer)
-                                                    <option value="{{$customer->id}}"
-                                                            @if(isset($invoices) && $customer->id == $invoices->customer_id) selected
-                                                            @endif data-value="{{$customer->id}}">{{$customer->fullname}}</option>
-                                                @endforeach
+                                                <option ng-repeat="customer in customers"
+                                                        @if(isset($invoices) && '@{{customer.id}}' == $invoices->customer_id) selected
+                                                        @endif data-value="@{{customer.id}}" value="@{{customer.id}}">
+                                                    @{{customer.fullname}}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-md-3">
@@ -98,10 +97,10 @@
                                                                     {{ $item->hasStock($stock->id) ? 'selected' : '' }}  value="{{$stock->id}}">{{$stock->name}}
                                                                     - <small> {{$stock->brand->name}}</small> - <b>
                                                                             <?php $datas = json_decode($stock->version(), TRUE);
-                                                                               foreach ($datas as $mykey => $myValue) {
-                                                                                   echo "$myValue,";
-                                                                               }
-                                                                               ?></b>
+                                                                            foreach ($datas as $mykey => $myValue) {
+                                                                                echo "$myValue,";
+                                                                            }
+                                                                            ?></b>
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -135,7 +134,8 @@
                                                     </div>
                                                     <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Renk</p>
-                                                        <select name="color_id" class="form-select item-details select2 mb-2">
+                                                        <select name="color_id"
+                                                                class="form-select item-details select2 mb-2">
                                                             @foreach($colors as $color)
                                                                 <option
                                                                     {{ $item->hasStock($color->id) ? 'selected' : '' }} value="{{$color->id}}">{{$color->name}}</option>
@@ -144,16 +144,19 @@
                                                     </div>
                                                     <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">IMEI</p>
-                                                        <input minlength="15" maxlength="15" class="form-control" name="imei"
+                                                        <input minlength="15" maxlength="15" class="form-control"
+                                                               name="imei"
                                                                value="{{$item->imei}}"/>
                                                     </div>
-                                                    <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0" style="text-align: center">
+                                                    <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0"
+                                                         style="text-align: center">
                                                         <p class="mb-2 repeater-title">Temikli Cihaz</p>
                                                         <input class="form-check-input" type="checkbox"
                                                                @if($item->assigned_device == 1) selected
                                                                @endif name="assigned_device"/>
                                                     </div>
-                                                    <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0" style="text-align: center">
+                                                    <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0"
+                                                         style="text-align: center">
                                                         <p class="mb-2 repeater-title">Temikli Aksesuar</p>
                                                         <input class="form-check-input" type="checkbox"
                                                                @if($item->assigned_accessory == 1) selected
@@ -161,7 +164,8 @@
                                                     </div>
                                                     <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Neden</p>
-                                                        <select name="reason_id" class="form-select item-details  select2 mb-2">
+                                                        <select name="reason_id"
+                                                                class="form-select item-details  select2 mb-2">
                                                             @foreach($reasons as $reason)
                                                                 <option
                                                                     {{ $item->hasReason($reason->id) ? 'selected' : '' }} value="{{$reason->id}}">{{$reason->name}}</option>
@@ -258,14 +262,17 @@
                                             <div class="row w-100 m-0 p-3">
                                                 <div class="col-md-5 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Stok</p>
-                                                    <select name="stock_card_id" class="form-select item-details select2 mb-2">
+                                                    <select name="stock_card_id"
+                                                            class="form-select item-details select2 mb-2">
                                                         @foreach($stocks as $stock)
-                                                            <option value="{{$stock->id}}">{{$stock->name}}  - <small> {{$stock->brand->name}}</small> - <b>  <?php
-                                                                                                                                                                  $datas = json_decode($stock->version(), TRUE);
-                                                                                                                                                                  foreach ($datas as $mykey => $myValue) {
-                                                                                                                                                                      echo "$myValue,";
-                                                                                                                                                                  }
-                                                                                                                                                                  ?></b></option>
+                                                            <option value="{{$stock->id}}">{{$stock->name}} -
+                                                                <small> {{$stock->brand->name}}</small> - <b>  <?php
+                                                                                                                   $datas = json_decode($stock->version(), TRUE);
+                                                                                                                   foreach ($datas as $mykey => $myValue) {
+                                                                                                                       echo "$myValue,";
+                                                                                                                   }
+                                                                                                                   ?></b>
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -276,7 +283,8 @@
                                                 </div>
                                                 <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Renk</p>
-                                                    <select name="color_id" class="form-select item-details select2 mb-2">
+                                                    <select name="color_id"
+                                                            class="form-select item-details select2 mb-2">
                                                         @foreach($colors as $color)
                                                             <option value="{{$color->id}}">{{$color->name}}</option>
                                                         @endforeach
@@ -305,24 +313,30 @@
 
                                                 <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">IMEI</p>
-                                                    <input minlength="13"  maxlength="13" class="form-control" name="imei"/>
+                                                    <input minlength="13" maxlength="13" class="form-control"
+                                                           name="imei"/>
                                                 </div>
 
                                                 <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Neden</p>
-                                                    <select name="reason_id" class="form-select item-details select2 mb-2">
+                                                    <select name="reason_id"
+                                                            class="form-select item-details select2 mb-2">
                                                         @foreach($reasons as $reason)
                                                             <option value="{{$reason->id}}">{{$reason->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0" style="text-align: center;">
+                                                <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0"
+                                                     style="text-align: center;">
                                                     <p class="mb-2 repeater-title">Temikli Cihaz</p>
-                                                    <input class="form-check-input" type="checkbox" name="assigned_device"/>
+                                                    <input class="form-check-input" type="checkbox"
+                                                           name="assigned_device"/>
                                                 </div>
-                                                <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0" style="text-align: center;">
+                                                <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0"
+                                                     style="text-align: center;">
                                                     <p class="mb-2 repeater-title">Temikli Aksesuar</p>
-                                                    <input class="form-check-input" type="checkbox" name="assigned_accessory"/>
+                                                    <input class="form-check-input" type="checkbox"
+                                                           name="assigned_accessory"/>
                                                 </div>
                                             </div>
                                             <div
@@ -615,5 +629,52 @@
             }
         })
     </script>
+
+    <script>
+        app.controller("mainController", function ($scope, $http, $httpParamSerializerJQLike, $window) {
+            $scope.getCustomers = function () {
+                var postUrl = window.location.origin + '/customers';   // Returns base URL (https://example.com)
+                $http({
+                    method: 'GET',
+                    //url: './comment/change_status?id=' + id + '&status='+status+'',
+                    url: postUrl,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(function successCallback(response) {
+                    $scope.customers = response.data;
+                });
+            }
+            $scope.customerSave = function () {
+                var postUrl = window.location.origin + '/custom_customerstore';   // Returns base URL (https://example.com)
+                var formData = $("#customerForm").serialize();
+
+                $http({
+                    method: 'POST',
+                    url: postUrl,
+                    data: formData,
+                    dataType: "json",
+                    encode: true,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(function successCallback(response) {
+                    $scope.getCustomers();
+                    $(".customerinformation").html('<p className="mb-1">\'+data.address+\'</p>\n' + '<p className="mb-1">\'+data.phone1+\'</p>');
+                    $('#selectCustomer option:selected').val(response.data.id);
+                    var modalDiv = $("#editUser");
+                    modalDiv.modal('hide');
+                    modalDiv
+                        .find("input,textarea,select")
+                        .val('')
+                        .end()
+                        .find("input[type=checkbox], input[type=radio]")
+                        .prop("checked", "")
+                        .end();
+                });
+            }
+        });
+    </script>
+
 @endsection
 
