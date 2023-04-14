@@ -44,9 +44,14 @@
                                                 <div class="row w-100 m-0 p-3">
                                                     <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Stok</p>
-                                                        <select name="stock_card_id" class="form-select item-details mb-2">
+                                                        <select name="stock_card_id" class="form-select item-details mb-2 select2">
                                                             @foreach($stocks as $stock)
-                                                                <option @if(isset($transfers)) {{ $transfers->hasStaff($item['stock_card_id']) ? 'selected' : '' }}@endif value="{{$stock->id}}">{{$stock->name}}</option>
+                                                                <option @if(isset($transfers)) {{ $transfers->hasStaff($item['stock_card_id']) ? 'selected' : '' }}@endif value="{{$stock->id}}">{{$stock->name}}  - <small> {{$stock->brand->name}}</small> - <b>  <?php
+                                                                                                                                                                                                                                                                        $datas = json_decode($stock->version(), TRUE);
+                                                                                                                                                                                                                                                                        foreach ($datas as $mykey => $myValue) {
+                                                                                                                                                                                                                                                                            echo "$myValue,";
+                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                        ?></b></option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -85,9 +90,14 @@
                                             <div class="row w-100 m-0 p-3">
                                                 <div class="col-md-7 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Stok</p>
-                                                    <select name="stock_card_id" class="form-select item-details mb-2">
+                                                    <select name="stock_card_id" class="form-select item-details mb-2 select2">
                                                         @foreach($stocks as $stock)
-                                                            <option  value="{{$stock->id}}">{{$stock->name}}</option>
+                                                            <option  value="{{$stock->id}}">{{$stock->name}} - <small> {{$stock->brand->name}}</small> - <b>  <?php
+                                                                                                                                                                $datas = json_decode($stock->version(), TRUE);
+                                                                                                                                                                foreach ($datas as $mykey => $myValue) {
+                                                                                                                                                                    echo "$myValue,";
+                                                                                                                                                                }
+                                                                                                                                                                ?></b></option>
                                                         @endforeach
                                                     </select>
                                                 </div>

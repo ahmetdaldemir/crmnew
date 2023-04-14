@@ -109,9 +109,9 @@ class StockCardServiceImplement extends Service implements StockCardService
                     'assigned_device' => isset($item['assigned_device']) and $item['assigned_device'] == 'on' ? 1 : 0,
                     'serial_number' => $item['serial'] ??  SN::generate(),
                     'tax' => $item['tax'],
-                    'cost_price' => $item['cost_price'],
-                    'base_cost_price' => $item['base_cost_price'],
-                    'sale_price' => $item['sale_price'],
+                    'cost_price' => str_replace(",",".",$item['cost_price']),
+                    'base_cost_price' => str_replace(",",".",$item['base_cost_price']),
+                    'sale_price' => str_replace(",",".",$item['sale_price']),
                     'description' => $item['description'],
                     'discount' => $item['discount'],
                 );

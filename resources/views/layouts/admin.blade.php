@@ -45,11 +45,19 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-message-box@3.2.2/dist/messagebox.min.css"/>
     <script src="{{asset('assets/vendor/js/helpers.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js" class=""></script>
+    <script> var app = angular.module("app", ['ngSanitize']);
+        app.filter('unsafe', function ($sce) {
+            return $sce.trustAsHtml;
+        });
+    </script>
     <script src="{{asset('assets/js/config.js')}}"></script>
     @yield('custom-css')
 </head>
 
-<body>
+<body ng-app="app" ng-controller="mainController">
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
 @include('layouts.components.aside')
@@ -89,7 +97,7 @@
                                 data-size="large"
                                 data-show-count="true"
                                 aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                            >Star</a
+                            >{{\Carbon\Carbon::now()}}</a
                             >
                         </li>
 

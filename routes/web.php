@@ -207,6 +207,14 @@ Route::middleware('companies')->group(function () {
         Route::post('e_invoice_create', [App\Http\Controllers\EInvoiceController::class, 'e_invoice_create'])->name('e_invoice_create');
     });
 
+    Route::prefix('fakeproduct')->name('fakeproduct.')->middleware([])->group(function () {
+        Route::get('/', [App\Http\Controllers\FakeProductController::class, 'index'])->name('index');
+        Route::get('edit', [App\Http\Controllers\FakeProductController::class, 'edit'])->name('edit');
+        Route::get('delete', [App\Http\Controllers\FakeProductController::class, 'delete'])->name('delete');
+        Route::get('create', [App\Http\Controllers\FakeProductController::class, 'create'])->name('create');
+        Route::post('store', [App\Http\Controllers\FakeProductController::class, 'store'])->name('store');
+        Route::post('update', [App\Http\Controllers\FakeProductController::class, 'update'])->name('update');
+    });
 
     Route::prefix('accounting_category')->name('accounting_category.')->middleware([])->group(function () {
         Route::get('/', [App\Http\Controllers\AccountingCategoryController::class, 'index'])->name('index');

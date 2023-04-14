@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="lastName" class="form-label">TC Kimlik / Passport No</label>
-                                    <input class="form-control" type="text" name="tc" id="tc" maxlength="13" required/>
+                                    <input class="form-control" type="text" name="tc" id="tc" maxlength="13" />
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="email" class="form-label">E-mail</label>
@@ -104,7 +104,6 @@
                                         type="text"
                                         id="email"
                                         name="email"
-
                                         placeholder="john.doe@example.com"
                                     />
                                 </div>
@@ -115,7 +114,6 @@
                                         class="form-control"
                                         id="organization"
                                         name="iban"
-
                                     />
                                 </div>
                                 <div class="mb-3 col-md-6">
@@ -127,7 +125,6 @@
                                             id="phoneNumber"
                                             name="phone1"
                                             class="form-control"
-
                                             required
                                         />
                                     </div>
@@ -145,7 +142,6 @@
                                         />
                                     </div>
                                 </div>
-
                                 <div class="mb-3 col-md-6">
                                     <label for="state" class="form-label">Adres</label>
                                     <textarea class="form-control" id="address" name="address"></textarea>
@@ -160,7 +156,6 @@
                                         @foreach($citys as $city)
                                             <option value="{{$city->id}}">{{$city->name}}</option>
                                         @endforeach
-
                                     </select>
                                 </div>
                                 <div class="mb-3 col-md-6">
@@ -189,13 +184,10 @@
                                         id="phoneNumber"
                                         name="web_sites"
                                         class="form-control"
-
                                     />
                                 </div>
                             </div>
                         </div>
-                        <!-- /Account -->
-
                         <hr class="my-5">
                         <div>
                             <button onclick="customerSave()" type="button" class="btn btn-danger btn-buy-now">Kaydet</button>

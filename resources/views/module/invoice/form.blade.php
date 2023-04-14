@@ -92,10 +92,17 @@
                                                     <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Stok</p>
                                                         <select name="stock_card_id"
-                                                                class="form-select item-details mb-2">
+                                                                class="form-select item-details mb-2 select2">
                                                             @foreach($stocks as $stock)
                                                                 <option
-                                                                    {{ $item->hasStock($stock->id) ? 'selected' : '' }}  value="{{$stock->id}}">{{$stock->name}}</option>
+                                                                    {{ $item->hasStock($stock->id) ? 'selected' : '' }}  value="{{$stock->id}}">{{$stock->name}}
+                                                                    - <small> {{$stock->brand->name}}</small> - <b>
+                                                                            <?php $datas = json_decode($stock->version(), TRUE);
+                                                                               foreach ($datas as $mykey => $myValue) {
+                                                                                   echo "$myValue,";
+                                                                               }
+                                                                               ?></b>
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -128,7 +135,7 @@
                                                     </div>
                                                     <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Renk</p>
-                                                        <select name="color_id" class="form-select item-details mb-2">
+                                                        <select name="color_id" class="form-select item-details select2 mb-2">
                                                             @foreach($colors as $color)
                                                                 <option
                                                                     {{ $item->hasStock($color->id) ? 'selected' : '' }} value="{{$color->id}}">{{$color->name}}</option>
@@ -154,7 +161,7 @@
                                                     </div>
                                                     <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Neden</p>
-                                                        <select name="reason_id" class="form-select item-details mb-2">
+                                                        <select name="reason_id" class="form-select item-details  select2 mb-2">
                                                             @foreach($reasons as $reason)
                                                                 <option
                                                                     {{ $item->hasReason($reason->id) ? 'selected' : '' }} value="{{$reason->id}}">{{$reason->name}}</option>
@@ -251,9 +258,14 @@
                                             <div class="row w-100 m-0 p-3">
                                                 <div class="col-md-5 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Stok</p>
-                                                    <select name="stock_card_id" class="form-select item-details mb-2">
+                                                    <select name="stock_card_id" class="form-select item-details select2 mb-2">
                                                         @foreach($stocks as $stock)
-                                                            <option value="{{$stock->id}}">{{$stock->name}}</option>
+                                                            <option value="{{$stock->id}}">{{$stock->name}}  - <small> {{$stock->brand->name}}</small> - <b>  <?php
+                                                                                                                                                                  $datas = json_decode($stock->version(), TRUE);
+                                                                                                                                                                  foreach ($datas as $mykey => $myValue) {
+                                                                                                                                                                      echo "$myValue,";
+                                                                                                                                                                  }
+                                                                                                                                                                  ?></b></option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -264,7 +276,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Renk</p>
-                                                    <select name="color_id" class="form-select item-details mb-2">
+                                                    <select name="color_id" class="form-select item-details select2 mb-2">
                                                         @foreach($colors as $color)
                                                             <option value="{{$color->id}}">{{$color->name}}</option>
                                                         @endforeach
@@ -298,7 +310,7 @@
 
                                                 <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Neden</p>
-                                                    <select name="reason_id" class="form-select item-details mb-2">
+                                                    <select name="reason_id" class="form-select item-details select2 mb-2">
                                                         @foreach($reasons as $reason)
                                                             <option value="{{$reason->id}}">{{$reason->name}}</option>
                                                         @endforeach

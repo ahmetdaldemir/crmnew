@@ -14,11 +14,14 @@
                     <div class="row">
                         <div class="col-xl-6 col-md-8 col-sm-9 col-12 fv-plugins-icon-container">
                             <label for="defaultFormControlInput" class="form-label">Stok Adı</label>
-                            <input type="text" class="form-control" id="name"
-                                   @if(isset($stockcards)) value="{{$stockcards->name}}" @endif  name="name"
-                                   aria-describedby="name">
+                            <input type="text" class="form-control" id="name" @if(isset($stockcards)) value="{{$stockcards->name}}" @endif  name="name" aria-describedby="name">
                             <div id="name" class="form-text">
-                                We'll never share your details with anyone else.
+                                <select name="fakeproduct" class="form-select select2">
+                                    <option value="">Seçiniz</option>
+                                    @foreach($fakeproducts as $fakeproduct)
+                                        <option value="{{$fakeproduct->name}}">{{$fakeproduct->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-xl-2 col-md-4 col-sm-5 col-12 fv-plugins-icon-container">

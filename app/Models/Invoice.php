@@ -43,8 +43,8 @@ class Invoice extends BaseModel
     ];
 
     public const INVOICE_TYPE = [
-        '1' => 'Giden Fatura',
-        '2' => 'Gelen Fatura'
+        '2' => 'Giden Fatura',
+        '1' => 'Gelen Fatura'
     ];
 
     public const INVOICE_TYPE_COLOR = [
