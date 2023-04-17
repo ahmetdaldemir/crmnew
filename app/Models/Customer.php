@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LaravelEasyRepository\Traits\FileUpload;
 
@@ -39,5 +40,15 @@ class Customer extends BaseModel
     public function hasSeller($id): string
     {
         return $this->seller_id == $id ? 'true':'false';
+    }
+
+    public function city(): HasOne
+    {
+        return $this->hasOne(City::class, 'id', 'city');
+    }
+
+    public function town(): HasOne
+    {
+        return $this->hasOne(Town::class, 'id', 'district');
     }
 }

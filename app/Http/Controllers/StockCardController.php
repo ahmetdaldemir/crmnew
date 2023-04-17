@@ -65,7 +65,7 @@ class StockCardController extends Controller
         $data['brands'] = $this->brandService->get();
         $data['versions'] = $this->versionService->get();
         $data['categories'] = $this->categoryService->get();
-        $data['fakeproducts'] = $this->fakeProductService->get();
+        $data['fakeproducts'] = $this->stockcardService->get();
         $data['units'] = Unit::Unit()->value;
         return view('module.stockcard.form', $data);
     }
@@ -125,18 +125,11 @@ class StockCardController extends Controller
 
     protected function store(Request $request)
     {
-
         if(is_null($request->name))
         {
-            $brand = $this->brandService->find($request->brand_id);
-            $version=[];
-            foreach ($request->version_id as $item)
-            {
-                $version[] = $this->versionService->find($item)['name'];
-            }
-            $name = $brand->name." ".implode(",",$version)." ".$request->fakeproduct;
+            $name = $request->fakeproduct;
         }else{
-            $name = $request->name." ".$request->fakeproduct;
+            $name = $request->name;
         }
         $data = array(
             'name' => $name,

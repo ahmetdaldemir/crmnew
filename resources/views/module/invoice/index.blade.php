@@ -32,7 +32,7 @@
                     <tbody class="table-border-bottom-0">
                     @foreach($invoices as $invoice)
                         <tr>
-                            <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number}}</a> / {{\Carbon\Carbon::parse($invoice->created_at)->format('d-m-Y')}}</td>
+                            <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number??"Numara Girilmedi"}}</a> / {{\Carbon\Carbon::parse($invoice->created_at)->format('d-m-Y')}}</td>
                             <td style="text-align: center;"><strong>{{$invoice->account->fullname ?? "Genel Cari"}}</strong></td>
                             <td style="text-align: center;">
                                 <div class="d-flex justify-content-start align-items-center">
@@ -77,16 +77,13 @@
 
                             </td>
                             <td>
-                                <a title="Seri Numarası Yazdır" href="{{route('invoice.serialprint',['id' => $invoice->id])}}"
-                                   class="btn btn-icon btn-primary">
+                                <a title="Seri Numarası Yazdır" target="_blank" href="{{route('invoice.serialprint',['id' => $invoice->id])}}" class="btn btn-icon btn-primary">
                                     <span class="bx bx-barcode-reader"></span>
                                 </a>
-                                <a title="Düzenle" href="{{route('invoice.edit',['id' => $invoice->id])}}"
-                                   class="btn btn-icon btn-primary">
+                                <a title="Düzenle" href="{{route('invoice.edit',['id' => $invoice->id])}}"  class="btn btn-icon btn-primary">
                                     <span class="bx bx-edit-alt"></span>
                                 </a>
-                                <a title="Sil" href="{{route('invoice.delete',['id' => $invoice->id])}}"
-                                   class="btn btn-icon btn-danger">
+                                <a title="Sil" href="{{route('invoice.delete',['id' => $invoice->id])}}" class="btn btn-icon btn-danger">
                                     <span class="bx bxs-trash"></span>
                                 </a>
                             </td>

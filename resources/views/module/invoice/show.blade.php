@@ -11,11 +11,12 @@
                             class="d-flex justify-content-between flex-xl-row flex-md-column flex-sm-row flex-column p-sm-3 p-0">
                             <div class="mb-xl-0 mb-4">
                                 <div class="d-flex svg-illustration mb-3 gap-2">
-                                    <span class="app-brand-text demo text-body fw-bolder">{{$invoice->account->fullname}}</span>
+                                    <span
+                                        class="app-brand-text demo text-body text-uppercase fw-bolder">{{is_null($invoice->account) ? 'Genel Cari':$invoice->account->fullname}}</span>
                                 </div>
-                                <p class="mb-1">Office 149, 450 South Brand Brooklyn</p>
-                                <p class="mb-1">San Diego County, CA 91905, USA</p>
-                                <p class="mb-0">+1 (123) 456 7891, +44 (876) 543 2198</p>
+                                <p class="mb-1">{{is_null($invoice->account) ? 'Genel Cari':$invoice->account->phone1}}</p>
+                                <p class="mb-1">{{is_null($invoice->account) ? 'Genel Cari':$invoice->account->email}}</p>
+                                <p class="mb-0">{{is_null($invoice->account) ? 'Genel Cari':$invoice->account->address.'/'.$invoice->account->city->name .'/'.$invoice->account->town->name}}</p>
                             </div>
                             <div>
                                 <h4>#{{$invoice->number}}</h4>
@@ -32,6 +33,7 @@
                             <thead>
                             <tr>
                                 <th>Ürün</th>
+                                <th>Seri Numarası</th>
                                 <th>Adet</th>
                                 <th>Alış Fiyatı</th>
                                 <th>Destekli Fiyat</th>
@@ -41,8 +43,15 @@
                             <tbody>
                             @if($invoice->detail)
                                 @foreach($invoice->detail as $item)
-                                     <tr>
-                                        <td class="text-nowrap">{{$item->stock->name}}</td>
+                                    <tr>
+                                        <td class="text-nowrap">{{$item->stock->brand->name}}/
+                                                <?php
+                                                $datas = json_decode($item->stock->version(), TRUE);
+                                                foreach ($datas as $mykey => $myValue) {
+                                                    echo "<b>".$myValue,"</b>";
+                                                }
+                                                ?>  /{{$item->stock->name}}</td>
+                                        <td class="text-nowrap">{{$item->serial_number}}</td>
                                         <td class="text-nowrap">{{$item->quantity}}</td>
                                         <td>{{$item->cost_price}}</td>
                                         <td>{{$item->base_cost_price}}</td>
