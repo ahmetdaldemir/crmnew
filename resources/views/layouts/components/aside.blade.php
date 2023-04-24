@@ -41,7 +41,7 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="{{route('sale.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Satış</div>
             </a>
@@ -49,7 +49,7 @@
         <li class="menu-item">
             <a href="{{route('transfer.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Sevk</div>
+                <div data-i18n="Basic">Sevk <b style="color: #f00">({{sevkcount()}})</b></div>
             </a>
         </li>
         <li class="menu-item">

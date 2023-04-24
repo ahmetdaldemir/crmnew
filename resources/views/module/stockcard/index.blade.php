@@ -76,6 +76,7 @@
             <form class="modal-content" id="transferForm">
                 @csrf
                 <input id="stockCardId" name="stock_card_id" type="hidden">
+                <input id="id" name="id" type="hidden">
                 <div class="modal-header">
                     <h5 class="modal-title" id="backDropModalTitle">Sevk İşlemi</h5>
                     <button

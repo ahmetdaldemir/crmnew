@@ -46,7 +46,7 @@
                                                         <p class="mb-2 repeater-title">Stok</p>
                                                         <select name="stock_card_id" class="form-select item-details mb-2 select2">
                                                             @foreach($stocks as $stock)
-                                                                <option @if(isset($transfers)) {{ $transfers->hasStaff($item['stock_card_id']) ? 'selected' : '' }}@endif value="{{$stock->id}}">{{$stock->name}}  - <small> {{$stock->brand->name}}</small> - <b>  <?php
+                                                                <option @if(isset($transfers)) {{ $transfers->hasStaff($item['stock_card_id']) ? 'selected' : '' }}@endif value="{{$stock->id}}">{{$stock->name}} - s {{$stock->quantity}} - <small> {{$stock->brand->name}}</small> - <b>  <?php
                                                                                                                                                                                                                                                                         $datas = json_decode($stock->version(), TRUE);
                                                                                                                                                                                                                                                                         foreach ($datas as $mykey => $myValue) {
                                                                                                                                                                                                                                                                             echo "$myValue,";
@@ -92,7 +92,7 @@
                                                     <p class="mb-2 repeater-title">Stok</p>
                                                     <select name="stock_card_id" class="form-select item-details mb-2 select2">
                                                         @foreach($stocks as $stock)
-                                                            <option  value="{{$stock->id}}">{{$stock->name}} - <small> {{$stock->brand->name}}</small> - <b>  <?php
+                                                            <option @if($stock->quantity() <= 0) disabled @endif value="{{$stock->id}}">{{$stock->name}} - {{$stock->quantity()}}  - <small> {{$stock->brand->name}}</small> - <b>  <?php
                                                                                                                                                                 $datas = json_decode($stock->version(), TRUE);
                                                                                                                                                                 foreach ($datas as $mykey => $myValue) {
                                                                                                                                                                     echo "$myValue,";
@@ -101,14 +101,14 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <!--div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Renk</p>
                                                     <select name="color_id" class="form-select item-details mb-2">
                                                         @foreach($colors as $color)
                                                             <option value="{{$color->id}}">{{$color->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                </div>
+                                                </div -->
                                                 <!--div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Maliyet</p>
                                                     <input type="text" class="form-control invoice-item-price" name="cost_price"/>
@@ -121,10 +121,10 @@
                                                     <p class="mb-2 repeater-title">Satış Fiyatı</p>
                                                     <input type="text" class="form-control invoice-item-price" name="sale_price"/>
                                                 </div -->
-                                                <div class="col-md-3 col-12 mb-md-0 mb-3">
+                                                <!-- div class="col-md-3 col-12 mb-md-0 mb-3">
                                                     <p class="mb-2 repeater-title">Adet</p>
                                                     <input type="number" class="form-control invoice-item-qty" name="quantity"  min="1" max="50">
-                                                </div>
+                                                </div -->
                                             </div>
 
                                         </div>

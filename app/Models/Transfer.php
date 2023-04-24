@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transfer extends BaseModel
 {
-    use HasFactory,SoftDeletes;
+    use SoftDeletes;
 
     const STATUS = [
         '1' => 'Beklemede',
@@ -35,9 +35,10 @@ class Transfer extends BaseModel
         'stocks',
         'delivery_seller_id',
         'description',
+        'serial_list'
     ];
 
-    protected $casts = ['stocks' => 'json'];
+    protected $casts = ['stocks' => 'json','serial_list' => 'json'];
 
 
     public function seller($id)
@@ -59,4 +60,6 @@ class Transfer extends BaseModel
     {
         return $this->color_id == $id ? 'true':'false';
     }
+
+
 }

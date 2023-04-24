@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendTransferInfo;
+use App\Models\StockCardMovement;
 use App\Services\Color\ColorService;
 use App\Services\Reason\ReasonService;
 use App\Services\Seller\SellerService;
@@ -75,37 +77,55 @@ class TransferController extends Controller
     protected function store(Request $request)
     {
         $stock = $request->group_a;
-
+        foreach ($stock as $item) {
+            $serialList[$item['stock_card_id']] = $this->getSerialList($item['stock_card_id'], $item['quantity']);
+        }
         $data = array(
             'company_id' => Auth::user()->company_id,
             'user_id' => Auth::user()->id,
-            'is_status' =>1,
+            'is_status' => 1,
             'main_seller_id' => Auth::user()->seller_id,
-            'delivery_id' =>$request->delivery_id,
-            'description' =>$request->description,
-            'number' =>$request->number,
+            'delivery_id' => $request->delivery_id,
+            'description' => $request->description,
+            'number' => $request->number??null,
             'stocks' => json_encode($stock),
-            'delivery_seller_id' =>$request->delivery_seller_id,
+            'serial_list' => json_encode($serialList),
+            'delivery_seller_id' => $request->delivery_seller_id,
         );
 
         if (empty($request->id)) {
-            $this->transferService->create($data);
+            $transfer = $this->transferService->create($data);
         } else {
-            $this->transferService->update($request->id, $data);
+            $transfer = $this->transferService->update($request->id, $data);
         }
-
-        return response()->json('Transfer Gerçekleşti',200);
+        //$this->dispatch(new SendTransferInfo($transfer));
+        return response()->json('Transfer Gerçekleşti', 200);
     }
 
     protected function update(Request $request)
     {
-        $data = array('is_status' => $request->is_status);
-        return $this->transferService->update($request->id, $data);
+        $transfer = $this->transferService->find($request->id);
+        if ($transfer->serial_list) {
+            foreach ($transfer->serial_list as $key => $value) {
+                foreach ($value as $item) {
+                    StockCardMovement::where('serial_number', $item)->update(['seller_id' => $transfer->delivery_seller_id]);
+                }
+            }
+            $data = array('is_status' => $request->is_status);
+            $this->transferService->update($request->id, $data);
+            return redirect()->back();
+        }
+        return redirect()->back()->withErrors(['msg' => 'Seri Numaraları Seçilmedi']);
     }
 
     protected function show(Request $request)
     {
         $data['transfer'] = $this->transferService->find($request->id);
-        return view('module.transfer.show',$data);
+        return view('module.transfer.show', $data);
+    }
+
+    public function getSerialList($stockCardId, $quantity)
+    {
+        return StockCardMovement::select('serial_number')->where('stock_card_id', $stockCardId)->pluck('serial_number')->take($quantity);
     }
 }

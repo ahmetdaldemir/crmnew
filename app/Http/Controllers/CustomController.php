@@ -11,6 +11,7 @@ use App\Models\Version;
 use App\Services\Customer\CustomerService;
 use App\Services\Seller\SellerService;
 use App\Services\StockCard\StockCardService;
+use App\Services\Transfer\TransferService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -20,14 +21,16 @@ class CustomController extends Controller
     private CustomerService $customerService;
     private SellerService $sellerService;
     private StockCardService $stockCardService;
+    private TransferService $transferService;
 
     protected StockCardMovement $stockCardMovement;
 
-    public function __construct(CustomerService $customerService, SellerService $sellerService, StockCardService $stockCardService)
+    public function __construct(CustomerService $customerService, SellerService $sellerService, StockCardService $stockCardService,TransferService $transferService)
     {
         $this->customerService = $customerService;
         $this->sellerService = $sellerService;
         $this->stockCardService = $stockCardService;
+        $this->transferService = $transferService;
         $this->stockCardMovement = new StockCardMovement();
     }
 
@@ -113,5 +116,9 @@ class CustomController extends Controller
     {
         $data =  $this->customerService->get();
         return response()->json($data,200);
+    }
+    public function transferList()
+    {
+        return response()->json($this->transferService->get(),200);
     }
 }

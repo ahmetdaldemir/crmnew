@@ -18,6 +18,10 @@ class Companies
      */
     public function handle(Request $request, Closure $next)
     {
+        if(!Auth::check())
+        {
+            return redirect()->to('logout');
+        }
         $companies_id = Auth::user()->company_id;
         $companies = Company::find($companies_id);
         if ($companies->is_status == 0) {

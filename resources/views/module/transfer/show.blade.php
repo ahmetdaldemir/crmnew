@@ -13,9 +13,7 @@
                                 <div class="d-flex svg-illustration mb-3 gap-2">
                                     <span class="app-brand-text demo text-body fw-bolder">{{$transfer->user($transfer->delivery_id)->name}}</span>
                                 </div>
-                                <p class="mb-1">Office 149, 450 South Brand Brooklyn</p>
-                                <p class="mb-1">San Diego County, CA 91905, USA</p>
-                                <p class="mb-0">+1 (123) 456 7891, +44 (876) 543 2198</p>
+                                <p class="mb-1">Şube :  {{$transfer->user($transfer->delivery_id)->seller->name}}</p>
                             </div>
                             <div>
                                 <h4>#{{$transfer->number}}</h4>
@@ -39,18 +37,24 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if($transfer)
-                                @foreach($transfer->stocks as $item)
-                                     <tr>
-                                        <td class="text-nowrap">{{$item['stock_card_id']}}</td>
-                                        <td class="text-nowrap">{{$item['quantity']}}</td>
-                                        <td>{{$item['cost_price']}}</td>
-                                        <td>{{$item['base_cost_price']}}</td>
-                                        <td>{{$item['sale_price']}}</td>
-                                    </tr>
+                            @if($transfer->serial_list)
+                                @foreach($transfer->serial_list as $key => $value)
+                                    @foreach($value as $item)
+                                        <?php $stock_card_moveement =  \App\Models\StockCardMovement::where('serial_number',$item)->first(); ?>
+                                        <tr>
+                                            <td class="text-nowrap">{{$stock_card_moveement->stock->name}}</td>
+                                            <td class="text-nowrap">1</td>
+                                            <td>{{$stock_card_moveement->cost_price}}</td>
+                                            <td>{{$stock_card_moveement->base_cost_price}}</td>
+                                            <td>{{$stock_card_moveement->sale_price}}</td>
+                                        </tr>
+                                    @endforeach
                                 @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="5" style="text-align: center;font-weight: bolder">Ürün Bulunamadı</td>
+                                </tr>
                             @endif
-
                             <tr>
                                 <td colspan="3" class="align-top px-4 py-5">
                                     <p class="mb-2">

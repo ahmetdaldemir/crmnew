@@ -165,7 +165,7 @@ Route::middleware('companies')->group(function () {
         Route::get('delete', [App\Http\Controllers\TransferController::class, 'delete'])->name('delete');
         Route::get('create', [App\Http\Controllers\TransferController::class, 'create'])->name('create');
         Route::post('store', [App\Http\Controllers\TransferController::class, 'store'])->name('store');
-        Route::post('update', [App\Http\Controllers\TransferController::class, 'update'])->name('update');
+        Route::get('update', [App\Http\Controllers\TransferController::class, 'update'])->name('update');
         Route::get('show', [App\Http\Controllers\TransferController::class, 'show'])->name('show');
     });
 
@@ -247,6 +247,18 @@ Route::middleware('companies')->group(function () {
         Route::post('store', [App\Http\Controllers\SettingController::class, 'store'])->name('store');
         Route::post('update', [App\Http\Controllers\SettingController::class, 'update'])->name('update');
     });
+
+
+    Route::prefix('sale')->name('sale.')->middleware([])->group(function () {
+        Route::get('/', [App\Http\Controllers\SaleController::class, 'index'])->name('index');
+        Route::get('edit', [App\Http\Controllers\SaleController::class, 'edit'])->name('edit');
+        Route::get('delete', [App\Http\Controllers\SaleController::class, 'delete'])->name('delete');
+        Route::get('create', [App\Http\Controllers\SaleController::class, 'create'])->name('create');
+        Route::post('store', [App\Http\Controllers\SaleController::class, 'store'])->name('store');
+        Route::post('update', [App\Http\Controllers\SaleController::class, 'update'])->name('update');
+        Route::get('show', [App\Http\Controllers\SaleController::class, 'show'])->name('show');
+    });
+
 });
 /**  Custom **/
 
@@ -257,3 +269,4 @@ Route::post('/getStock', [App\Http\Controllers\CustomController::class, 'getStoc
 Route::get('/get_version', [App\Http\Controllers\CustomController::class, 'get_version'])->name('get_version');
 Route::get('/getStockCard', [App\Http\Controllers\CustomController::class, 'getStockCard'])->name('getStockCard');
 Route::get('/customers', [App\Http\Controllers\CustomController::class, 'customers'])->name('customers');
+Route::get('/transferList', [App\Http\Controllers\CustomController::class, 'transferList'])->name('transferList');

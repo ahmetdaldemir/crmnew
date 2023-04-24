@@ -6,6 +6,7 @@ use App\Enums\Unit;
 use App\Models\StockCard;
 use App\Models\StockCardMovement;
 use App\Models\Transfer;
+use App\Models\User;
 use App\Services\Brand\BrandService;
 use App\Services\Category\CategoryService;
 use App\Services\Color\ColorService;
@@ -13,6 +14,7 @@ use App\Services\FakeProduct\FakeProductService;
 use App\Services\Reason\ReasonService;
 use App\Services\Seller\SellerService;
 use App\Services\StockCard\StockCardService;
+use App\Services\Transfer\TransferService;
 use App\Services\Version\VersionService;
 use App\Services\Warehouse\WarehouseService;
 use Illuminate\Http\Request;
@@ -30,6 +32,7 @@ class StockCardController extends Controller
     private VersionService $versionService;
     private ReasonService $reasonService;
     private FakeProductService $fakeProductService;
+    private TransferService $transferService;
 
     public function __construct(StockCardService $stockcardService,
                                 SellerService    $sellerService,
@@ -39,7 +42,8 @@ class StockCardController extends Controller
                                 ColorService     $colorService,
                                 VersionService   $versionService,
                                 ReasonService    $reasonService,
-                                FakeProductService $fakeProductService
+                                FakeProductService $fakeProductService,
+                                TransferService $transferService
     )
     {
         $this->stockcardService = $stockcardService;
@@ -51,6 +55,7 @@ class StockCardController extends Controller
         $this->categoryService = $categoryService;
         $this->reasonService = $reasonService;
         $this->fakeProductService = $fakeProductService;
+        $this->transferService = $transferService;
     }
 
     protected function index()
@@ -97,23 +102,33 @@ class StockCardController extends Controller
     {
         $serial_stock_card_movement = StockCardMovement::where('serial_number',$request->serial_number)->first();
 
-        if(is_null($serial_stock_card_movement) || $serial_stock_card_movement->quantityCheck($request->serial_number) >= 0)
+         if(is_null($serial_stock_card_movement) || $serial_stock_card_movement->quantityCheck($request->serial_number) <= 0)
         {
             return response()->json("Seri Numarası Bulunamadı Veya Stok Yetersiz", 400);
         }
-        if($serial_stock_card_movement->transfer->is_status == 1)
-        {
-            return response()->json("Beklemede olan sevk işlemi var", 400);
-        }
 
-        $transfer = new Transfer();
-        $transfer->stock_card_id = $request->stock_card_id;
-        $transfer->serial_number = $request->serial_number;
-        $transfer->stock_card_movement_id = $serial_stock_card_movement->id;
-        $transfer->user_id = Auth::user()->id;
-        $transfer->is_status = 1;
-        $transfer->save();
-        return response()->json("Sevk Başlatıldı", 200);
+
+        $stock = ['stock_card_id' => $request->stock_card_id];
+        $serialList[$request->stock_card_id] = array($request->serial_number);
+
+        $data = array(
+            'company_id' => Auth::user()->company_id,
+            'user_id' => Auth::user()->id,
+            'is_status' => 1,
+            'main_seller_id' => Auth::user()->seller_id,
+            'delivery_id' => User::where('seller_id',$request->seller_id)->first()->id ?? 1,
+            'description' => $request->description,
+            'number' => $request->number??null,
+            'stocks' => json_encode($stock),
+            'serial_list' => json_encode($serialList),
+            'delivery_seller_id' => $request->seller_id,
+        );
+        if (empty($request->id)) {
+            $transfer = $this->transferService->create($data);
+        } else {
+            $transfer = $this->transferService->update($request->id, $data);
+        }
+        return response()->json($transfer, 200);
 
     }
 

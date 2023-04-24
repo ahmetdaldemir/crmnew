@@ -95,5 +95,12 @@ class StockCard extends BaseModel
         //return $this->hasOne(Version::class, 'id', 'version_id');
     }
 
+    public function quantity()
+    {
+        $in =  StockCardMovement::where('stock_card_id',$this->id)->where('type',1)->sum('quantity');
+        $out = StockCardMovement::where('stock_card_id',$this->id)->where('type',2)->sum('quantity');
+        return $in - $out;
+    }
+
 
 }

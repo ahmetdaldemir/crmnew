@@ -28,7 +28,7 @@
 
         $("#printableArea").submit();
 
-        function printDiv() {
+        $(document).ready(function() {
             var divName = 'printableArea';
             var printContents = document.getElementById(divName).innerHTML;
             w = window.open();
@@ -36,8 +36,7 @@
             w.document.write('<scr' + 'ipt type="text/javascript">' + 'window.onload = function() { window.print(); window.close(); };' + '</sc' + 'ript>');
             w.document.close(); // necessary for IE >= 10
             w.focus(); // necessary for IE >= 10
-            return true;
-        }
+        });
     </script>
 
 </head>
