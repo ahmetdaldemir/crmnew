@@ -46,8 +46,7 @@
                             </td>
                             <td>{{$transfer->comfirm_date}}</td>
                             <td>
-                                @if($transfer->is_status == 1 && $transfer->delivery_seller_id == auth()->user()->seller_id)
-                                    <a onclick="return confirm('Onaylamak istediğinizden eminmisiniz?');"
+                                     <a onclick="return confirm('Onaylamak istediğinizden eminmisiniz?');"
                                        href="{{route('transfer.update',['id' => $transfer->id,'is_status' => 2])}}"
                                        class="btn btn-icon btn-success">
                                         <span class="bx bx-navigation"></span>
@@ -66,24 +65,6 @@
                                        class="btn btn-icon btn-primary">
                                         <span class="bx bx-edit-alt"></span>
                                     </a>
-                                @elseif($transfer->is_status == 3)
-                                    <a href="{{route('transfer.update',['id' => $transfer->id,'is_status' => 2])}}"
-                                       class="btn btn-icon btn-danger">
-                                        <span class="bx bx-navigation"></span>
-                                    </a>
-                                    <a onclick="return confirm('Silmek istediğinizden eminmisiniz?');"
-                                       href="{{route('transfer.delete',['id' => $transfer->id])}}"
-                                       class="btn btn-icon btn-primary">
-                                        <span class="bx bxs-trash"></span>
-                                    </a>
-                                    <a href="{{route('transfer.edit',['id' => $transfer->id])}}"
-                                       class="btn btn-icon btn-primary">
-                                        <span class="bx bx-edit-alt"></span>
-                                    </a>
-                                @else
-                                    <b>İşlem Yapılamaz<b>
-                                @endif
-
                             </td>
                         </tr>
                     @endforeach

@@ -25,7 +25,7 @@ class Customer extends BaseModel
         'district',
         'email',
         'note',
-        'image',
+        'type',
         'company_id',
         'seller_id',
         'user_id',

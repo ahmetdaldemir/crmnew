@@ -80,61 +80,9 @@
                             </div>
 
                              <hr class="mx-n4">
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="row">
-                                            <label for="total_price" class="col-md-3 col-form-label">Toplam Tutar / Döviz  </label>
-                                            <div class="col-md-9">
-                                                <div class=" input-group">
-                                                <input type="text" class="form-control" id="total_price"
-                                                       @if(isset($invoices)) value="{{$invoices->total_price}}"
-                                                       @endif  name="total_price"
-                                                       aria-describedby="name"
-                                                       aria-label="Text input with segmented dropdown button" required>
-                                                    <input name="exchange" id="exchange" value="1" type="hidden">
-                                                    <input name="currency" id="currency" value="1" type="hidden">
-                                                       <span class="input-group-text" id="exchange_text">1.00</span>
-                                                <button type="button" class="btn btn-outline-primary"> <span id="currencySymbol" style="font-weight: 800;margin-right: 10px;">₺</span> Döviz</button>
-                                                <button type="button"
-                                                        class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    @foreach($currencies as $currency)
-                                                    <li><a class="dropdown-item" onclick="currencyCalculate('{{$currency->symbol}}',{{$currency->id}},{{$currency->exchange_rate}})" data-id="{{$currency->id}}" data-exchange="{{$currency->exchange_rate}}" href="javascript:void(0);">{{$currency->name}}</a></li>
-                                                    @endforeach
-                                                </ul>
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <hr class="mb-4 mt-4">
-                                    <div class="row">
-                                        <label for="tax_total" class="col-md-3 col-form-label">Toplam KDV</label>
-                                        <div class="col-md-9">
-                                            <div class=" input-group">
-                                                <input type="text" class="form-control" id="tax_total"
-                                                       @if(isset($invoices)) value="{{$invoices->tax_total}}"
-                                                       @endif  name="tax_total"
-                                                       aria-describedby="tax_total"
-                                                       aria-label="Text input with segmented dropdown button">
-                                                <input name="tax" id="tax" value="18" type="hidden">
-                                                <button type="button" class="btn btn-outline-primary"> <span style="font-weight: 800;margin-right: 10px;">%</span> <span id="tax_text">18</span></button>
-                                                <button type="button"
-                                                        class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    @foreach($taxs as $key => $value)
-                                                        <li><a class="dropdown-item" onclick="taxCalculate({{$key}})" data-id="{{$key}}" <?php if($key=='18') { ?> data-select="selected" <?php } ?> data-exchange="{{$key}}" href="javascript:void(0);">{{$value}}</a></li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <input name="tax" id="tax" value="18" type="hidden">
+                            <input name="exchange" id="exchange" value="1" type="hidden">
+                            <input name="currency" id="currency" value="1" type="hidden">
                             <hr class="my-4 mx-n4">
                             <div class="row py-sm-3">
                                 <div class="col-md-6 mb-md-0 mb-3">
@@ -154,6 +102,25 @@
                                 <div class="col-md-6 mb-md-0 mb-3" id="safeArea"></div>
                             </div>
                             <hr class="my-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="fullname">Kredi Kartı</label>
+                                    <input type="text" name="payment_type[credit_card]" id="credit_card"
+                                           class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="fullname">Nakit</label>
+                                    <input type="text" name="payment_type[cash]" id="money_order" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="fullname">Taksit</label>
+                                    <input type="text" name="payment_type[installment]" id="installment"
+                                           class="form-control">
+                                </div>
+
+                            </div>
+                            <hr class="my-4">
+
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
@@ -187,12 +154,7 @@
                             <option value="paid">Ödendi</option>
                             <option value="paidOutOfPocket">Çalışan Cebinden Ödedi</option>
                         </select>
-                        <p class="mb-2"><i class="bx bx-credit-card bx-md me-1"></i> Ödeme Tipi</p>
-                        <select name="payment_type" class="form-select mb-4">
-                            <option value="1">Havale</option>
-                            <option value="2">Kredi Kartı</option>
-                            <option value="3">Nakit</option>
-                        </select>
+
                         <p class="mb-2"><i class="bx bx-folder-open bx-md me-1"></i> Kategori</p>
                         <select name="accounting_category_id" class="form-select mb-4">
                             @foreach($categories as $category)

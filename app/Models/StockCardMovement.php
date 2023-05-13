@@ -90,7 +90,10 @@ class StockCardMovement extends BaseModel
     {
         return $this->hasOne(Seller::class,'id','seller_id');
     }
-
+    public function color()
+    {
+        return $this->hasOne(Color::class,'id','color_id');
+    }
     public function warehouse()
     {
         return $this->hasOne(Warehouse::class,'id','warehouse_id');
@@ -115,4 +118,13 @@ class StockCardMovement extends BaseModel
     {
         return StockCard::find($this->stock_card_id);
     }
+
+    public function quantityCheckData()
+    {
+        $in  = StockCardMovement::select("quantity")->where('serial_number',$this->serial_number)->where('type',1)->sum('quantity');
+        $out = StockCardMovement::where('serial_number',$this->serial_number)->where('type',2)->sum('quantity');
+        return (int)$in - (int)$out;
+    }
+
+
 }

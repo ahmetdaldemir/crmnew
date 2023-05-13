@@ -18,7 +18,7 @@
                                                     data-style="btn-default" name="customer_id" ng-init="getCustomers()"
                                                     onchange="getCustomer(this.value)">
                                                 <option value="1" data-tokens="ketchup mustard">Genel Cari</option>
-                                                <option ng-repeat="customer in customers"
+                                                <option ng-repeat="customer in customers" ng-if="customer.type == 'account'"
                                                         @if(isset($invoices) && '@{{customer.id}}' == $invoices->customer_id) selected
                                                         @endif data-value="@{{customer.id}}" value="@{{customer.id}}">
                                                     @{{customer.fullname}}
@@ -86,12 +86,12 @@
                                 @if(isset($invoices))
                                     @foreach($invoices->detail as $item)
                                         <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item="">
+                                            <input type="hidden" name="stockcardmovementid" value="{{$item->id}}" />
                                             <div class="d-flex border rounded position-relative pe-0">
                                                 <div class="row w-100 m-0 p-3">
                                                     <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">Stok</p>
-                                                        <select name="stock_card_id"
-                                                                class="form-select item-details mb-2 select2">
+                                                        <select name="stock_card_id" class="form-select item-details mb-2 select2">
                                                             @foreach($stocks as $stock)
                                                                 <option
                                                                     {{ $item->hasStock($stock->id) ? 'selected' : '' }}  value="{{$stock->id}}">{{$stock->name}}
@@ -138,28 +138,26 @@
                                                                 class="form-select item-details select2 mb-2">
                                                             @foreach($colors as $color)
                                                                 <option
-                                                                    {{ $item->hasStock($color->id) ? 'selected' : '' }} value="{{$color->id}}">{{$color->name}}</option>
+                                                                    @if($item->color_id == $color->id) selected @endif value="{{$color->id}}">{{$color->name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                         <p class="mb-2 repeater-title">IMEI</p>
-                                                        <input minlength="15" maxlength="15" class="form-control"
-                                                               name="imei"
-                                                               value="{{$item->imei}}"/>
+                                                        <input minlength="15" maxlength="15" class="form-control" name="imei" value="{{$item->imei}}"/>
                                                     </div>
                                                     <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0"
                                                          style="text-align: center">
-                                                        <p class="mb-2 repeater-title">Temikli Cihaz</p>
+                                                        <p class="mb-2 repeater-title">Temlikli Cihaz</p>
                                                         <input class="form-check-input" type="checkbox"
-                                                               @if($item->assigned_device == 1) selected
+                                                               @if($item->assigned_device == 1) checked
                                                                @endif name="assigned_device"/>
                                                     </div>
                                                     <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0"
                                                          style="text-align: center">
-                                                        <p class="mb-2 repeater-title">Temikli Aksesuar</p>
+                                                        <p class="mb-2 repeater-title">Temlikli Aksesuar</p>
                                                         <input class="form-check-input" type="checkbox"
-                                                               @if($item->assigned_accessory == 1) selected
+                                                               @if($item->assigned_accessory == 1) checked
                                                                @endif name="assigned_accessory"/>
                                                     </div>
                                                     <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
@@ -167,8 +165,7 @@
                                                         <select name="reason_id"
                                                                 class="form-select item-details  select2 mb-2">
                                                             @foreach($reasons as $reason)
-                                                                <option
-                                                                    {{ $item->hasReason($reason->id) ? 'selected' : '' }} value="{{$reason->id}}">{{$reason->name}}</option>
+                                                                <option @if($item->reason_id == $reason->id) selected @endif value="{{$reason->id}}">{{$reason->name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -262,16 +259,15 @@
                                             <div class="row w-100 m-0 p-3">
                                                 <div class="col-md-5 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">Stok</p>
-                                                    <select name="stock_card_id"
-                                                            class="form-select item-details select2 mb-2">
+                                                    <select onchange="calculate(this.value)" name="stock_card_id" class="form-select item-details select2 mb-2">
                                                         @foreach($stocks as $stock)
-                                                            <option value="{{$stock->id}}">{{$stock->name}} -
+                                                            <option value="{{$stock->id}}" @if($stock->id == $stock_card_id) selected @endif>{{$stock->name}} -
                                                                 <small> {{$stock->brand->name}}</small> - <b>  <?php
-                                                                                                                   $datas = json_decode($stock->version(), TRUE);
-                                                                                                                   foreach ($datas as $mykey => $myValue) {
-                                                                                                                       echo "$myValue,";
-                                                                                                                   }
-                                                                                                                   ?></b>
+                                                                   $datas = json_decode($stock->version(), TRUE);
+                                                                   foreach ($datas as $mykey => $myValue) {
+                                                                       echo "$myValue,";
+                                                                   }
+                                                                   ?></b>
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -313,7 +309,7 @@
 
                                                 <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                     <p class="mb-2 repeater-title">IMEI</p>
-                                                    <input minlength="13" maxlength="13" class="form-control"
+                                                    <input minlength="15" maxlength="15" class="form-control"
                                                            name="imei"/>
                                                 </div>
 
@@ -328,13 +324,13 @@
                                                 </div>
                                                 <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0"
                                                      style="text-align: center;">
-                                                    <p class="mb-2 repeater-title">Temikli Cihaz</p>
+                                                    <p class="mb-2 repeater-title">Temlikli  Cihaz</p>
                                                     <input class="form-check-input" type="checkbox"
                                                            name="assigned_device"/>
                                                 </div>
                                                 <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0"
                                                      style="text-align: center;">
-                                                    <p class="mb-2 repeater-title">Temikli Aksesuar</p>
+                                                    <p class="mb-2 repeater-title">Temlikli  Aksesuar</p>
                                                     <input class="form-check-input" type="checkbox"
                                                            name="assigned_accessory"/>
                                                 </div>
@@ -406,30 +402,36 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="row">
+                            <!-- div class="row">
                                 <div class="col-12">
                                     <button type="button" class="btn btn-primary" data-repeater-create="">Add Item
                                     </button>
                                 </div>
-                            </div>
+                            </div-->
 
                             <hr class="my-4 mx-n4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="fullname">Kredi Kartı</label>
+                                    <input type="text" name="payment_type[credit_card]" id="credit_card"
+                                           class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="fullname">Nakit</label>
+                                    <input type="text" name="payment_type[cash]" id="money_order" class="form-control">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="fullname">Taksit</label>
+                                    <input type="text" name="payment_type[installment]" id="installment"
+                                           class="form-control">
+                                </div>
+
+                            </div>
+                            <hr class="my-4 mx-n4">
+                            <input type="hidden" name="staff_id" value="{{auth()->user()->id}}" />
 
                             <div class="row py-sm-3">
-                                <div class="col-md-6 mb-md-0 mb-3">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <label for="salesperson" class="form-label me-5 fw-semibold">Personel:</label>
-                                        <select id="selectpickerLiveSearch" class="selectpicker w-100"
-                                                data-style="btn-default" name="staff_id" data-live-search="true">
-                                            @foreach($users as $user)
-                                                <option @if(isset($invoices))
-                                                            {{ $invoices->hasStaff($user->id) ? 'selected' : '' }}
-                                                        @endif value="{{$user->id}}"
-                                                        data-value="{{$user->id}}">{{$user->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-6 mb-md-0 mb-3" id="safeArea"></div>
                                 <hr>
                                 <div class="col-md-12 d-flex justify-content-start">
@@ -491,12 +493,7 @@
                                 <option value="paid">Ödendi</option>
                                 <option value="paidOutOfPocket">Çalışan Cebinden Ödedi</option>
                             </select>
-                            <p class="mb-2"><i class="bx bx-credit-card bx-md me-1"></i> Ödeme Tipi</p>
-                            <select name="payment_type" class="form-select mb-4">
-                                <option value="1">Havale</option>
-                                <option value="2">Kredi Kartı</option>
-                                <option value="3">Nakit</option>
-                            </select>
+
                             <p class="mb-2"><i class="bx bx-folder-open bx-md me-1"></i> Kategori</p>
                             <select name="accounting_category_id" class="form-select mb-4">
                                 @foreach($categories as $category)
@@ -581,7 +578,6 @@
                 $(".customerinformation").html('<p className="mb-1">' + data.address + '</p><p className="mb-1">' + data.phone1 + '</p><p className="mb-1">' + data.email + '</p>');
             });
         }
-
         function save() {
             var postUrl = window.location.origin + '/invoice/store';   // Returns base URL (https://example.com)
             $.ajax({
@@ -602,12 +598,11 @@
                     $(placeholder).removeClass('loading');
                 },
                 complete: function () {
-                    window.location.href = "{{route('invoice.index')}}";
+                    window.location.href = "{{route('invoice.index',['type' => 1])}}";
                 },
 
             });
         }
-
         $("#paymentStatus").change(function () {
             var type = $(this).val();
             if (type == 'paid') {
@@ -628,6 +623,11 @@
                 $("#safeArea").html(' ');
             }
         })
+
+        function calculate(id)
+        {
+            console.log(id);
+        }
     </script>
 
     <script>

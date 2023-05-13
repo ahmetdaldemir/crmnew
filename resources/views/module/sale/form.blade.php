@@ -84,16 +84,15 @@
                                         <div class="row w-100 m-0 p-3">
                                             <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
                                                 <p class="mb-2 repeater-title">Stok</p>
-                                                <select name="stock_card_id"
-                                                        class="form-select item-details select2 mb-2">
+                                                <select name="stock_card_id" id="stock_card_id"  class="form-select item-details select2 mb-2">
                                                     @foreach($stocks as $stock)
                                                         <option value="{{$stock->id}}">{{$stock->name}} -
                                                             <small> {{$stock->brand->name}}</small> - <b>  <?php
-                                                                                                               $datas = json_decode($stock->version(), TRUE);
-                                                                                                               foreach ($datas as $mykey => $myValue) {
-                                                                                                                   echo "$myValue,";
-                                                                                                               }
-                                                                                                               ?></b>
+                                                               $datas = json_decode($stock->version(), TRUE);
+                                                               foreach ($datas as $mykey => $myValue) {
+                                                                   echo "$myValue,";
+                                                               }
+                                                               ?></b>
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -310,7 +309,7 @@
         }
 
         function save() {
-            var postUrl = window.location.origin + '/invoice/store';   // Returns base URL (https://example.com)
+            var postUrl = window.location.origin + '/sale/store';   // Returns base URL (https://example.com)
             $.ajax({
                 type: "POST",
                 url: postUrl,

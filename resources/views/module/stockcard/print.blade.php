@@ -24,24 +24,25 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-    <script>
 
-        $("#printableArea").submit();
 
-        $(document).ready(function() {
-            var divName = 'printableArea';
-            var printContents = document.getElementById(divName).innerHTML;
-            w = window.open();
-            w.document.write(printContents);
-            w.document.write('<scr' + 'ipt type="text/javascript">' + 'window.onload = function() { window.print(); window.close(); };' + '</sc' + 'ript>');
-            w.document.close(); // necessary for IE >= 10
-            w.focus(); // necessary for IE >= 10
-        });
-    </script>
-
+    @foreach($movements as $value)
+        <script>
+            $(document).ready(function() {
+                var divName = 'printableArea{{$value->id}}';
+                var printContents = document.getElementById(divName).innerHTML;
+                w = window.open();
+                w.document.write(printContents);
+                w.document.write('<scr' + 'ipt type="text/javascript">' + 'window.onload = function() { window.print(); window.close(); };' + '</sc' + 'ript>');
+                w.document.close(); // necessary for IE >= 10
+                w.focus(); // necessary for IE >= 10
+             });
+        </script>
+    @endforeach
 </head>
 <body>
-<div id="printableArea" style="width: 350px; height: 150px;">
+@foreach($movements as $value)
+ <div id="printableArea{{$value->id}}" style="width: 350px; height: 150px;">
     <div style="width: 18%; float: left;">
         <img src="{{asset('img/147836.png')}}" style="rotate: 90deg;
     margin-top: 23px;
@@ -74,7 +75,8 @@
         </div>
     </div>
 </div>
-<button id="printableArea" onclick="printDiv()">YAZDIR</button>
+<button style="display: none" id="printableAreaButton" onclick="printDiv()">YAZDIR</button>
+ @endforeach
 
 
 </body>

@@ -2,22 +2,24 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Faturalar /</span> Fatura listesi</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Satışlar /</span> Satış listesi</h4>
 
         <div class="card">
-            <div class="card-header">
-
-                <div class="btn-group demo-inline-spacing float-end">
-                    <a href="{{route('sale.create')}}" class="btn btn-danger float-end">Yeni Fatura Ekle</a>
-                </div>
+            <div class="card-body">
+                @include('components.search')
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Fatura No / Tarih</th>
-                        <th style="text-align: center">Cari</th>
-                        <th style="text-align: center">Tipi</th>
+                        <th style="text-align: center">Müşteri</th>
+                        <th style="text-align: center">Ürün</th>
+                        <th style="text-align: center">Satışı Yapan</th>
+                        <th style="text-align: center">Satış Fiyatı</th>
+                        <th style="text-align: center">Kredi Kartı</th>
+                        <th style="text-align: center">Nakit</th>
+                        <th style="text-align: center">Taksit</th>
                         <th style="text-align: center">Status</th>
                         <th>Actions</th>
                     </tr>
@@ -25,22 +27,17 @@
                     <tbody class="table-border-bottom-0">
                     @foreach($invoices as $invoice)
                         @if($invoice->type == 2)
+                            <?php $detail = json_decode($invoice->detail,true);  ?>
                         <tr>
-                            <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number??"Numara Girilmedi"}}</a> / {{\Carbon\Carbon::parse($invoice->created_at)->format('d-m-Y')}}</td>
+                            <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number??"#"}}</a> / {{\Carbon\Carbon::parse($invoice->created_at)->format('d-m-Y')}}</td>
                             <td style="text-align: center;"><strong>{{$invoice->account->fullname ?? "Genel Cari"}}</strong></td>
-                            <td style="text-align: center;">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div class="avatar-wrapper">
-                                        <div class="avatar avatar-sm me-2">
-                                            <span class="avatar-initial rounded-circle bg-label-warning"><i class="bx bxs-user"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <span class="badge bg-label-{{$invoice->invoice_type_color($invoice->type)}}">{{$invoice->invoice_type($invoice->type)}}</span>
-                                    </div>
-                                </div>
+                            <td style="text-align: center;">@if(!empty($detail)) {{ \App\Models\StockCard::find($detail[0]['stock_card_id'])->name ?? "Silinmiş"}} @endif</td>
+                            <td style="text-align: center;">{{$invoice->staff->name}}</td>
+                            <td style="text-align: right;font-weight: 600">@if(!empty($detail)) {{ $detail[0]['sale_price']  ?? 0.00}} @endif ₺</td>
+                            <td style="text-align: right;font-weight: 600"> {{ $invoice->credit_card ??  0.00}}   ₺</td>
+                            <td style="text-align: right;font-weight: 600"> {{ $invoice->cash ??  0.00}}   ₺</td>
+                            <td style="text-align: right;font-weight: 600"> {{ $invoice->installment ??  0.00}}   ₺</td>
 
-                            </td>
                             <td style="text-align: center;">
                                 @if($invoice->is_status == 1)
                                     <span data-bs-toggle="tooltip" data-bs-html="true"
@@ -71,13 +68,10 @@
 
                             </td>
                             <td>
-                                <a title="Seri Numarası Yazdır" target="_blank" href="{{route('invoice.serialprint',['id' => $invoice->id])}}" class="btn btn-icon btn-primary">
-                                    <span class="bx bx-barcode-reader"></span>
-                                </a>
-                                <a title="Düzenle" href="{{route('invoice.edit',['id' => $invoice->id])}}"  class="btn btn-icon btn-primary">
+                                <a title="Düzenle" href="{{route('invoice.salesedit',['id' => $invoice->id])}}"  class="btn btn-icon btn-primary">
                                     <span class="bx bx-edit-alt"></span>
                                 </a>
-                                <a title="Sil" href="{{route('invoice.delete',['id' => $invoice->id])}}" class="btn btn-icon btn-danger">
+                                <a title="Sil" href="{{route('sale.delete',['id' => $invoice->id])}}" class="btn btn-icon btn-danger">
                                     <span class="bx bxs-trash"></span>
                                 </a>
                             </td>

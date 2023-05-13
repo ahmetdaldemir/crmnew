@@ -10,70 +10,19 @@
                     @csrf
                     <input type="hidden" name="id"/>
                     <div class="card-body">
-                        <!-- Account -->
-                        <div class="card-body">
-                            <div class="d-flex align-items-start align-items-sm-center gap-4 mb-4">
-                                <img
-                                    src="{{asset('assets/img/identity.jpg')}}"
-                                    alt="user-avatar"
-                                    class="d-block rounded"
-                                    width="100"
-                                    id="uploadedAvatar"
-                                />
-                                <div class="button-wrapper">
-                                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                        <span class="d-none d-sm-block">Kimlik / Passport Ön Yüzü</span>
-                                        <i class="bx bx-upload d-block d-sm-none"></i>
-                                        <input
-                                            type="file"
-                                            id="upload"
-                                            class="account-file-input"
-                                            hidden
-                                            accept="image/png, image/jpeg"
-                                            name="image"
-                                        />
-                                    </label>
-                                    <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                                        <i class="bx bx-reset d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">Reset</span>
-                                    </button>
-                                    <!-- div class="container-fluid" id='camcam'>
-                                        <a class='btn btn-block btn-primary text-white' id='open'> Open cam</a>
-                                        <div class="row">
-                                            <div class="col-md- offset-1">
-                                                <div id="wrap">
-                                                    <div id='cont'>
-                                                        <div id="vid" class='son' >
-                                                            <video id='video'></video>
-                                                        </div>
-                                                        <div id="capture" class='son'>
-                                                            <canvas id='canvas'></canvas>
-                                                            <canvas id='blank' style='display:none;'></canvas>
-                                                        </div>
-
-                                                        <div id="control">
-                                                            <div class="container">
-                                                                <div class="row">
-                                                                    <div class="col-md-4"><a id='retake' class='btn btn-block m-1 hov'><i class="fas fa-sync-alt"></i></a></div>
-                                                                    <div class="col-md-4"><a id='snap' class='btn btn-block m-1 hov'><i class="fas fa-camera"></i></a></div>
-                                                                    <div class="col-md-4"><a id='close' class='btn btn-block m-1 hov'><i class="fas fa-times"></i></a></div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div -->
-                                    <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="my-0"/>
                         <div class="card-body">
                             <div class="row">
                                 <div class="mb-3 col-md-3">
+                                    <label for="firstname" class="form-label">Tip</label>
+                                    <select
+                                        class="form-select"
+                                         id="type"
+                                        name="type" >
+                                        <option value="account">Cari</option>
+                                        <option value="customer">Müşteri</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-5">
                                     <label for="firstname" class="form-label">İsim</label>
                                     <input
                                         class="form-control"
@@ -83,7 +32,7 @@
                                         autofocus required
                                     />
                                 </div>
-                                <div class="mb-3 col-md-3">
+                                <div class="mb-3 col-md-4">
                                     <label for="lastname" class="form-label">Soyisim</label>
                                     <input
                                         class="form-control"
@@ -125,8 +74,7 @@
                                             id="phoneNumber"
                                             name="phone1"
                                             class="form-control"
-                                            required
-                                        />
+                                         />
                                     </div>
                                 </div>
                                 <div class="mb-3 col-md-6">
@@ -176,15 +124,6 @@
                                         <option value="sahis">Şahıs</option>
                                         <option value="firma">Firma</option>
                                     </select>
-                                </div>
-                                <div class="mb-3 col-md-4">
-                                    <label for="zipCode" class="form-label">Web Sitesi</label>
-                                    <input
-                                        type="text"
-                                        id="phoneNumber"
-                                        name="web_sites"
-                                        class="form-control"
-                                    />
                                 </div>
                             </div>
                         </div>

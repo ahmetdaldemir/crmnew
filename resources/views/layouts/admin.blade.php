@@ -180,28 +180,30 @@
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <script src="{{asset('assets/vendor/libs/jquery/jquery.js')}}"></script>
-<script src="{{asset('assets/vendor/libs/popper/popper.js')}}"></script>
 <script src="{{asset('assets/vendor/js/bootstrap.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
 <script src="{{asset('assets/vendor/js/menu.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
-<script src="{{asset('assets/vendor/libs/i18n.js')}}"></script>
-<script src="{{asset('assets/vendor/libs/cleave/cleave.js')}}"></script>
-<script src="{{asset('assets/vendor/libs/cleave/cleave-phone.js')}}"></script>
+ <script src="{{asset('assets/vendor/libs/i18n.js')}}"></script>
+
 <script src="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/moment/moment.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/tagify/tagify.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-message-box@3.2.2/dist/messagebox.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
 @yield('custom-js')
 
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="{{asset('assets/js/custom.js')}}"></script>
 <script src="{{asset('assets/js/forms-selects.js')}}"></script>
 <script src="{{asset('assets/js/dashboards-analytics.js')}}"></script>
-<script src="{{asset('assets/js/forms-tagify.js')}}"></script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>

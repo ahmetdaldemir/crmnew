@@ -23,7 +23,8 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
                     @foreach($customers as $customer)
-                        <tr>
+                        @if($customer->type == "customer")
+                            <tr>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{$customer->fullname}}</strong></td>
                             <td><span class="badge bg-label-primary me-1">{{$customer->phone1}}</span></td>
                             <td><span class="badge bg-label-primary me-1">{{$customer->email}}</span></td>
@@ -54,6 +55,7 @@
 
                             </td>
                         </tr>
+                        @endif
                     @endforeach
                     </tbody>
                 </table>

@@ -8,27 +8,40 @@ use Illuminate\Database\Eloquent\Model;
 class TechnicalService extends Model
 {
     use HasFactory;
-    protected $casts = ['version_id' => 'array','products' => 'array'];
+    protected $casts = ['version_id' => 'array','products' => 'array','accessory_category'=> 'array','physically_category'=> 'array','fault_category'=> 'array'];
 
     protected $fillable = [
         'customer_id',
         'physical_condition',
         'accessories',
         'fault_information',
-        'process',
-        'products',
+        'device_password',
+         'products',
         'seller_id',
         'brand_id',
         'version_id',
         'total_price',
         'customer_price',
-        'process_type',
+        'status',
         'delivery_staff',
         'company_id',
         'user_id',
+        'accessory_category',
+        'physically_category',
+        'fault_category',
     ];
 
 
+    const STATUS = [
+        "new" => "Yeni",
+        "waiting" => "Bekleme",
+        "price_comfirm" => "Fiyat Onay Bekleniyor",
+        "item_waiting" => "Parça Bekleniyor",
+        "item_not" => "Parça Bekleniyor",
+        "customer_waiting" => "Teslim Edilecek",
+        "complated" => "Tamamlandı",
+        "closed" => "İptal",
+    ];
 
     public function seller()
     {
@@ -37,14 +50,14 @@ class TechnicalService extends Model
 
     public function brand()
     {
-        return $this->hasOne(Brand::class,'brand','brand_id');
+        return $this->hasOne(Brand::class,'id','brand_id');
     }
 
     public function version()
     {
         $array = $this->version_id;
-        $names = collect($array)->map(function($name, $key) {
-            return Brand::find($name)->name;
+         $names = collect($array)->map(function($name, $key) {
+             return Version::find($name)->name;
         });
         return $names->toJson();
     }
@@ -56,5 +69,10 @@ class TechnicalService extends Model
     public function customer()
     {
         return $this->hasOne(Customer::class,'id','customer_id');
+    }
+
+    public function sumPrice()
+    {
+       return TechnicalServiceProducts::where('technical_service_id',$this->id)->sum('sale_price');
     }
 }

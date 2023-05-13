@@ -19,10 +19,16 @@ class CustomerController extends Controller
         $this->sellerService = $sellerService;
     }
 
-    protected function index()
+    protected function index(Request $request)
     {
         $data['customers'] = $this->customerService->get();
-        return view('module.customer.index',$data);
+        $data['request'] = $request;
+        if($request->type == 'customer')
+        {
+            return view('module.customer.index',$data);
+        }else{
+            return view('module.customer.account',$data);
+        }
     }
 
     protected function create()
@@ -52,7 +58,6 @@ class CustomerController extends Controller
             'fullname' => $request->firstname.' '.$request->lastname,
             'iban' => $request->iban,
             'company_type' => $request->company_type,
-            'web_sites' => $request->web_sites,
             'code' => Str::uuid(),
             'tc' => $request->tc,
             'phone1' => $request->phone1,
@@ -62,7 +67,6 @@ class CustomerController extends Controller
             'district' => $request->district,
             'email' => $request->email,
             'note' => $request->note,
-            'image' => $request->file('image'),
             'seller_id' => $request->seller_id,
             'company_id' => Auth::user()->company_id,
             'user_id' => Auth::id()

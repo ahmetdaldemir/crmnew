@@ -2,7 +2,8 @@
 
 if (! function_exists('setting')) {
     function setting($key) {
-        \App\Models\Setting::where('key',$key)->first()->value;
+        $newkey = explode(".",$key);
+        return \App\Models\Setting::where('key',$newkey[1])->where('category',$newkey[0])->first()->value;
     }
 }
 

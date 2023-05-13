@@ -50,7 +50,7 @@ class StockCard extends BaseModel
 
     public function hasBrand($id): string
     {
-        return $this->brand_id == $id ? 'true':'false';
+        return $this->brand_id == $id ? 'true' : 'false';
     }
 
     public function hasVersion($id): string
@@ -68,15 +68,15 @@ class StockCard extends BaseModel
         return $this->id == $id ? 'true' : 'false';
     }
 
-    public function hasStock($id): string
-    {
-        return $this->id == $id ? 'true':'false';
-    }
-
 
     public function seller(): HasOne
     {
         return $this->hasOne(Seller::class, 'id', 'seller_id');
+    }
+
+    public function category(): HasOne
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
     }
 
     public function warehouse(): HasOne
@@ -91,10 +91,10 @@ class StockCard extends BaseModel
 
     public function version()
     {
-
         $array = $this->version_id;
-        $names = collect($array)->map(function($name, $key) {
-            return Version::find($name)->name;
+
+        $names = collect($array)->map(function ($name, $key) {
+            return Version::find($name)->name ?? "Belirtilmedi";
         });
         return $names->toJson();
         //return $this->hasOne(Version::class, 'id', 'version_id');
@@ -102,10 +102,26 @@ class StockCard extends BaseModel
 
     public function quantity()
     {
-        $in =  StockCardMovement::where('stock_card_id',$this->id)->where('type',1)->sum('quantity');
-        $out = StockCardMovement::where('stock_card_id',$this->id)->where('type',2)->sum('quantity');
+        $in = StockCardMovement::where('stock_card_id', $this->id)->where('type', 1)->sum('quantity');
+        $out = StockCardMovement::where('stock_card_id', $this->id)->where('type', 2)->sum('quantity');
+        return $in - $out;
+    }
+
+    public function quantityId($id)
+    {
+        $in = StockCardMovement::where('stock_card_id', $id)->where('type', 1)->sum('quantity');
+        $out = StockCardMovement::where('stock_card_id', $id)->where('type', 2)->sum('quantity');
         return $in - $out;
     }
 
 
+    public function stockCardPrice()
+    {
+        return $this->hasOne(StockCardPrice::class, 'id', 'stock_card_id');
+    }
+
+    public static function getStockCardPrice($id)
+    {
+       return StockCardPrice::where('stock_card_id',$id)->orderBy('id','desc')->first();
+    }
 }

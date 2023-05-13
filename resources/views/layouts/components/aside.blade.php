@@ -22,9 +22,21 @@
             </a>
         </li>
 
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Kategoriler</span>
+        </li>
+        <?php
+
+        $category =  \App\Models\Category::where('company_id',auth()->user()->company_id)->where('parent_id',0)->get();  ?>
+        @foreach($category as $item)
+        <li class="menu-item">
+            <a href="{{route('stockcard.list',['category_id' => $item->id])}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">{{$item->name}}</div>
+            </a>
+        </li>
+        @endforeach
         <!-- Layouts -->
-
-
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Stok İşlemleri</span>
         </li>
@@ -35,9 +47,15 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{route('invoice.index')}}" class="menu-link">
+            <a href="{{route('invoice.index',['type' => 1])}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Faturalar</div>
+                <div data-i18n="Basic">Gelen Faturalar</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{route('invoice.index',['type' => 2])}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Giden Faturalar</div>
             </a>
         </li>
         <li class="menu-item">
@@ -73,9 +91,15 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{route('customer.index')}}" class="menu-link">
+            <a href="{{route('customer.index',['type' => 'customer'])}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Müşteriler</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{route('customer.index',['type' => 'account'])}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Cari</div>
             </a>
         </li>
         <li class="menu-item">
@@ -171,6 +195,12 @@
             <a href="{{route('fakeproduct.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Fake Ürünler</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{route('technical_service.category')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Teknik Servis Kategorileri</div>
             </a>
         </li>
     </ul>

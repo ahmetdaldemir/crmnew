@@ -43,7 +43,8 @@
                             <tbody>
                             @if($invoice->detail)
                                 @foreach($invoice->detail as $item)
-                                    <tr>
+                                    @if(!empty($item->stock))
+                                     <tr>
                                         <td class="text-nowrap">{{$item->stock->brand->name}}/
                                                 <?php
                                                 $datas = json_decode($item->stock->version(), TRUE);
@@ -57,6 +58,11 @@
                                         <td>{{$item->base_cost_price}}</td>
                                         <td>{{$item->sale_price}}</td>
                                     </tr>
+                                     @else
+                                        <tr>
+                                            <td colspan="6">Stok Bulunamıyor</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             @endif
 

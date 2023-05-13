@@ -76,10 +76,6 @@ class TransferController extends Controller
 
     protected function store(Request $request)
     {
-        $stock = $request->group_a;
-        foreach ($stock as $item) {
-            $serialList[$item['stock_card_id']] = $this->getSerialList($item['stock_card_id'], $item['quantity']);
-        }
         $data = array(
             'company_id' => Auth::user()->company_id,
             'user_id' => Auth::user()->id,
@@ -88,8 +84,8 @@ class TransferController extends Controller
             'delivery_id' => $request->delivery_id,
             'description' => $request->description,
             'number' => $request->number??null,
-            'stocks' => json_encode($stock),
-            'serial_list' => json_encode($serialList),
+            'stocks' => array_unique($request->sevkList),
+            'serial_list' => array_unique($request->sevkList),
             'delivery_seller_id' => $request->delivery_seller_id,
         );
 
@@ -124,8 +120,8 @@ class TransferController extends Controller
         return view('module.transfer.show', $data);
     }
 
-    public function getSerialList($stockCardId, $quantity)
+    public function getSerialList($stockCardId, $quantity,$color_id)
     {
-        return StockCardMovement::select('serial_number')->where('stock_card_id', $stockCardId)->pluck('serial_number')->take($quantity);
+        return StockCardMovement::select('serial_number')->where('stock_card_id', $stockCardId)->where('color_id', $color_id)->pluck('serial_number')->take($quantity);
     }
 }

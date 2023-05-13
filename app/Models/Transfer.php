@@ -38,7 +38,7 @@ class Transfer extends BaseModel
         'serial_list'
     ];
 
-    protected $casts = ['stocks' => 'json','serial_list' => 'json'];
+    protected $casts = ['stocks' => 'array','serial_list' => 'array'];
 
 
     public function seller($id)

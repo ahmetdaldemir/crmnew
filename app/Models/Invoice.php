@@ -19,7 +19,9 @@ class Invoice extends BaseModel
         'type',
         'number',
         'create_date',
-        'payment_type',
+        'credit_card',
+        'cash',
+        'installment',
         'description',
         'is_status',
         'total_price',
@@ -70,7 +72,10 @@ class Invoice extends BaseModel
     {
         return $this->hasMany(StockCardMovement::class, 'invoice_id', 'id');
     }
-
+    public function seller(): hasOne
+    {
+        return $this->hasOne(Seller::class, 'id', 'seller');
+    }
     public function staff(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'staff_id');
