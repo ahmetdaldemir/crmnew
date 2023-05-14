@@ -17,7 +17,7 @@ class SafeController extends Controller
 
     protected function index()
     {
-        $data['safes'] = $this->safeService->get();
+        $data['safes'] = $this->safeService->get()->sortByDesc('id');
         return view('module.safe.index',$data);
     }
 

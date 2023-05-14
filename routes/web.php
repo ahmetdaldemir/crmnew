@@ -25,7 +25,7 @@ Route::get('/logout', [App\Http\Controllers\Auth\LogoutController::class, 'logou
 
 Auth::routes();
 
-Route::middleware('companies')->group(function () {
+Route::middleware(['companies','activity'])->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -272,6 +272,18 @@ Route::middleware('companies')->group(function () {
         Route::get('show', [App\Http\Controllers\SaleController::class, 'show'])->name('show');
     });
 
+    Route::prefix('phone')->name('phone.')->middleware([])->group(function () {
+        Route::get('/', [App\Http\Controllers\PhoneController::class, 'index'])->name('index');
+        Route::get('edit', [App\Http\Controllers\PhoneController::class, 'edit'])->name('edit');
+        Route::get('delete', [App\Http\Controllers\PhoneController::class, 'delete'])->name('delete');
+        Route::get('create', [App\Http\Controllers\PhoneController::class, 'create'])->name('create');
+        Route::post('store', [App\Http\Controllers\PhoneController::class, 'store'])->name('store');
+        Route::post('update', [App\Http\Controllers\PhoneController::class, 'update'])->name('update');
+        Route::get('barcode', [App\Http\Controllers\PhoneController::class, 'barcode'])->name('barcode');
+        Route::get('show', [App\Http\Controllers\PhoneController::class, 'show'])->name('show');
+        Route::get('sale', [App\Http\Controllers\PhoneController::class, 'sale'])->name('sale');
+        Route::post('salestore', [App\Http\Controllers\PhoneController::class, 'salestore'])->name('salestore');
+    });
 });
 /**  Custom **/
 
@@ -289,3 +301,19 @@ Route::get('/serialcheck', [App\Http\Controllers\CustomController::class, 'seria
 Route::get('/getStockCardCategory', [App\Http\Controllers\CustomController::class, 'getStockCardCategory'])->name('getStockCardCategory');
 Route::get('/getStockSeller', [App\Http\Controllers\CustomController::class, 'getStockSeller'])->name('getStockSeller');
 
+
+
+Route::group(['prefix' => 'activity', 'namespace' => 'jeremykenedy\LaravelLogger\App\Http\Controllers', 'middleware' => ['web', 'auth', 'activity']], function () {
+
+    // Dashboards
+    Route::get('/', 'LaravelLoggerController@showAccessLog')->name('activity');
+    Route::get('/cleared', ['uses' => 'LaravelLoggerController@showClearedActivityLog'])->name('cleared');
+
+    Route::get('/log/{id}', 'LaravelLoggerController@showAccessLogEntry');
+    Route::get('/cleared/log/{id}', 'LaravelLoggerController@showClearedAccessLogEntry');
+
+    // Forms
+    Route::delete('/clear-activity', ['uses' => 'LaravelLoggerController@clearActivityLog'])->name('clear-activity');
+    Route::delete('/destroy-activity', ['uses' => 'LaravelLoggerController@destroyActivityLog'])->name('destroy-activity');
+    Route::post('/restore-log', ['uses' => 'LaravelLoggerController@restoreClearedActivityLog'])->name('restore-activity');
+});

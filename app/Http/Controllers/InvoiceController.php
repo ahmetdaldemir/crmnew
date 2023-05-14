@@ -302,6 +302,7 @@ class InvoiceController extends Controller
         $safe->name = "Şirket";
         $safe->company_id = Auth::user()->company_id;
         $safe->user_id = Auth::user()->id;
+        $safe->seller_id = Auth::user()->seller_id;
         $safe->type = "out";
         $safe->incash = $request->payment_type['cash'] ?? 0;
         $safe->outcash ="0";

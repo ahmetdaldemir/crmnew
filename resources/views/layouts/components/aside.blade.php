@@ -25,16 +25,22 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Kategoriler</span>
         </li>
-        <?php
-
-        $category =  \App\Models\Category::where('company_id',auth()->user()->company_id)->where('parent_id',0)->get();  ?>
-        @foreach($category as $item)
         <li class="menu-item">
-            <a href="{{route('stockcard.list',['category_id' => $item->id])}}" class="menu-link">
+            <a href="{{route('phone.index')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">{{$item->name}}</div>
+                <div data-i18n="Basic">Telefon</div>
             </a>
         </li>
+
+        <?php
+        $category = \App\Models\Category::where('company_id', auth()->user()->company_id)->where('parent_id', 0)->get(); ?>
+        @foreach($category as $item)
+            <li class="menu-item">
+                <a href="{{route('stockcard.list',['category_id' => $item->id])}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <div data-i18n="Basic">{{$item->name}}</div>
+                </a>
+            </li>
         @endforeach
         <!-- Layouts -->
         <li class="menu-header small text-uppercase">

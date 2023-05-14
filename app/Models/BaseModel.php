@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class BaseModel extends Model
 {
-    use LogsActivity;
+    use LogsActivity,ActivityLogger;
 
     protected $fillable = ['name', 'text'];
 

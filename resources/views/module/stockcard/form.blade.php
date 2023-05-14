@@ -111,10 +111,7 @@
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Model</label>
-                                <select name="version_id[]"
-                                        @if(isset($stockcards)) @if(!is_null($stockcards->version_id)) data-version="{{implode(",",$stockcards->version_id)}}"
-                                        @endif  @endif id="version_id" class="form-control select2" required
-                                        multiple></select>
+                                <select name="version_id[]" @if(isset($stockcards)) @if(!is_null($stockcards->version_id)) data-version="{{implode(",",$stockcards->version_id)}}" @endif  @endif id="version_id" class="form-control select2" required  multiple></select>
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Birim</label>

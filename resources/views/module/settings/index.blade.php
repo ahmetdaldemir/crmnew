@@ -44,7 +44,9 @@
                                         </option>
                                         <option @if($setting->category == 'admin') selected @endif value="Admin">Admin
                                         </option>
-                                        <option @if($setting->category == 'sms') selected @endif value="Admin">SMS
+                                        <option @if($setting->category == 'sms') selected @endif value="SMS">SMS
+                                        </option>
+                                        <option @if($setting->category == 'phone') selected @endif value="Telefon">Telefon
                                         </option>
                                     </select>
                                 </div>
@@ -96,6 +98,7 @@
                                     <option value="sms">SMS</option>
                                     <option value="site">Site</option>
                                     <option value="admin">Admin</option>
+                                    <option value="phone">Telefon</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
