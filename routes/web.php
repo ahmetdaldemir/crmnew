@@ -200,6 +200,7 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::get('salesedit', [App\Http\Controllers\InvoiceController::class, 'salesedit'])->name('salesedit');
         Route::post('salesstore', [App\Http\Controllers\InvoiceController::class, 'salesstore'])->name('salesstore');
         Route::post('salesupdate', [App\Http\Controllers\InvoiceController::class, 'salesupdate'])->name('salesupdate');
+        Route::get('stockcardmovementform', [App\Http\Controllers\InvoiceController::class, 'stockcardmovementform'])->name('stockcardmovementform');
 
     });
 

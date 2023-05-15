@@ -542,4 +542,18 @@ class InvoiceController extends Controller
         return response()->json('Kaydedildi', 200);
     }
 
+
+    public function stockcardmovementform(Request $request)
+    {
+        $data['warehouses'] = $this->warehouseService->get();
+        $data['stocks'] = $this->stockCardService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['colors'] = $this->colorService->get();
+        $data['reasons'] = $this->reasonService->get();
+        $data['citys'] = City::all();
+        $data['stock_card_id'] = $request->id;
+        $data['stock_card_movements'] = StockCardMovement::where('stock_card_id', $request->id)->get();
+        return view('module.invoice.stockcardmovementform', $data);
+    }
+
 }
