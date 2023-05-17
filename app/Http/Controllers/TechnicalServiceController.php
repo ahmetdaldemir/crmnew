@@ -210,5 +210,19 @@ class TechnicalServiceController extends Controller
         return redirect()->back();
      }
 
+    public function covering(Request $request)
+    {
+        $data['stocks'] = $this->stockCardService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['customers'] = $this->customerService->get();
+        $data['brands'] = $this->brandService->get();
+        $data['users'] = $this->userService->get();
+        $data['citys'] = City::all();
+        $data['categories_all'] =  TechnicalProcess::all();
+        $data['tows'] = Town::where('city_id',34)->get();
+
+        return view('module.technical_service.covering', $data);
+    }
+
 
 }

@@ -80,6 +80,7 @@
                 </form>
             </div>
             <div class="card-header">
+                <a href="{{route('technical_service.covering')}}" class="btn btn-danger ">Yeni Kaplama Ekle</a>
                 <a href="{{route('technical_service.create')}}" class="btn btn-primary float-end">Yeni Teknik Servis Ekle</a>
             </div>
             <div class="table-responsive text-nowrap">

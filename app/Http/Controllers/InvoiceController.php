@@ -9,6 +9,7 @@ use App\Models\Currency;
 use App\Models\Invoice;
 use App\Models\Safe;
 use App\Models\StockCardMovement;
+use App\Models\StockCardPrice;
 use App\Models\Transfer;
 use App\Services\AccountingCategory\AccountingCategoryService;
 use App\Services\Brand\BrandService;
@@ -297,7 +298,7 @@ class InvoiceController extends Controller
             $this->invoiceService->update($invoiceID->id, $newdata);
         }
 
-        $total = $request->payment_type['cash'] +  $request->payment_type['credit_card'];
+        $total = $request->payment_type['cash'] + $request->payment_type['credit_card'];
         $safe = new Safe();
         $safe->name = "Şirket";
         $safe->company_id = Auth::user()->company_id;
@@ -305,8 +306,8 @@ class InvoiceController extends Controller
         $safe->seller_id = Auth::user()->seller_id;
         $safe->type = "out";
         $safe->incash = $request->payment_type['cash'] ?? 0;
-        $safe->outcash ="0";
-        $safe->amount =	 $total ?? 0;
+        $safe->outcash = "0";
+        $safe->amount = $total ?? 0;
         $safe->invoice_id = $invoiceID->id;
         $safe->credit_card = $request->payment_type['credit_card'] ?? 0;
         $safe->installment = 0;
@@ -466,9 +467,9 @@ class InvoiceController extends Controller
         $safe->company_id = Auth::user()->company_id;
         $safe->user_id = Auth::user()->id;
         $safe->type = "in";
-	    $safe->incash = $request->payment_type['cash'];
-        $safe->outcash ="0";
-	 	$safe->amount =	 $request->payment_type['cash'] + $request->payment_type['credit_card']  + $request->payment_type['installment'];
+        $safe->incash = $request->payment_type['cash'];
+        $safe->outcash = "0";
+        $safe->amount = $request->payment_type['cash'] + $request->payment_type['credit_card'] + $request->payment_type['installment'];
         $safe->invoice_id = $invoiceID->id;
         $safe->credit_card = $request->payment_type['credit_card'];
         $safe->installment = $request->payment_type['installment'];
@@ -551,9 +552,53 @@ class InvoiceController extends Controller
         $data['colors'] = $this->colorService->get();
         $data['reasons'] = $this->reasonService->get();
         $data['citys'] = City::all();
-        $data['stock_card_id'] = $request->id;
-        $data['stock_card_movements'] = StockCardMovement::where('stock_card_id', $request->id)->get();
+        $data['invoice_id'] = $request->id;
+        $data['stock_card_movements'] = StockCardMovement::selectRaw('*,count(stock_card_id) as quant')->where('invoice_id', $request->id)->groupBy('stock_card_id')->get();
         return view('module.invoice.stockcardmovementform', $data);
+    }
+
+    public function stockcardmovementstore(Request $request)
+    {
+            for ($i = 0; $i < $request->quantity; $i++) {
+                $stockcardmovement = new StockCardMovement();
+                $stockcardmovement->stock_card_id = $request->stock_card_id;
+                $stockcardmovement->user_id = Auth::user()->id;
+                $stockcardmovement->invoice_id = $request->invoice_id;
+                $stockcardmovement->color_id = $request->color_id;
+                $stockcardmovement->warehouse_id = $request->warehouse_id;
+                $stockcardmovement->seller_id = $request->seller_id;
+                $stockcardmovement->reason_id = $request->reason_id;
+                $stockcardmovement->type = 1;
+                $stockcardmovement->quantity = 1;
+                $stockcardmovement->imei = $request->imei ?? null;
+                $stockcardmovement->assigned_accessory = isset($request->assigned_accessory) and $request->assigned_accessory == 'on' ? 1 : 0;
+                $stockcardmovement->assigned_device = isset($request->assigned_device) and $request->assigned_device == 'on' ? 1 : 0;
+                $stockcardmovement->serial_number = $request->serial ?? SN::generate();
+                $stockcardmovement->tax = $request->tax ?? null;
+                $stockcardmovement->cost_price = str_replace(",", ".", $request->cost_price);
+                $stockcardmovement->base_cost_price = str_replace(",", ".", $request->base_cost_price);
+                $stockcardmovement->sale_price = str_replace(",", ".", $request->sale_price);
+                $stockcardmovement->description = $request->description ?? null;
+                $stockcardmovement->discount = $request->discount ?? null;
+                $stockcardmovement->save();
+            }
+
+            $stockcardprice = new StockCardPrice();
+            $stockcardprice->company_id = Auth::user()->company_id;
+            $stockcardprice->user_id = Auth::user()->id;
+            $stockcardprice->stock_card_id = $request['stock_card_id'];
+            $stockcardprice->cost_price = str_replace(",", ".", $request['cost_price']);
+            $stockcardprice->base_cost_price = str_replace(",", ".", $request['base_cost_price']);
+            $stockcardprice->sale_price = str_replace(",", ".", $request['sale_price']);
+            $stockcardprice->save();
+
+    }
+
+
+    public function stockmovementdelete(Request $request)
+    {
+        StockCardMovement::where('stock_card_id',$request->id)->delete();
+        return redirect()->back();
     }
 
 }

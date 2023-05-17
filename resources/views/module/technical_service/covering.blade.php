@@ -27,69 +27,31 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <button class="btn btn-secondary btn-primary" tabindex="0" data-bs-toggle="modal"
-                                            data-bs-target="#editUser" type="button"><span><i
-                                                class="bx bx-plus me-md-1"></i></span></button>
+                                    <button class="btn btn-secondary btn-primary" tabindex="0" data-bs-toggle="modal" data-bs-target="#editUser" type="button"><span><i class="bx bx-plus me-md-1"></i></span></button>
                                 </div>
                             </div>
                             <div>
-                                <label for="defaultFormControlInput" class="form-label">Fiziksel Durumu</label>
+                                <label for="defaultFormControlInput" class="form-label">Hizmet Tipi</label>
                                 <div id="physical_condition" class="form-text">
-                                    <ul>
-                                        @foreach($categories_all as $item)
-                                            @if($item->parent_id == "physically")
-                                                <li><input type="checkbox" value="{{$item->id}}"
-                                                           name="physically_category[]"/> {{$item->name}}</li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <hr>
-                                <textarea class="form-control" id="physical_condition" name="physical_condition"
-                                          aria-describedby="physical_condition">@if(isset($technical_services))
-                                        {{$technical_services->physical_condition}}
-                                    @endif </textarea>
-
+                                    <select class="form-select" name="type">
+                                        <option>Kaplama</option>
+                                        <option>Kılıf Baskı</option>
+                                    </select>
+                                 </div>
                             </div>
                             <div>
-                                <div id="accessories" class="form-text">
-                                    <ul>
-                                        @foreach($categories_all as $item)
-                                            @if($item->parent_id == "accessory")
-                                                <li><input type="checkbox" value="{{$item->id}}"
-                                                           name="accessory_category[]"/> {{$item->name}}</li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <hr>
-                                <label for="defaultFormControlInput" class="form-label">Aksesuar</label>
-                                <textarea class="form-control" id="accessories" name="accessories"
+                                <label for="defaultFormControlInput" class="form-label">Kaplama Bilgisi</label>
+                                <textarea class="form-control" id="coating_information" name="coating_information"
                                           aria-describedby="accessories">@if(isset($technical_services))
-                                        {{$technical_services->accessories}}
+                                        {{$technical_services->coating_information}}
                                     @endif</textarea>
-
-                            </div>
+                             </div>
                             <div>
-                                <label for="defaultFormControlInput" class="form-label">Arıza Açıklaması</label>
-
-                                <div id="fault_information" class="form-text">
-                                    <ul>
-                                        @foreach($categories_all as $item)
-                                            @if($item->parent_id == "fault")
-                                                <li><input type="checkbox" value="{{$item->id}}"
-                                                           name="fault_category[]"/> {{$item->name}}</li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
-
-                                <textarea class="form-control" id="fault_information" name="fault_information"
-                                          aria-describedby="fault_information">@if(isset($technical_services))
-                                        {{$technical_services->fault_information}}
+                                <label for="defaultFormControlInput" class="form-label">Baskı Bilgisi</label>
+                                <textarea class="form-control" id="print_information" name="print_information" aria-describedby="print_information">@if(isset($technical_services))
+                                        {{$technical_services->print_information}}
                                     @endif</textarea>
-
-                            </div>
+                             </div>
                         </div>
                     </div>
                 </div>
