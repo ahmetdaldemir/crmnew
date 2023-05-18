@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Invoice extends BaseModel
 {
@@ -129,5 +130,22 @@ class Invoice extends BaseModel
     {
         return $this->safe_id == $id ? 'true':'false';
     }
+
+    public function totalCost()
+    {
+        return StockCardMovement::where('invoice_id',$this->id)->where('type',1)->sum(DB::raw('quantity * cost_price'));
+     }
+
+    public function totalBaseCost()
+    {
+        return StockCardMovement::where('invoice_id',$this->id)->where('type',1)->sum(DB::raw('quantity * base_cost_price'));
+    }
+
+    public function totalSale()
+    {
+        return StockCardMovement::where('invoice_id',$this->id)->where('type',1)->sum(DB::raw('quantity * sale_price'));
+    }
+
+
 
 }

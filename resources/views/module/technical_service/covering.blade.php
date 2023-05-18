@@ -102,7 +102,7 @@
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Cihaz Şifresi</label>
-                                <input type="text" class="form-control" id="device_password"
+                                <input type="text" class="form-control" name="device_password" id="device_password"
                                        @if(isset($technical_services)) value="{{$technical_services->device_password}}"
                                        @endif aria-describedby="device_password">
                             </div>
@@ -139,7 +139,7 @@
 
     <script>
         function save() {
-            var postUrl = window.location.origin + '/technical_service/store';   // Returns base URL (https://example.com)
+            var postUrl = window.location.origin + '/technical_service/coveringstore';   // Returns base URL (https://example.com)
             $.ajax({
                 type: "POST",
                 url: postUrl,
@@ -150,7 +150,7 @@
                     $('#loader').removeClass('display-none')
                 },
                 success: function (data) {
-                    window.location.href =  window.location.origin + '/technical_service/detail?id=' + data + '';
+                    window.location.href =  window.location.origin + '/technical_service/index';
                 },
                 error: function (xhr) { // if error occured
                     alert("Error occured.please try again");
@@ -158,7 +158,7 @@
                     $(placeholder).removeClass('loading');
                 },
                 complete: function () {
-                    window.location.href = window.location.origin + '/technical_service/detail?id=' + data + '';
+                    window.location.href = window.location.origin + '/technical_service/index';
                 },
 
             });

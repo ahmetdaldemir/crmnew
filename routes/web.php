@@ -254,6 +254,7 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::post('categorystore', [App\Http\Controllers\TechnicalServiceController::class, 'categorystore'])->name('categorystore');
         Route::get('categorydelete', [App\Http\Controllers\TechnicalServiceController::class, 'categorydelete'])->name('categorydelete');
         Route::get('covering', [App\Http\Controllers\TechnicalServiceController::class, 'covering'])->name('covering');
+        Route::post('coveringstore', [App\Http\Controllers\TechnicalServiceController::class, 'coveringstore'])->name('coveringstore');
     });
 
     Route::prefix('settings')->name('settings.')->middleware([])->group(function () {

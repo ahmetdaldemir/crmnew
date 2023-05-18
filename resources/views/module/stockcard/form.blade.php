@@ -39,9 +39,7 @@
                             <input type="text" class="form-control" id="sku"
                                    @if(isset($stockcards)) value="{{$stockcards->sku}}" @endif  name="sku"
                                    aria-describedby="sku">
-                            <div id="sku" class="form-text">
-                                We'll never share your details with anyone else.
-                            </div>
+
                         </div>
                         <div class="col-xl-2 col-md-3 col-sm-6 col-12 fv-plugins-icon-container">
                             <label for="defaultFormControlInput" class="form-label">Stok Takibi</label>
@@ -49,9 +47,7 @@
                                 <input class="form-check-input" type="checkbox" name="tracking"
                                        id="flexSwitchCheckChecked"/>
                             </div>
-                            <div id="name" class="form-text">
-                                We'll never share your details with anyone else.
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -67,9 +63,7 @@
                                        @if(isset($stockcards)) value="{{$stockcards->tracking_quantity}}"
                                        @endif  name="tracking_quantity"
                                        aria-describedby="tracking_quantity">
-                                <div id="tracking_quantity" class="form-text">
-                                    We'll never share your details with anyone else.
-                                </div>
+
                             </div>
 
                             <div>
@@ -87,9 +81,7 @@
                                         @endif
                                     @endforeach
                                 </select>
-                                <div id="category_id" class="form-text">
-                                    We'll never share your details with anyone else.
-                                </div>
+
                             </div>
 
                         </div>
@@ -105,9 +97,7 @@
                                             @endif value="{{$brand->id}}">{{$brand->name}}</option>
                                     @endforeach
                                 </select>
-                                <div id="brand_id" class="form-text">
-                                    We'll never share your details with anyone else.
-                                </div>
+
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Model</label>
@@ -122,9 +112,7 @@
                                                 @endif  value="{{$key}}">{{$value}}</option>
                                     @endforeach
                                 </select>
-                                <div id="unit_id" class="form-text">
-                                    We'll never share your details with anyone else.
-                                </div>
+
                             </div>
                         </div>
                         <hr class="my-5">

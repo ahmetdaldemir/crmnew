@@ -10,7 +10,6 @@ class Phone extends BaseModel
 {
     use HasFactory;
 
-    protected $casts =['physical_condition' => 'array','altered_parts'=> 'array'];
     protected $fillable = [
         'user_id',
         'company_id',

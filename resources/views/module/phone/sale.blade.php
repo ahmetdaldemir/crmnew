@@ -7,6 +7,7 @@
             <input name="company_id" type="hidden" value="{{\Illuminate\Support\Facades\Auth::user()->company_id}}">
             <input name="user_id" type="hidden" value="{{\Illuminate\Support\Facades\Auth::user()->id}}">
             <input name="phone_id" type="hidden" value="{{$phone->id}}">
+            <input name="sales_price" type="hidden" value="{{$phone->sale_price}}">
             <div class="row">
                 <div class="col-md-6 mb-md-0 mb-4">
                     <div class="card mb-4">
@@ -56,7 +57,7 @@
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Satış Fiyatı</label>
-                                <span>{{$phone->sale_price}} ₺</span>
+                                <span data-sales="{{$phone->sales_price}}" class="invoice-item-sales-price">{{$phone->sale_price}} ₺</span>
                             </div>
                         </div>
                     </div>
@@ -114,6 +115,18 @@
         new Tagify(input);
         new Tagify(input1);
 
+    </script>
+
+    <script>
+        $("#discount_total").change(function () {
+            var salesprice = $(".invoice-item-sales-price").data('sales');
+            var discount = $(this).val();
+            var newSalesPrice = salesprice - ((discount * salesprice) / 100);
+            if(newSalesPrice < salesprice)
+            {
+                Swal.fire('Destekli Satış Fiyatı altına satılamaz');
+            }
+        })
     </script>
 
     <script>

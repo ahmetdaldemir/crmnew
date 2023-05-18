@@ -116,6 +116,14 @@ class PhoneController extends Controller
 
     public function salestore(Request $request)
     {
+
+        $salePrice = $request->payment_type['credit_card'] + $request->payment_type['cash'] + $request->payment_type['installment'];
+        if($salePrice < $request->sale_price)
+        {
+            return redirect()->back();
+        }
+
+
         $data = array(
             'type' => 2,
             'number' =>   null,

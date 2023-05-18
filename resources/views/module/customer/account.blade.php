@@ -11,15 +11,15 @@
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th>Müşteri Adı</th>
-                        <th>Telefon</th>
-                        <th>Email</th>
-                        <th>Kayıt Tarihi</th>
-                        <th>Status</th>
-                        <th><strong>Satış Yapma</strong></th>
-                        <th>Actions</th>
-                    </tr>
+                        <tr>
+                            <th>Müşteri Adı</th>
+                            <th>Telefon</th>
+                            <th>Email</th>
+                            <th>Kayıt Tarihi</th>
+                            <th>Status</th>
+                            <th><strong>Satış Yapma</strong></th>
+                            <th>Actions</th>
+                        </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                     @foreach($customers as $customer)

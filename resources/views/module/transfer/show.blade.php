@@ -32,9 +32,7 @@
                                 <th>Seri No</th>
                                 <th>Ürün</th>
                                 <th>Adet</th>
-                                <th>Alış Fiyatı</th>
-                                <th>Destekli Fiyat</th>
-                                <th>Satış Fiyatı</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -47,9 +45,6 @@
                                             <td>{{$value}}</td>
                                             <td class="text-nowrap">{{$stock_card_moveement->stock->name ?? "Stok Kartı Bulunmayan Seri Eklediniz"}}</td>
                                             <td class="text-nowrap">1</td>
-                                            <td>{{$stock_card_moveement->cost_price}}</td>
-                                            <td>{{$stock_card_moveement->base_cost_price}}</td>
-                                            <td>{{$stock_card_moveement->sale_price}}</td>
                                         </tr>
                                     @else
                                         <tr>

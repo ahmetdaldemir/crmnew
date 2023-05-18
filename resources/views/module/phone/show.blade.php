@@ -5,12 +5,12 @@
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Telefonlar /</span> Telefon listesi</h4>
 
         <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
-            <div class="card">
+            <div id="printableArea" class="card">
                 <div class="card-header">
 
                 </div>
                 <div class="card-body">
-                    <div class="user-avatar-section">
+                    <!-- div class="user-avatar-section">
                         <div class=" d-flex align-items-center flex-column">
                             <img class="img-fluid rounded my-4" src="../../assets/img/avatars/10.png" height="110"
                                  width="110" alt="User avatar">
@@ -18,14 +18,16 @@
                                 <h4 class="mb-2">{{$phone->brand->name}} {{$phone->version->name}}</h4>
                             </div>
                         </div>
-                    </div>
+                    </div -->
                     <div class="d-flex justify-content-around flex-wrap my-4 py-3">
+                        @role('admin')
                         <div class="d-flex align-items-start me-4 mt-3 gap-3">
                             <div>
                                 <h5 class="mb-0">{{$phone->cost_price}} ₺ </h5>
                                 <span>Alış Fiyatı</span>
                             </div>
                         </div>
+                        @endrole
                         <div class="d-flex align-items-start mt-3 gap-3">
                             <div>
                                 <h5 class="mb-0">{{$phone->sale_price}} ₺ </h5>
@@ -58,7 +60,7 @@
                             </li>
                             <li class="mb-3">
                                 <span class="fw-bold me-2">Pil:</span>
-                                <span>{{$phone->batery}}</span>
+                                <span>{{$phone->batery}} %</span>
                             </li>
                             <li class="mb-3">
                                 <span class="fw-bold me-2">Garanti:</span>
@@ -66,20 +68,34 @@
                             </li>
                             <li class="mb-3">
                                 <span class="fw-bold me-2">Fizisel Durum:</span>
-                                <span>(123) 456-7890</span>
+                                <span>{{$phone->physical_condition}}</span>
                             </li>
                             <li class="mb-3">
                                 <span class="fw-bold me-2">Değişen Parçalar:</span>
-                                <span>French</span>
+                                <span>{{$phone->altered_parts}}</span>
                             </li>
 
                         </ul>
                         <div class="d-flex justify-content-center pt-3">
-                            <a href="javascript:;" class="btn btn-label-danger suspend-user">Yazdır</a>
+                            <a href="#" id="printableAreaButton" onclick="printDiv()" class="btn btn-label-danger suspend-user">Yazdır</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('custom-js')
+    <script>
+         function printDiv() {
+            var divName = 'printableArea';
+            var printContents = document.getElementById(divName).innerHTML;
+            w = window.open();
+            w.document.write(printContents);
+            w.document.write('<scr' + 'ipt type="text/javascript">' + 'window.onload = function() { window.print(); window.close(); };' + '</sc' + 'ript>');
+            w.document.close(); // necessary for IE >= 10
+            w.focus(); // necessary for IE >= 10
+        }
+    </script>
 @endsection

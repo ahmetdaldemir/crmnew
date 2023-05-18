@@ -135,24 +135,13 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label for="defaultFormControlInput" class="form-label">Fiziksel durum</label>
-                                    <select class="form-control select2" id="physical_condition" data-version="{{implode(",",$phone->physical_condition)}}" name="physical_condition[]" multiple required>
-                                        <option @if(array_search(1,$phone->physical_condition) != "") selected @endif value="1">1</option>
-                                        <option @if(array_search(2,$phone->physical_condition) != "") selected @endif value="2">2</option>
-                                        <option @if(array_search(3,$phone->physical_condition) != "") selected @endif value="3">3</option>
-                                        <option @if(array_search(4,$phone->physical_condition) != "") selected @endif value="4">4</option>
-                                    </select>
+                                    <textarea class="form-control" id="physical_condition" name="physical_condition">{{$phone->physical_condition}}</textarea>
                                 </div>
 
                                 <div class="col-md-12">
                                     <label for="defaultFormControlInput" class="form-label">Değişmiş Parçalar</label>
-                                    <select class="form-control select2" id="altered_parts" data-version="{{implode(",",$phone->altered_parts)}}" name="altered_parts[]" multiple required>
-                                        <option @if(array_search(1,$phone->altered_parts) != "") selected @endif value="1">1</option>
-                                        <option @if(array_search(2,$phone->altered_parts) != "") selected @endif value="2">2</option>
-                                        <option @if(array_search(3,$phone->altered_parts) != "") selected @endif value="3">3</option>
-                                        <option @if(array_search(4,$phone->altered_parts) != "") selected @endif value="4">4</option>
-                                    </select>
+                                    <textarea class="form-control" id="physical_condition" name="altered_parts">{{$phone->altered_parts}}</textarea>
                                 </div>
-
                             </div>
                         </div>
                     </div>

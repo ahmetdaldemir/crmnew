@@ -22,7 +22,8 @@ class Reason extends BaseModel
         1 => 'İPTAL',
         2 => 'İADE',
         3 => 'SATIŞ',
-        4 => 'TEKNİK SERVİS'
+        4 => 'TEKNİK SERVİS',
+        5 => 'ALIŞ'
     ];
 
 }

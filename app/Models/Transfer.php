@@ -33,6 +33,7 @@ class Transfer extends BaseModel
         'comfirm_date',
         'delivery_id',
         'stocks',
+        'number',
         'delivery_seller_id',
         'description',
         'serial_list'

@@ -16,9 +16,11 @@
                                         <label for="selectCustomer" class="form-label">Cari Seçiniz</label>
                                         <div class="col-md-9">
                                             <select id="selectCustomer" class="w-100 select2"
-                                                    data-style="btn-default" name="customer_id" ng-init="getCustomers()" onchange="getCustomer(this.value)">
+                                                    data-style="btn-default" name="customer_id" ng-init="getCustomers()"
+                                                    onchange="getCustomer(this.value)">
                                                 <option value="1" data-tokens="ketchup mustard">Genel Cari</option>
-                                                <option ng-repeat="customer in customers" ng-if="customer.type == 'customer'"
+                                                <option ng-repeat="customer in customers"
+                                                        ng-if="customer.type == 'customer'"
                                                         @if(isset($invoices) && '@{{customer.id}}' == $invoices->customer_id) selected
                                                         @endif data-value="@{{customer.id}}" value="@{{customer.id}}">
                                                     @{{customer.fullname}}
@@ -90,11 +92,11 @@
                                                         <option @if($product['stock_card']['id'] == $stock->id) selected
                                                                 @endif value="{{$stock->id}}">{{$stock->name}} -
                                                             <small> {{$stock->brand->name}}</small> - <b>  <?php
-                                                                   $datas = json_decode($stock->version(), TRUE);
-                                                                   foreach ($datas as $mykey => $myValue) {
-                                                                       echo "$myValue,";
-                                                                   }
-                                                                   ?></b>
+                                                                                                               $datas = json_decode($stock->version(), TRUE);
+                                                                                                               foreach ($datas as $mykey => $myValue) {
+                                                                                                                   echo "$myValue,";
+                                                                                                               }
+                                                                                                               ?></b>
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -126,8 +128,8 @@
                                             @endrole
                                             <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                 <p class="mb-2 repeater-title">Satış Fiyatı</p>
-                                                <input type="text" class="form-control invoice-item-price"
-                                                       name="sale_price"
+                                                <input type="text" class="form-control invoice-item-price invoice-item-sales-price"
+                                                       name="sale_price" data-sales="{{$product['stock_card_price']['sale_price']?? $product['stock_card_movement']['sale_price']}}"
                                                        value="{{$product['stock_card_price']['sale_price']?? $product['stock_card_movement']['sale_price']}}"
                                                        readonly/>
                                             </div>
@@ -393,6 +395,22 @@
                     }
                 });
             });
+
+
+            $("#discountInput").change(function () {
+                var salesprice = $(".invoice-item-sales-price").data('sales');
+                var baseCostprice = $(".invoice-item-price").val();
+                var discount = $(this).val();
+                console.log(discount * salesprice);
+                var newSalesPrice = salesprice - ((discount * salesprice) / 100);
+                if(newSalesPrice > baseCostprice)
+                {
+                    $(".invoice-item-sales-price").val(Math.round(newSalesPrice));
+                }else{
+                    Swal.fire('Destekli Satış Fiyatı altına satılamaz');
+                }
+
+            })
         });
 
         $("#serialnumber").show();

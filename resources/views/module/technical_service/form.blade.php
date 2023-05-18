@@ -35,53 +35,50 @@
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Fiziksel Durumu</label>
                                 <div id="physical_condition" class="form-text">
-                                    <ul>
+                                    <select class="form-select select2" name="physically_category[]">
                                         @foreach($categories_all as $item)
                                             @if($item->parent_id == "physically")
-                                                <li><input type="checkbox" value="{{$item->id}}"
-                                                           name="physically_category[]"/> {{$item->name}}</li>
+                                                <option value="{{$item->id}}"> {{$item->name}}</option>
                                             @endif
                                         @endforeach
-                                    </ul>
+                                    </select>
                                 </div>
-                                <hr>
                                 <textarea class="form-control" id="physical_condition" name="physical_condition"
                                           aria-describedby="physical_condition">@if(isset($technical_services))
                                         {{$technical_services->physical_condition}}
                                     @endif </textarea>
 
                             </div>
+                            <hr>
                             <div>
+                                <label for="defaultFormControlInput" class="form-label">Aksesuar</label>
+
                                 <div id="accessories" class="form-text">
-                                    <ul>
+                                    <select class="form-select select2" name="accessory_category[]">
                                         @foreach($categories_all as $item)
                                             @if($item->parent_id == "accessory")
-                                                <li><input type="checkbox" value="{{$item->id}}"
-                                                           name="accessory_category[]"/> {{$item->name}}</li>
+                                                <option value="{{$item->id}}"> {{$item->name}}</option>
                                             @endif
                                         @endforeach
-                                    </ul>
+                                    </select>
                                 </div>
-                                <hr>
-                                <label for="defaultFormControlInput" class="form-label">Aksesuar</label>
                                 <textarea class="form-control" id="accessories" name="accessories"
                                           aria-describedby="accessories">@if(isset($technical_services))
                                         {{$technical_services->accessories}}
                                     @endif</textarea>
 
                             </div>
+                            <hr>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Arıza Açıklaması</label>
-
                                 <div id="fault_information" class="form-text">
-                                    <ul>
+                                    <select class="form-select select2" name="fault_category[]" multiple>
                                         @foreach($categories_all as $item)
                                             @if($item->parent_id == "fault")
-                                                <li><input type="checkbox" value="{{$item->id}}"
-                                                           name="fault_category[]"/> {{$item->name}}</li>
+                                                <option  value="{{$item->id}}"> {{$item->name}}</option>
                                             @endif
                                         @endforeach
-                                    </ul>
+                                    </select>
                                 </div>
 
                                 <textarea class="form-control" id="fault_information" name="fault_information"
@@ -188,7 +185,7 @@
                     $('#loader').removeClass('display-none')
                 },
                 success: function (data) {
-                    window.location.href =  window.location.origin + '/technical_service/detail?id=' + data + '';
+                    window.location.href = window.location.origin + '/technical_service/detail?id=' + data + '';
                 },
                 error: function (xhr) { // if error occured
                     alert("Error occured.please try again");

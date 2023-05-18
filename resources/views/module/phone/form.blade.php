@@ -145,22 +145,12 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label for="defaultFormControlInput" class="form-label">Fiziksel durum</label>
-                                    <select class="form-control select2" id="physical_condition" name="physical_condition[]" multiple required>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
+                                    <textarea class="form-control" id="physical_condition" name="physical_condition"></textarea>
                                 </div>
 
                                 <div class="col-md-12">
                                     <label for="defaultFormControlInput" class="form-label">Değişmiş Parçalar</label>
-                                    <select class="form-control select2" id="altered_parts" name="altered_parts[]" multiple required>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
+                                    <textarea class="form-control" id="physical_condition" name="altered_parts"></textarea>
                                 </div>
 
                             </div>

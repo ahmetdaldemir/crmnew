@@ -28,25 +28,16 @@ return new class extends Migration
             $table->unsignedBigInteger('version_id')->nullable();
             $table->foreign('version_id')->references('id')->on('versions')->onDelete('cascade');
 
-            $table->unsignedBigInteger('stock_id')->nullable();
-            $table->foreign('stock_id')->references('id')->on('stock_cards')->onDelete('cascade');
-
-            $table->unsignedBigInteger('stock_card_movement_id')->nullable();
-            $table->foreign('stock_card_movement_id')->references('id')->on('stock_card_movements')->onDelete('cascade');
-
 
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
 
-            $table->string('serial_number')->nullable();
             $table->string('status')->nullable();
             $table->double('total_price',10,2)->nullable();
             $table->double('customer_price',10,2)->nullable();
-            $table->string('process_type',5)->nullable();
-            $table->text('process')->nullable();
-            $table->text('physical_condition')->nullable();
-            $table->text('fault_information')->nullable();
-            $table->text('accessories')->nullable();
+            $table->string('type')->nullable();
+            $table->text('coating_information')->nullable();
+            $table->text('print_information')->nullable();
             $table->string('device_password')->nullable();
 
             $table->unsignedBigInteger('delivery_staff')->nullable();

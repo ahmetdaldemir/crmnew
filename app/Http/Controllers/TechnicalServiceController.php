@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Setting;
+use App\Models\TechnicalCustomService;
 use App\Models\TechnicalProcess;
 use App\Models\TechnicalServiceProducts;
 use App\Models\Town;
@@ -48,6 +49,7 @@ class TechnicalServiceController extends Controller
     protected function index()
     {
         $data['technical_services'] = $this->technicalService->get();
+        $data['technical_covering_services'] = TechnicalCustomService::all();
         $data['brands'] = $this->brandService->get();
         $data['sellers'] = $this->sellerService->get();
         $data['sms'] = Setting::where('category', 'sms')->get();
@@ -220,8 +222,28 @@ class TechnicalServiceController extends Controller
         $data['citys'] = City::all();
         $data['categories_all'] =  TechnicalProcess::all();
         $data['tows'] = Town::where('city_id',34)->get();
-
         return view('module.technical_service.covering', $data);
+    }
+
+    public function coveringstore(Request $request)
+    {
+        $technical_custom_service = new TechnicalCustomService();
+        $technical_custom_service->company_id = Auth::user()->company_id;
+        $technical_custom_service->user_id = Auth::user()->id;
+        $technical_custom_service->brand_id = $request->brand_id;
+        $technical_custom_service->seller_id = $request->seller_id;
+        $technical_custom_service->version_id = $request->version_id;
+        $technical_custom_service->customer_id = $request->customer_id;
+        $technical_custom_service->status = $request->status;
+        $technical_custom_service->total_price = $request->total_price;
+        $technical_custom_service->customer_price = $request->customer_price;
+        $technical_custom_service->type = $request->type;
+        $technical_custom_service->coating_information = $request->coating_information;
+        $technical_custom_service->print_information = $request->print_information;
+        $technical_custom_service->device_password = $request->device_password;
+        $technical_custom_service->delivery_staff = $request->delivery_staff;
+        $technical_custom_service->save();
+        return redirect()->back();
     }
 
 

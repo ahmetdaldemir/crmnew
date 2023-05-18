@@ -269,52 +269,52 @@ class InvoiceController extends Controller
             $invoiceID = $this->invoiceService->find($request->id);
         }
 
-        if (isset($request->group_a)) {
+     //  if (isset($request->group_a)) {
 
-            if (empty($request->id)) {
-                $this->stockCardService->add_movement($request->group_a, $invoiceID, $request->type);
-            } else {
-                $this->stockCardService->add_movementupdate($request->group_a, $invoiceID, $request->type);
-            }
+     //      if (empty($request->id)) {
+     //          $this->stockCardService->add_movement($request->group_a, $invoiceID, $request->type);
+     //      } else {
+     //          $this->stockCardService->add_movementupdate($request->group_a, $invoiceID, $request->type);
+     //      }
 
-            $total = 0;
-            $taxtotal = 0;
-            $discount_total = 0;
+     //      $total = 0;
+     //      $taxtotal = 0;
+     //      $discount_total = 0;
 
-            foreach ($request->group_a as $item) {
-                $costprice = str_replace(",", ".", $item['cost_price']);
-                $total += $costprice + (($costprice * $item['tax']) / 100) * $item['quantity'];
-                $taxtotal += (($costprice * $item['tax']) / 100) * $item['quantity'];
-                $discount_total += (($costprice * $item['discount'] ?? 0) / 100) * $item['quantity'];
-            }
-            $totalprice = $total - $discount_total;
+     //      foreach ($request->group_a as $item) {
+     //          $costprice = str_replace(",", ".", $item['cost_price']);
+     //          $total += $costprice + (($costprice * $item['tax']) / 100) * $item['quantity'];
+     //          $taxtotal += (($costprice * $item['tax']) / 100) * $item['quantity'];
+     //          $discount_total += (($costprice * $item['discount'] ?? 0) / 100) * $item['quantity'];
+     //      }
+     //      $totalprice = $total - $discount_total;
 
-            $newdata = array(
-                'total_price' => $totalprice,
-                'discount_total' => $discount_total,
-                'taxtotal' => $taxtotal,
-            );
+     //      $newdata = array(
+     //          'total_price' => $totalprice,
+     //          'discount_total' => $discount_total,
+     //          'taxtotal' => $taxtotal,
+     //      );
 
-            $this->invoiceService->update($invoiceID->id, $newdata);
-        }
+     //      $this->invoiceService->update($invoiceID->id, $newdata);
+     //  }
 
-        $total = $request->payment_type['cash'] + $request->payment_type['credit_card'];
-        $safe = new Safe();
-        $safe->name = "Şirket";
-        $safe->company_id = Auth::user()->company_id;
-        $safe->user_id = Auth::user()->id;
-        $safe->seller_id = Auth::user()->seller_id;
-        $safe->type = "out";
-        $safe->incash = $request->payment_type['cash'] ?? 0;
-        $safe->outcash = "0";
-        $safe->amount = $total ?? 0;
-        $safe->invoice_id = $invoiceID->id;
-        $safe->credit_card = $request->payment_type['credit_card'] ?? 0;
-        $safe->installment = 0;
-        $safe->description = AccountingCategory::find($request->accounting_category_id)->name;
-        $safe->save();
+     //  $total = $request->payment_type['cash'] + $request->payment_type['credit_card'];
+     //  $safe = new Safe();
+     //  $safe->name = "Şirket";
+     //  $safe->company_id = Auth::user()->company_id;
+     //  $safe->user_id = Auth::user()->id;
+     //  $safe->seller_id = Auth::user()->seller_id;
+     //  $safe->type = "out";
+     //  $safe->incash = $request->payment_type['cash'] ?? 0;
+     //  $safe->outcash = "0";
+     //  $safe->amount = $total ?? 0;
+     //  $safe->invoice_id = $invoiceID->id;
+     //  $safe->credit_card = $request->payment_type['credit_card'] ?? 0;
+     //  $safe->installment = 0;
+     //  $safe->description = AccountingCategory::find($request->accounting_category_id)->name;
+     //  $safe->save();
 
-        return response()->json('Kaydedildi', 200);
+        return response()->json($invoiceID->id, 200);
     }
 
     protected function update(Request $request)
@@ -550,6 +550,7 @@ class InvoiceController extends Controller
         $data['stocks'] = $this->stockCardService->get();
         $data['sellers'] = $this->sellerService->get();
         $data['colors'] = $this->colorService->get();
+        $data['invoice'] =  Invoice::find($request->id);
         $data['reasons'] = $this->reasonService->get();
         $data['citys'] = City::all();
         $data['invoice_id'] = $request->id;
@@ -591,6 +592,7 @@ class InvoiceController extends Controller
             $stockcardprice->base_cost_price = str_replace(",", ".", $request['base_cost_price']);
             $stockcardprice->sale_price = str_replace(",", ".", $request['sale_price']);
             $stockcardprice->save();
+            return redirect()->back();
 
     }
 

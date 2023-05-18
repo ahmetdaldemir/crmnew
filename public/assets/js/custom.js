@@ -138,6 +138,7 @@ function getVersion(sel) {
         type: "GET",
         url: postUrl,
         success: function (response) {
+            $('#version_id').append('<option value="">Tümü</option>');
             $.each(response, function (index, value) {
                 $('#version_id').append($('<option>', {
                     value: value.id,

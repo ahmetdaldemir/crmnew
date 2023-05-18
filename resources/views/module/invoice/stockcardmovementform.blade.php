@@ -20,7 +20,8 @@
                                                 <option value="1" data-tokens="ketchup mustard">Genel Cari</option>
                                                 <option ng-repeat="customer in customers"
                                                         ng-if="customer.type == 'account'"
-                                                        @if(isset($invoices) && '@{{customer.id}}' == $invoices->customer_id) selected
+                                                        ng-selected="customer.id == {{$invoice->customer_id}}"
+                                                        @if(isset($invoice) && '@{{customer.id}}' == $invoice->customer_id) selected
                                                         @endif data-value="@{{customer.id}}" value="@{{customer.id}}">
                                                     @{{customer.fullname}}
                                                 </option>
@@ -41,7 +42,7 @@
                                         <dd class="col-sm-6 d-flex justify-content-md-end">
                                             <div class="w-px-150">
                                                 <input type="text" class="form-control"
-                                                       @if(isset($invoices)) value="{{$invoices->number}}"
+                                                       @if(isset($invoice)) value="{{$invoice->number}}"
                                                        @endif name="number" id="invoiceId">
                                             </div>
                                         </dd>
@@ -50,9 +51,8 @@
                                         </dt>
                                         <dd class="col-sm-6 d-flex justify-content-md-end">
                                             <div class="w-px-150">
-                                                <input type="text" class="form-control datepicker flatpickr-input"
-                                                       name="create_date"
-                                                       @if(isset($invoices)) value="{{$invoices->create_date}}"
+                                                <input type="text" class="form-control datepicker flatpickr-input" name="create_date"
+                                                       @if(isset($invoice)) value="{{$invoice->create_date}}"
                                                        @else  value="{{date('d-m-Y')}}" @endif />
                                             </div>
                                         </dd>
@@ -66,8 +66,7 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <button onclick="save()" type="button" class="btn btn-primary d-grid w-100">
-                                              <span
-                                                  class="d-flex align-items-center justify-content-center text-nowrap">
+                                              <span class="d-flex align-items-center justify-content-center text-nowrap">
                                              <i class="bx bx-paper-plane bx-xs me-1"></i>Kaydet</span>
                                             </button>
                                         </div>
@@ -143,7 +142,9 @@
                                                 <select name="reason_id"
                                                         class="form-select item-details select2 mb-2">
                                                     @foreach($reasons as $reason)
+                                                        @if($reason->type == 5)
                                                         <option value="{{$reason->id}}">{{$reason->name}}</option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -227,11 +228,15 @@
                         <table class="table table-bordered">
                             <tr>
                                 <td style="font-size: 13px">Toplam Maliyet</td>
-                                <td style="font-size: 13px;text-align: center">12000 TL</td>
+                                <td style="font-size: 13px;text-align: center">{{$invoice->totalCost()}} TL</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 13px">Toplam Dest. Sat. Turarı</td>
+                                <td style="font-size: 13px;text-align: center">{{$invoice->totalBaseCost()}} TL</td>
                             </tr>
                             <tr>
                                 <td style="font-size: 13px">Toplam Satış Turarı</td>
-                                <td style="font-size: 13px;text-align: center">12000 TL</td>
+                                <td style="font-size: 13px;text-align: center">{{$invoice->totalSale()}} TL</td>
                             </tr>
                         </table>
                     </div>
@@ -308,19 +313,17 @@
                             $('#loader').removeClass('display-none')
                         },
                         success: function (data) {
-                            Swal.fire(data);
+                            window.location.href = "{{route('invoice.stockcardmovementform')}}?id="+data+"";
                         },
                         error: function (xhr) { // if error occured
                             alert("Error occured.please try again");
                             $(placeholder).append(xhr.statusText + xhr.responseText);
                             $(placeholder).removeClass('loading');
-                        },
-                        complete: function () {
-                            window.location.href = "{{route('invoice.index',['type' => 1])}}";
-                        },
+                        }
 
                     });
                 }
+
 
             </script>
 
