@@ -51,4 +51,6 @@ class Customer extends BaseModel
     {
         return $this->hasOne(Town::class, 'id', 'district');
     }
+
+
 }

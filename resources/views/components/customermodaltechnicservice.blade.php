@@ -126,13 +126,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="mb-3 col-md-4">
-                                    <label for="zipCode" class="form-label">Firma Türü</label>
-                                    <select id="seller" name="company_type" class="select2 form-select">
-                                        <option value="sahis">Şahıs</option>
-                                        <option value="firma">Firma</option>
-                                    </select>
-                                </div>
+
                             </div>
                         </div>
                         <hr class="my-5">

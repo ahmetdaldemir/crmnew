@@ -24,6 +24,7 @@ use App\Services\StockCard\StockCardService;
 use App\Services\User\UserService;
 use App\Services\Version\VersionService;
 use App\Services\Warehouse\WarehouseService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use elogo_api\elogo_api;
 use Illuminate\Http\Request;
@@ -601,6 +602,38 @@ class InvoiceController extends Controller
     {
         StockCardMovement::where('stock_card_id',$request->id)->delete();
         return redirect()->back();
+    }
+
+
+    public function pdf()
+    {
+        $data = [];
+        $movements = $this->stockCardService->getInvoiceForSerial(139);
+        foreach ($movements as $item)
+        {
+            $data[] = [
+                'title' => 'Welcome to CodeSolutionStuff.com',
+                'id' => $item->id,
+                'serial_number' => $item->serial_number,
+                'sale_price' => $item->sale_price,
+                'brand_name' => $item->stockcard()->brand->name,
+                'name' => $item->stockcard()->name,
+                'version'=>$this->getVersionMap($item->stockcard()->version()),
+            ];
+        }
+
+
+        $pdf = PDF::loadView('module.stockcard.print', ['data' => $data]);
+
+        return $pdf->download('codesolutionstuff.pdf');
+    }
+
+    public function getVersionMap($map)
+    {
+        $datas = json_decode($map, TRUE);
+        foreach ($datas as $mykey => $myValue) {
+            return "$myValue,";
+        }
     }
 
 }

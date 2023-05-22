@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Safe;
 use App\Models\Setting;
 use App\Models\TechnicalCustomService;
 use App\Models\TechnicalProcess;
@@ -53,6 +54,8 @@ class TechnicalServiceController extends Controller
         $data['brands'] = $this->brandService->get();
         $data['sellers'] = $this->sellerService->get();
         $data['sms'] = Setting::where('category', 'sms')->get();
+        $data['users'] = $this->userService->get();
+
         return view('module.technical_service.index', $data);
     }
 
@@ -69,6 +72,41 @@ class TechnicalServiceController extends Controller
 
         return view('module.technical_service.form', $data);
     }
+    protected function payment(Request $request)
+    {
+        $data['technical_service'] = \App\Models\TechnicalService::find($request->id);
+        $data['users'] = $this->userService->get();
+        return view('module.technical_service.payment', $data);
+    }
+    public function paymentcomplate(Request $request)
+    {
+
+        $total = $request->payment_type['cash'] + $request->payment_type['credit_card'] + $request->payment_type['installment'];
+        if($total < $request->total_price)
+        {
+            return redirect()->back();
+        }
+        $technicalservice = \App\Models\TechnicalService::find($request->id);
+        $technicalservice->payment_status = 1;
+        $technicalservice->save();
+
+        $safe = new Safe();
+        $safe->name = "Şirket";
+        $safe->company_id = Auth::user()->company_id;
+        $safe->user_id = Auth::user()->id;
+        $safe->seller_id = Auth::user()->seller_id;
+        $safe->type = "in";
+        $safe->incash = $request->payment_type['cash'] ?? 0;
+        $safe->outcash = "0";
+        $safe->amount = $request->total_price ?? 0;
+        $safe->invoice_id = $request->id;
+        $safe->credit_card = $request->payment_type['credit_card'] ?? 0;
+        $safe->installment = 0;
+        $safe->description = "Teknik Servis";
+        $safe->save();
+
+        return redirect()->back();
+    }
 
     protected function edit(Request $request)
     {
@@ -81,7 +119,18 @@ class TechnicalServiceController extends Controller
         $data['citys'] = City::all();
         return view('module.technical_service.form', $data);
     }
-
+    protected function coveredit(Request $request)
+    {
+        $data['technical_service_cover'] = TechnicalCustomService::find($request->id);
+        $data['stocks'] = $this->stockCardService->get();
+        $data['sellers'] = $this->sellerService->get();
+        $data['customers'] = $this->customerService->get();
+        $data['brands'] = $this->brandService->get();
+        $data['users'] = $this->userService->get();
+        $data['citys'] = City::all();
+        $data['tows'] = Town::where('city_id',$data['technical_service_cover']->customer->city)->get();
+        return view('module.technical_service.coveredit', $data);
+    }
     protected function detail(Request $request)
     {
         $technical_services = $this->technicalService->find($request->id);
@@ -96,7 +145,6 @@ class TechnicalServiceController extends Controller
         $data['citys'] = City::all();
          return view('module.technical_service.detail', $data);
     }
-
     protected function show(Request $request)
     {
         $data['technical_services'] = $this->technicalService->find($request->id);
@@ -120,7 +168,6 @@ class TechnicalServiceController extends Controller
         $t->delete();
         return redirect()->back();
     }
-
 
     protected function detaildelete(Request $request)
     {
@@ -234,16 +281,81 @@ class TechnicalServiceController extends Controller
         $technical_custom_service->seller_id = $request->seller_id;
         $technical_custom_service->version_id = $request->version_id;
         $technical_custom_service->customer_id = $request->customer_id;
-        $technical_custom_service->status = $request->status;
         $technical_custom_service->total_price = $request->total_price;
-        $technical_custom_service->customer_price = $request->customer_price;
+        $technical_custom_service->customer_price = 0;
         $technical_custom_service->type = $request->type;
         $technical_custom_service->coating_information = $request->coating_information;
         $technical_custom_service->print_information = $request->print_information;
-        $technical_custom_service->device_password = $request->device_password;
         $technical_custom_service->delivery_staff = $request->delivery_staff;
         $technical_custom_service->save();
-        return redirect()->back();
+        $id = $technical_custom_service->id;
+
+        $safe = new Safe();
+        $safe->name = "Şirket";
+        $safe->company_id = Auth::user()->company_id;
+        $safe->user_id = Auth::user()->id;
+        $safe->seller_id = Auth::user()->seller_id;
+        $safe->type = "in";
+        $safe->incash = $request->payment_type['cash'] ?? 0;
+        $safe->outcash = "0";
+        $safe->amount = $request->total_price ?? 0;
+        $safe->invoice_id = $id;
+        $safe->credit_card = $request->payment_type['credit_card'] ?? 0;
+        $safe->installment = 0;
+        $safe->description = "Kaplama";
+        $safe->save();
+
+        return redirect()->to('technical_service');
+    }
+    public function coveringupdate(Request $request)
+    {
+        $technical_custom_service = TechnicalCustomService::find($request->id);
+        $technical_custom_service->company_id = Auth::user()->company_id;
+        $technical_custom_service->user_id = Auth::user()->id;
+        $technical_custom_service->brand_id = $request->brand_id;
+        $technical_custom_service->seller_id = $request->seller_id;
+        $technical_custom_service->version_id = $request->version_id;
+        $technical_custom_service->customer_id = $request->customer_id;
+        $technical_custom_service->total_price = $request->total_price;
+        $technical_custom_service->customer_price = 0;
+        $technical_custom_service->type = $request->type;
+        $technical_custom_service->coating_information = $request->coating_information;
+        $technical_custom_service->print_information = $request->print_information;
+        $technical_custom_service->delivery_staff = $request->delivery_staff;
+        $technical_custom_service->save();
+
+        $saferecord   =Safe::where('invoice_id',$request->id)->where('description','Kaplama')->first();
+        $saferecord->delete();
+
+        $safe = new Safe();
+        $safe->name = "Şirket";
+        $safe->company_id = Auth::user()->company_id;
+        $safe->user_id = Auth::user()->id;
+        $safe->seller_id = Auth::user()->seller_id;
+        $safe->type = "in";
+        $safe->incash = $request->payment_type['cash'] ?? 0;
+        $safe->outcash = "0";
+        $safe->amount = $request->total_price ?? 0;
+        $safe->invoice_id = $request->id;
+        $safe->credit_card = $request->payment_type['credit_card'] ?? 0;
+        $safe->installment = 0;
+        $safe->description = "Kaplama";
+        $safe->save();
+
+        return redirect()->to('technical_service');
+    }
+
+
+    public function coverprint(Request $request)
+    {
+        $data['cover'] = TechnicalCustomService::find($request->id);
+        return view('module.technical_service.coverprint', $data);
+    }
+
+    public function print(Request $request)
+    {
+        $data['technical_service'] = \App\Models\TechnicalService::find($request->id);
+        return view('module.technical_service.print', $data);
     }
 
 

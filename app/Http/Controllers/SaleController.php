@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Currency;
+use App\Models\Invoice;
+use App\Models\Safe;
 use App\Models\StockCardMovement;
 use App\Services\AccountingCategory\AccountingCategoryService;
 use App\Services\Brand\BrandService;
@@ -19,6 +21,7 @@ use App\Services\User\UserService;
 use App\Services\Version\VersionService;
 use App\Services\Warehouse\WarehouseService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,12 +77,50 @@ class SaleController extends Controller
 
     }
 
-    protected function index()
+    protected function index(Request $request)
     {
-        $data['invoices'] = $this->invoiceService->get();
+        $query = Invoice::where('company_id', Auth::user()->company_id)->where('type', 2)->orderBy('id', 'desc');
+        if ($request->filled('daterange')) {
+            $daterange = explode("to", $request->daterange);
+            $query->whereBetween('created_at', [trim($daterange[0]), trim($daterange[1])]);
+        }
+
+        if($request->filled('stockName'))
+        {
+              $query->with('detail',function ($query) use ($request) {
+                $query->where('name','like','%'.$request->stockName.'%');
+            });
+        }
+
+        if($request->filled('serialNumber'))
+        {
+            $query->with('detail',function ($query) use ($request) {
+                $query->where('name','like','%'.$request->stockName.'%');
+            });
+            $query->detail->where('serial_number',$request->serialNumber);
+        }
+
+        if($request->filled('brand'))
+        {
+            $query->whereHas('detail',function (Builder $query) use ($request) {
+                $query->where('brand_id',$request->brand);
+            });
+        }
+
+        if($request->filled('version'))
+        {
+            $query->detail->where('version_id',$request->version);
+        }
+        if ($request->filled('seller')) {
+            $query->where('seller_id', $request->seller);
+        }
+
+
+        $invoices = $query->get();
+        $data['invoices'] = $invoices;
         $data['brands'] = $this->brandService->get();
         $data['categories'] = $this->categoryService->get();
-        return view('module.sale.index',$data);
+        return view('module.sale.index', $data);
     }
 
     protected function create()
@@ -94,9 +135,10 @@ class SaleController extends Controller
         $data['stocks'] = $this->stockCardService->all();
         $data['categories'] = $this->accountingCategoryService->all();
         $data['safes'] = $this->safeService->all();
-        $data['taxs'] = ['0' => '%0','1' => '%1','8' => '%8','18' => '%18'];
-        return view('module.sale.form',$data);
+        $data['taxs'] = ['0' => '%0', '1' => '%1', '8' => '%8', '18' => '%18'];
+        return view('module.sale.form', $data);
     }
+
     protected function edit(Request $request)
     {
         $data['invoices'] = $this->invoiceService->find($request->id);
@@ -110,9 +152,9 @@ class SaleController extends Controller
         $data['stocks'] = $this->stockCardService->all();
         $data['categories'] = $this->accountingCategoryService->all();
         $data['safes'] = $this->safeService->all();
-        $data['taxs'] = ['0' => '%0','1' => '%1','8' => '%8','18' => '%18'];
+        $data['taxs'] = ['0' => '%0', '1' => '%1', '8' => '%8', '18' => '%18'];
 
-        return view('module.sale.form',$data);
+        return view('module.sale.form', $data);
     }
 
     protected function delete(Request $request)
@@ -187,6 +229,6 @@ class SaleController extends Controller
     protected function update(Request $request)
     {
         $data = array('is_status' => $request->is_status);
-        return $this->invoiceService->update($request->id,$data);
+        return $this->invoiceService->update($request->id, $data);
     }
 }

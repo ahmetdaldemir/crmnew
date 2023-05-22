@@ -32,13 +32,11 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
 
-            $table->string('status')->nullable();
-            $table->double('total_price',10,2)->nullable();
+             $table->double('total_price',10,2)->nullable();
             $table->double('customer_price',10,2)->nullable();
             $table->string('type')->nullable();
             $table->text('coating_information')->nullable();
             $table->text('print_information')->nullable();
-            $table->string('device_password')->nullable();
 
             $table->unsignedBigInteger('delivery_staff')->nullable();
             $table->foreign('delivery_staff')->references('id')->on('users')->onDelete('cascade');

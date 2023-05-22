@@ -2,15 +2,22 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Teknik Servis /</span> Teknik Servis listesi</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Teknik Servis /</span> Teknik Servis listesi
+        </h4>
 
         <div class="nav-align-top mb-4">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-home" aria-controls="navs-top-home" aria-selected="true">Teknik Servis</button>
+                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+                            data-bs-target="#navs-top-home" aria-controls="navs-top-home" aria-selected="true">Teknik
+                        Servis
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-profile" aria-controls="navs-top-profile" aria-selected="false">Kaplama Ve Baskı</button>
+                    <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                            data-bs-target="#navs-top-profile" aria-controls="navs-top-profile" aria-selected="false">
+                        Kaplama Ve Baskı
+                    </button>
                 </li>
 
             </ul>
@@ -23,12 +30,14 @@
                                 <div class="row g-3">
                                     <div class="col-md-2">
                                         <label class="form-label" for="multicol-username">Müşteri</label>
-                                        <input type="text" class="form-control" placeholder="············" name="stockName">
+                                        <input type="text" class="form-control" placeholder="············"
+                                               name="stockName">
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label" for="multicol-email">Marka</label>
                                         <div class="input-group input-group-merge">
-                                            <select type="text" name="brand" class="form-select" onchange="getVersion(this.value)" style="width: 100%">
+                                            <select type="text" name="brand" class="form-select"
+                                                    onchange="getVersion(this.value)" style="width: 100%">
                                                 <option value="">Tümü</option>
                                                 @foreach($brands as $brand)
                                                     <option value="{{$brand->id}}">{{$brand->name}}</option>
@@ -40,7 +49,8 @@
                                         <div class="form-password-toggle">
                                             <label class="form-label" for="multicol-password">Model</label>
                                             <div class="input-group input-group-merge">
-                                                <select type="text" id="version_id" name="version" class="form-select" style="width: 100%">
+                                                <select type="text" id="version_id" name="version" class="form-select"
+                                                        style="width: 100%">
                                                     <option value="">Tümü</option>
                                                 </select>
                                             </div>
@@ -50,7 +60,8 @@
                                         <div class="form-password-toggle">
                                             <label class="form-label" for="multicol-password">Bayi</label>
                                             <div class="input-group input-group-merge">
-                                                <select type="text" name="category" class="form-select" style="width: 100%">
+                                                <select type="text" name="category" class="form-select"
+                                                        style="width: 100%">
                                                     <option value="">Tümü</option>
                                                     @foreach($sellers as $seller)
                                                         <option value="{{$seller->id}}">{{$seller->name}}</option>
@@ -63,7 +74,8 @@
                                         <div class="form-password-toggle">
                                             <label class="form-label" for="multicol-password">İşlem Durumu</label>
                                             <div class="input-group input-group-merge">
-                                                <select type="text" name="category" class="form-select" style="width: 100%">
+                                                <select type="text" name="category" class="form-select"
+                                                        style="width: 100%">
                                                     <option value="">Tümü</option>
                                                     @foreach($sellers as $seller)
                                                         <option value="{{$seller->id}}">{{$seller->name}}</option>
@@ -76,7 +88,8 @@
                                         <div class="form-password-toggle">
                                             <label class="form-label" for="multicol-password">Ödeme Durumu</label>
                                             <div class="input-group input-group-merge">
-                                                <select type="text" name="category" class="form-select" style="width: 100%">
+                                                <select type="text" name="category" class="form-select"
+                                                        style="width: 100%">
                                                     <option value="">Tümü</option>
                                                     @foreach($sellers as $seller)
                                                         <option value="{{$seller->id}}">{{$seller->name}}</option>
@@ -87,12 +100,15 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mt-4">
-                                    <button ng-click="getStockSearch()" type="button" class="btn btn-sm btn-outline-primary">Ara</button>
+                                    <button ng-click="getStockSearch()" type="button"
+                                            class="btn btn-sm btn-outline-primary">Ara
+                                    </button>
                                 </div>
                             </form>
                         </div>
                         <div class="card-header">
-                             <a href="{{route('technical_service.create')}}" class="btn btn-primary float-end">Yeni Teknik Servis Ekle</a>
+                            <a href="{{route('technical_service.create')}}" class="btn btn-primary float-end">Yeni
+                                Teknik Servis Ekle</a>
                         </div>
                         <div class="table-responsive text-nowrap">
                             <table class="table" style="font-size:13px">
@@ -112,54 +128,55 @@
                                 <tbody class="table-border-bottom-0">
                                 @foreach($technical_services as $technical_service)
                                     <tr>
-                                        <td><a href="{{route('technical_service.detail',['id' => $technical_service->id])}}">#{{$technical_service->id}}</a></td>
-                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>{{$technical_service->seller->name}}</td>
+                                        <td>
+                                            <a href="{{route('technical_service.detail',['id' => $technical_service->id])}}">#{{$technical_service->id}}</a>
+                                        </td>
+                                        <td>
+                                            <i class="fab fa-angular fa-lg text-danger me-3"></i><strong>{{$technical_service->seller->name??"bulunamadı"}}
+                                        </td>
                                         <td>{{$technical_service->customer->fullname ?? "Silinmiş"}}</td>
-                                        <td>{{$technical_service->brand->name}} /
-                                                <?php
-                                                $datas = json_decode($technical_service->version(), TRUE);
-                                                foreach ($datas as $mykey => $myValue) {
-                                                    echo "$myValue</br>";
-                                                }
-                                                ?>
-                                            </span></td>
-                                        <td><span class="badge bg-label-primary me-1">{{$technical_service->process_type}}</span></td>
-                                        <td><span class="badge bg-label-primary me-1">{{$technical_service->status}}</span></td>
+                                        <td>{{$technical_service->brand->name}} / {{$technical_service->version->name}}</td>
+                                        <td><span
+                                                class="badge bg-label-primary me-1">{{$technical_service->process_type}}</span>
+                                        </td>
+                                        <td><span
+                                                class="badge bg-label-primary me-1">{{$technical_service->status}}</span>
+                                        </td>
                                         <td>{{\Carbon\Carbon::parse($technical_service->created_at)->format('d-m-Y')}}</td>
                                         <td>{{$technical_service->delivery->name}}</td>
                                         <td>
-                                            <a href="#"
-                                               class="btn btn-icon btn-danger btn-sm"
-                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                               data-bs-original-title="Form Yazdır" onclick="technicalServiceOpen()">
+                                            <a target="_blank" href="{{route('technical_service.print',['id' => $technical_service->id])}}" class="btn btn-icon btn-danger btn-sm" >
                                                 <span class="bx bxs-printer"></span>
                                             </a>
-                                            <a  class="btn btn-icon btn-success btn-sm"
-                                                data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                                data-bs-original-title="Ödeme İşlemi" onclick="checkoutModalOpen()">
+                                            <a class="btn btn-icon btn-success btn-sm" target="_blank" href="{{route('technical_service.payment',['id' => $technical_service->id])}}" >
                                                 <span class="bx bxs-dollar-circle"></span>
                                             </a>
                                             <a
                                                 class="btn btn-icon btn-warning btn-sm"
-                                                data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
+                                                data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
+                                                data-bs-html="true"
                                                 data-bs-original-title="Sms Gönder" onclick="smsModalOpen()">
                                                 <span class="bx bxs-message-add"></span>
                                             </a>
                                             <a href="{{route('technical_service.show',['id' => $technical_service->id])}}"
                                                class="btn btn-icon btn-secondary btn-sm"
-                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
+                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
+                                               data-bs-html="true"
                                                data-bs-original-title="Görüntüle">
                                                 <span class="bx bxs-happy-heart-eyes"></span>
                                             </a>
-                                            <a  onclick="return confirm('Silmek istediğinizden eminmisiniz?');" href="{{route('technical_service.delete',['id' => $technical_service->id])}}"
-                                                class="btn btn-icon btn-primary btn-sm"
-                                                data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                                data-bs-original-title="Sil">
+                                            <a onclick="return confirm('Silmek istediğinizden eminmisiniz?');"
+                                               href="{{route('technical_service.delete',['id' => $technical_service->id])}}"
+                                               class="btn btn-icon btn-primary btn-sm"
+                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
+                                               data-bs-html="true"
+                                               data-bs-original-title="Sil">
                                                 <span class="bx bxs-trash"></span>
                                             </a>
                                             <a href="{{route('technical_service.detail',['id' => $technical_service->id])}}"
                                                class="btn btn-icon btn-primary btn-sm"
-                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
+                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
+                                               data-bs-html="true"
                                                data-bs-original-title="Düzenle">
                                                 <span class="bx bx-edit-alt"></span>
                                             </a>
@@ -179,12 +196,14 @@
                                 <div class="row g-3">
                                     <div class="col-md-2">
                                         <label class="form-label" for="multicol-username">Müşteri</label>
-                                        <input type="text" class="form-control" placeholder="············" name="stockName">
+                                        <input type="text" class="form-control" placeholder="············"
+                                               name="stockName">
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label" for="multicol-email">Marka</label>
                                         <div class="input-group input-group-merge">
-                                            <select type="text" name="brand" class="form-select" onchange="getVersion(this.value)" style="width: 100%">
+                                            <select type="text" name="brand" class="form-select"
+                                                    onchange="getVersion(this.value)" style="width: 100%">
                                                 <option value="">Tümü</option>
                                                 @foreach($brands as $brand)
                                                     <option value="{{$brand->id}}">{{$brand->name}}</option>
@@ -196,7 +215,8 @@
                                         <div class="form-password-toggle">
                                             <label class="form-label" for="multicol-password">Model</label>
                                             <div class="input-group input-group-merge">
-                                                <select type="text" id="version_id" name="version" class="form-select" style="width: 100%">
+                                                <select type="text" id="version_id" name="version" class="form-select"
+                                                        style="width: 100%">
                                                     <option value="">Tümü</option>
                                                 </select>
                                             </div>
@@ -206,7 +226,8 @@
                                         <div class="form-password-toggle">
                                             <label class="form-label" for="multicol-password">Bayi</label>
                                             <div class="input-group input-group-merge">
-                                                <select type="text" name="category" class="form-select" style="width: 100%">
+                                                <select type="text" name="category" class="form-select"
+                                                        style="width: 100%">
                                                     <option value="">Tümü</option>
                                                     @foreach($sellers as $seller)
                                                         <option value="{{$seller->id}}">{{$seller->name}}</option>
@@ -219,7 +240,8 @@
                                         <div class="form-password-toggle">
                                             <label class="form-label" for="multicol-password">İşlem Durumu</label>
                                             <div class="input-group input-group-merge">
-                                                <select type="text" name="category" class="form-select" style="width: 100%">
+                                                <select type="text" name="category" class="form-select"
+                                                        style="width: 100%">
                                                     <option value="">Tümü</option>
                                                     @foreach($sellers as $seller)
                                                         <option value="{{$seller->id}}">{{$seller->name}}</option>
@@ -232,7 +254,8 @@
                                         <div class="form-password-toggle">
                                             <label class="form-label" for="multicol-password">Ödeme Durumu</label>
                                             <div class="input-group input-group-merge">
-                                                <select type="text" name="category" class="form-select" style="width: 100%">
+                                                <select type="text" name="category" class="form-select"
+                                                        style="width: 100%">
                                                     <option value="">Tümü</option>
                                                     @foreach($sellers as $seller)
                                                         <option value="{{$seller->id}}">{{$seller->name}}</option>
@@ -243,13 +266,16 @@
                                     </div>
                                 </div>
                                 <div class="col-12 mt-4">
-                                    <button ng-click="getStockSearch()" type="button" class="btn btn-sm btn-outline-primary">Ara</button>
+                                    <button ng-click="getStockSearch()" type="button"
+                                            class="btn btn-sm btn-outline-primary">Ara
+                                    </button>
                                 </div>
                             </form>
                         </div>
                         <div class="card-header">
-                            <a href="{{route('technical_service.covering')}}" class="btn btn-danger ">Yeni Kaplama Ekle</a>
-                         </div>
+                            <a href="{{route('technical_service.covering')}}" class="btn btn-danger ">Yeni Kaplama
+                                Ekle</a>
+                        </div>
                         <div class="table-responsive text-nowrap">
                             <table class="table" style="font-size:13px">
                                 <thead>
@@ -258,8 +284,7 @@
                                     <th>Şube Adı</th>
                                     <th>Müşteri</th>
                                     <th>Marka/Model</th>
-                                    <th>İşlem Durumu</th>
-                                    <th>Ödeme Durumu</th>
+                                     <th>Ödeme Durumu</th>
                                     <th>Tarih</th>
                                     <th>Personel</th>
                                     <th>Actions</th>
@@ -268,54 +293,40 @@
                                 <tbody class="table-border-bottom-0">
                                 @foreach($technical_covering_services as $technical_service)
                                     <tr>
-                                        <td><a href="{{route('technical_service.detail',['id' => $technical_service->id])}}">#{{$technical_service->id}}</a></td>
-                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>{{$technical_service->seller->name}}</td>
-                                        <td>{{$technical_service->customer->fullname ?? "Silinmiş"}}</td>
-                                        <td>{{$technical_service->brand->name}} /
-                                                <?php
-                                                $datas = json_decode($technical_service->version(), TRUE);
-                                                foreach ($datas as $mykey => $myValue) {
-                                                    echo "$myValue</br>";
-                                                }
-                                                ?>
-                                            </span></td>
-                                        <td><span class="badge bg-label-primary me-1">{{$technical_service->process_type}}</span></td>
-                                        <td><span class="badge bg-label-primary me-1">{{$technical_service->status}}</span></td>
-                                        <td>{{\Carbon\Carbon::parse($technical_service->created_at)->format('d-m-Y')}}</td>
-                                        <td>{{$technical_service->delivery->name}}</td>
                                         <td>
-                                            <a href="#"
-                                               class="btn btn-icon btn-danger btn-sm"
-                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                               data-bs-original-title="Form Yazdır" onclick="technicalServiceOpen()">
+                                           #{{$technical_service->id}}
+                                        </td>
+                                        <td  style="font-size: 12px;">
+                                            <i class="fab fa-angular fa-lg text-danger me-3"></i><strong>{{$technical_service->seller->name??"bulunmadı"}}
+                                        </td>
+                                        <td style="font-size: 12px;">{{$technical_service->customer->fullname ?? "Silinmiş"}}</td>
+                                        <td style="font-size: 12px;">{{$technical_service->brand->name??"bulunamadı"}} / </span></td>
+                                        <td style="font-size: 12px;"></td>
+                                        <td style="font-size: 12px;">{{\Carbon\Carbon::parse($technical_service->created_at)->format('d-m-Y')}}</td>
+                                        <td style="font-size: 12px;">{{$technical_service->delivery->name??"bulunamadı"}}</td>
+                                        <td>
+                                            <a  target="_blank"  href="{{route('technical_service.coverprint',['id' => $technical_service->id])}}" class="btn btn-icon btn-danger btn-sm">
                                                 <span class="bx bxs-printer"></span>
-                                            </a>
-                                            <a  class="btn btn-icon btn-success btn-sm"
-                                                data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                                data-bs-original-title="Ödeme İşlemi" onclick="checkoutModalOpen()">
-                                                <span class="bx bxs-dollar-circle"></span>
                                             </a>
                                             <a
                                                 class="btn btn-icon btn-warning btn-sm"
-                                                data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                                data-bs-original-title="Sms Gönder" onclick="smsModalOpen()">
+                                                data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
+                                                data-bs-html="true"
+                                                data-bs-original-title="Sms Gönder" onclick="smsCoverModalOpen({{$technical_service->id}})">
                                                 <span class="bx bxs-message-add"></span>
                                             </a>
-                                            <a href="{{route('technical_service.show',['id' => $technical_service->id])}}"
-                                               class="btn btn-icon btn-secondary btn-sm"
-                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                               data-bs-original-title="Görüntüle">
-                                                <span class="bx bxs-happy-heart-eyes"></span>
-                                            </a>
-                                            <a  onclick="return confirm('Silmek istediğinizden eminmisiniz?');" href="{{route('technical_service.delete',['id' => $technical_service->id])}}"
-                                                class="btn btn-icon btn-primary btn-sm"
-                                                data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
-                                                data-bs-original-title="Sil">
+                                            <a onclick="return confirm('Silmek istediğinizden eminmisiniz?');"
+                                               href="{{route('technical_service.delete',['id' => $technical_service->id])}}"
+                                               class="btn btn-icon btn-primary btn-sm"
+                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
+                                               data-bs-html="true"
+                                               data-bs-original-title="Sil">
                                                 <span class="bx bxs-trash"></span>
                                             </a>
-                                            <a href="{{route('technical_service.detail',['id' => $technical_service->id])}}"
+                                            <a href="{{route('technical_service.coveredit',['id' => $technical_service->id])}}"
                                                class="btn btn-icon btn-primary btn-sm"
-                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" data-bs-html="true"
+                                               data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
+                                               data-bs-html="true"
                                                data-bs-original-title="Düzenle">
                                                 <span class="bx bx-edit-alt"></span>
                                             </a>
@@ -327,194 +338,13 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
-
         <hr class="my-5">
     </div>
 @endsection
-@include('components.technical_service_modal')
 @include('components.smsmodal')
-@include('components.technical_service_checkout_modal')
 
-<div class="modal fade modal-lg" id="technicalServiceModal" tabindex="-1" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-        <div class="modal-content p-3 p-md-5">
-            <div class="modal-body">
-                <div class="con-exemple-prompt">
-                    <div id="barcodeFormSet1">
-                        <table style="margin: 0px auto;">
-                            <tbody>
-                            <tr>
-                                <td style="height: 52px;">&nbsp;</td>
-                                <td style="height: 52px; width: 720px;">
-                                    <table style="width: 100%;">
-                                        <tbody>
-                                        <tr>
-                                            <td style="text-align: left;"><img alt=""
-                                                                               src="Helper/Barcode?barcodeText=17017&amp;width=80&amp;height=22">
-                                                <div>Form No: 11741</div>
-                                            </td>
-                                            <td style="font-size: 25px; text-align: center;">Phone Hospital - Marmara
-                                                Park
-                                            </td>
-                                            <td style="font-weight: bold; padding-left: 5px; width: 120px; text-align: right;">
-                                                <b>phonehospital.com.tr</b><br> <b>444 23 70</b></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td style="height: 52px;">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td style="height: 287px;">&nbsp;</td>
-                                <td style="height: 287px; width: 720px;">
-                                    <table style="height: 62px; width: 100%; border: 1px solid black; font-size: 14px;">
-                                        <tbody>
-                                        <tr>
-                                            <td style="font-weight: bold; padding-left: 5px; width: 120px;">Müşteri
-                                                Adı
-                                            </td>
-                                            <td style="text-align: center; width: 10px;">:</td>
-                                            <td class="detay">CEYLAN BOŞNAK</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="font-weight: bold; padding-left: 5px; width: 120px;">Telefon</td>
-                                            <td style="text-align: center; width: 10px;">:</td>
-                                            <td class="detay">05426483440</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="font-weight: bold; padding-left: 5px; width: 120px;">Email</td>
-                                            <td style="text-align: center; width: 10px;">:</td>
-                                            <td class="detay"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <table
-                                        style="height: 208px; width: 100%; border: 1px solid black; font-size: 14px; margin-top: 5px;">
-                                        <tbody>
-                                        <tr>
-                                            <td style="font-weight: bold; padding-left: 5px; width: 120px; height: 21px;">
-                                                Marka/Model
-                                            </td>
-                                            <td style="text-align: center; width: 10px; height: 21px;">:</td>
-                                            <td class="detay" style="height: 21px;">APPLE - IPHONE 12</td>
-                                            <td style="font-weight: bold; padding-left: 5px; height: 21px; width: 60px;">
-                                                Seri No
-                                            </td>
-                                            <td style="text-align: center; width: 10px; height: 21px;">:</td>
-                                            <td style="height: 21px; padding-right: 5px; text-align: right; width: 120px;"></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="font-weight: bold; padding-left: 5px; width: 120px; height: 21px;">
-                                                Son Durum
-                                            </td>
-                                            <td style="text-align: center; width: 10px; height: 21px;">:</td>
-                                            <td class="detay" style="height: 21px;">İşleme Alındı</td>
-                                            <td style="font-weight: bold; padding-left: 5px; height: 21px; width: 60px;">
-                                                Fiyat
-                                            </td>
-                                            <td style="text-align: center; width: 10px; height: 21px;">:</td>
-                                            <td style="height: 21px; padding-right: 5px; text-align: right; width: 120px;">
-                                                1700.00
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="font-weight: bold; padding-left: 5px; width: 120px;">Geliş
-                                                Tarihi
-                                            </td>
-                                            <td style="text-align: center; width: 10px;">:</td>
-                                            <td class="detay"></td>
-                                            <td style="font-weight: bold; padding-left: 5px; height: 21px; width: 60px;">
-                                                Ücret
-                                            </td>
-                                            <td style="text-align: center; width: 10px; height: 21px;">:</td>
-                                            <td style="height: 21px; padding-right: 5px; text-align: right; width: 120px;">
-                                                Alınmadı
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top"
-                                                style="font-weight: bold; padding-left: 5px; width: 120px;">Arıza
-                                                Bilgisi
-                                            </td>
-                                            <td valign="top" style="text-align: center; width: 10px;">:</td>
-                                            <td colspan="4" valign="top" class="detay">İÇ KULAKLIK DEĞİŞİMİ</td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top"
-                                                style="font-weight: bold; padding-left: 5px; width: 120px;">Cihaz
-                                                Şifresi
-                                            </td>
-                                            <td valign="top" style="text-align: center; width: 10px;">:</td>
-                                            <td colspan="4" valign="top" class="detay"> 010567</td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top"
-                                                style="font-weight: bold; padding-left: 5px; width: 120px;">Aksesuar
-                                            </td>
-                                            <td valign="top" style="text-align: center; width: 10px;">:</td>
-                                            <td colspan="4" valign="top" class="detay"></td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top"
-                                                style="font-weight: bold; padding-left: 5px; width: 120px;">Fiziksel
-                                                Durum
-                                            </td>
-                                            <td valign="top" style="text-align: center; width: 10px;">:</td>
-                                            <td colspan="4" valign="top" class="detay"></td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top"
-                                                style="font-weight: bold; padding-left: 5px; width: 120px;">İşlemler
-                                            </td>
-                                            <td valign="top" style="text-align: center; width: 10px;">:</td>
-                                            <td colspan="4" valign="top" class="detay"><p>2023-04-08 10:41 - İşleme
-                                                    Alındı</p></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6" style="height: 25px;"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                                <td style="height: 287px;">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td style="height: 30px;">&nbsp;</td>
-                                <td style="height: 30px; width: 720px;">
-                                    <table style="width: 100%;">
-                                        <tbody>
-                                        <tr>
-                                            <td style="text-align: center;"><b>Teslim Alan / İmza</b></td>
-                                            <td style="text-align: center;"><b>Teslim Eden / İmza</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center;">Phone Hospital - Tarek (M)</td>
-                                            <td style="text-align: center;">CEYLAN BOŞNAK</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="height: 60px;"></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4" style="height: 30px;">{{setting('site.adwords')}}</td>
-
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <button onclick="print(1)" style="width: 100%" class="btn btn-danger">Yazdır</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <style>
     @media print {
@@ -560,6 +390,17 @@
         function smsModalOpen() {
           $("#smsModal").modal('show');
         }
+        function smsCoverModalOpen(id) {
+            $("#smsCoverModal").modal('show');
+            $("#smsCoverForm").find("input[name=id]").val(id);
+        }
+        function smsCoverSend() {
+          alert("Kod Yazılacak");
+        }
+        function smsSend() {
+            alert("Kod Yazılacak");
+        }
+
     </script>
     <script>
         function checkoutModalOpen() {

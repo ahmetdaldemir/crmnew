@@ -24,7 +24,7 @@
                         <tr>
                              <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                 <strong>{{$category->name}}</strong></td>
-                            <td><span class="badge bg-label-primary me-1">{{$category->parent_id == 0 ? 'Ana Kategori':$category->parentName->name}}</span></td>
+                            <td><span class="badge bg-label-primary me-1">{{$category->parent_id == 0 ? 'Ana Kategori':$category->parentName->name??""}}</span></td>
                             <td><span class="badge bg-label-primary me-1">{{$category->created_at}}</span></td>
                             <td>
                                 <div class="form-check form-switch mb-2">

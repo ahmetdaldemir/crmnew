@@ -119,6 +119,10 @@
                                         class="btn btn-icon btn-success">
                                     <span class="bx bx-transfer"></span>
                                 </button>
+                                <button type="button" onclick="priceModal({{$stockcard->id}})"
+                                        class="btn btn-icon btn-danger">
+                                    <span class="bx bxs-dollar-circle"></span>
+                                </button>
                              </td>
                         </tr>
                      @endforeach
@@ -182,15 +186,45 @@
             </form>
         </div>
     </div>
+    <div class="modal fade" id="priceModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <form class="modal-content" id="priceForm">
+                @csrf
+                <input id="stockCardMovementId" name="stock_card_id" type="hidden">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backDropModalTitle">Fiyat Değişiklik İşlemi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBackdrop" class="form-label">Satış Fiyatı</label>
+                            <input type="text" id="serialBackdrop" class="form-control" name="sale_price" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Kapat
+                    </button>
+                    <button type="submit" class="btn btn-primary">Fiyat Değiştir</button>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection
 
 @section('custom-js')
     <script>
-
+        function priceModal(id) {
+            $("#priceModal").modal('show');
+            $("#priceModal #stockCardMovementId").val(id);
+        }
         function openModal(id) {
             $("#backDropModal").modal('show');
             $("#serialBackdrop").val(id);
+            $("#stockCardId").val(id);
         }
 
         $("#transferForm").submit(function (e) {
@@ -228,6 +262,43 @@
                         buttonsStyling: !1
                     });
                     $("#backDropModal").modal('hide');
+                }
+            });
+
+        });
+
+        $("#priceForm").submit(function (e) {
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+            var form = $(this);
+            var actionUrl = '{{route('stockcard.singlepriceupdate')}}';
+            $.ajax({
+                type: "POST",
+                url: actionUrl + '?id=' + $("#stockCardMovementId").val() + '',
+                data: form.serialize(),
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data, status) {
+                    Swal.fire({
+                        icon: status,
+                        title: data,
+                        customClass: {
+                            confirmButton: "btn btn-success"
+                        },
+                        buttonsStyling: !1
+                    });
+                    $("#priceModal").modal('hide');
+                },
+                error: function (request, status, error) {
+                    Swal.fire({
+                        icon: status,
+                        title: request.responseJSON,
+                        customClass: {
+                            confirmButton: "btn btn-danger"
+                        },
+                        buttonsStyling: !1
+                    });
+                    $("#priceModal").modal('hide');
                 }
             });
 

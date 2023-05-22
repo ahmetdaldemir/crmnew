@@ -3,12 +3,12 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y" onload="getTownLoad(34)">
         <h4 class="fw-bold py-3 mb-4"><span
-                class="text-muted fw-light">Teknik Servis Formu /</span> @if(isset($technical_services))
-                {{$technical_services->name}}
+                class="text-muted fw-light">Teknik Servis Formu /</span> @if(isset($technical_service_cover))
+                {{$technical_service_cover->name}}
             @endif</h4>
         <form action="{{route('technical_service.coveringstore')}}"  method="post" class="source-item ">
             @csrf
-            <input type="hidden" name="id" @if(isset($technical_services)) value="{{$technical_services->id}}" @endif />
+            <input type="hidden" name="id" @if(isset($technical_service_cover)) value="{{$technical_service_cover->id}}" @endif />
             <div class="row">
                 <div class="col-md-8">
                     <div class="card mb-4">
@@ -20,10 +20,7 @@
                                     <select id="selectCustomer" class="w-100 select2"
                                             data-style="btn-default" name="customer_id" ng-init="getCustomers()">
                                         <option value="1" data-tokens="ketchup mustard">Genel Cari</option>
-                                        <option ng-repeat="customer in customers" ng-selected="customer.id == idNew"
-                                                value="@{{customer.id}}">
-                                            @{{customer.fullname}}
-                                        </option>
+                                        <option ng-repeat="customer in customers" ng-selected="customer.id == {{$technical_service_cover->customer_id}}" value="@{{customer.id}}"> @{{customer.fullname}} </option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -34,37 +31,32 @@
                                 <label for="defaultFormControlInput" class="form-label">Hizmet Tipi</label>
                                 <div id="physical_condition" class="form-text">
                                     <select class="form-select" name="type">
-                                        <option>Kaplama</option>
-                                        <option>Kılıf Baskı</option>
+                                        <option value="Kaplama" @if($technical_service_cover->type == "Kaplama") selected @endif>Kaplama</option>
+                                        <option value="Kılıf Baskı" @if($technical_service_cover->type == "Kılıf Baskı") selected @endif>Kılıf Baskı</option>
                                     </select>
                                  </div>
                             </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Kaplama Bilgisi</label>
-                                <textarea class="form-control" id="coating_information" name="coating_information"
-                                          aria-describedby="accessories">@if(isset($technical_services))
-                                        {{$technical_services->coating_information}}
-                                    @endif</textarea>
+                                <textarea class="form-control" id="coating_information" name="coating_information">{{$technical_service_cover->coating_information}}</textarea>
                              </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Baskı Bilgisi</label>
-                                <textarea class="form-control" id="print_information" name="print_information" aria-describedby="print_information">@if(isset($technical_services))
-                                        {{$technical_services->print_information}}
-                                    @endif</textarea>
+                                <textarea class="form-control" id="print_information" name="print_information">{{$technical_service_cover->print_information}}</textarea>
                              </div>
                             <hr class="my-4 mx-n4">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label class="form-label" for="fullname">Kredi Kartı</label>
-                                    <input type="text" name="payment_type[credit_card]" id="credit_card"  value="0"  class="form-control" required>
+                                    <input type="text" name="payment_type[credit_card]" id="credit_card" class="form-control" required>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label class="form-label" for="fullname">Nakit</label>
-                                    <input type="text" name="payment_type[cash]" id="money_order"  value="0"  class="form-control" required>
+                                    <input type="text" name="payment_type[cash]" id="money_order" class="form-control" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label" for="fullname">.</label>
-                                    <input type="text" name="payment_type[installment]" id="installment"  value="0"  class="form-control" style="display: none;">
+                                    <input type="text" name="payment_type[installment]" id="installment" value="0" class="form-control" style="display: none;">
                                 </div>
 
                             </div>
@@ -92,9 +84,7 @@
                                         onchange="getVersion(this.value)" required>
                                     <option>Seçiniz</option>
                                     @foreach($brands as $value)
-                                        <option
-                                            @if(isset($technical_services) && $technical_services->brand_id == $key) selected
-                                            @endif  value="{{$value->id}}">{{$value->name}}</option>
+                                        <option @if(isset($technical_service_cover) && $technical_service_cover->brand_id == $value->id) selected @endif  value="{{$value->id}}">{{$value->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -105,16 +95,14 @@
 
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Toplam Fiyat</label>
-                                <input type="text" class="form-control" id="total_price" name="total_price" aria-describedby="total_price" required>
+                                <input type="text" class="form-control" id="total_price" name="total_price" value="{{$technical_service_cover->total_price}}" required>
                             </div>
 
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Teslim Alan Personel</label>
                                 <select id="brand_id" name="delivery_staff" class="select2 form-select">
                                     @foreach($users as $user)
-                                        <option
-                                            @if(isset($technical_services) && $technical_services->brand_id == $user->id) selected
-                                            @endif  value="{{$user->id}}">{{$user->name}}</option>
+                                        <option @if(isset($technical_service_cover) && $technical_service_cover->brand_id == $user->id) selected @endif  value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

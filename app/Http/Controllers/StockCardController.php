@@ -154,7 +154,11 @@ class StockCardController extends Controller
             return response()->json("Seri Numarası Bulunamadı Veya Stok Yetersiz", 400);
         }
 
-
+        $transfer = Transfer::whereJsonContains('serial_list',$request->serial_number)->whereNull('comfirm_id')->whereNull('comfirm_date')->first();
+        if($transfer)
+        {
+            return response()->json("Transferi kabul edilmemiş", 400);
+        }
         $stock = ['stock_card_id' => $request->stock_card_id];
         $serialList[$request->stock_card_id] = array($request->serial_number);
 
@@ -165,12 +169,13 @@ class StockCardController extends Controller
             'main_seller_id' => Auth::user()->seller_id,
             'delivery_id' => User::where('seller_id', $request->seller_id)->first()->id ?? 1,
             'description' => $request->description,
-            'number' => $request->number ?? null,
+            'number' => $request->number ?? rand(333333,999999),
             'stocks' => $request->serial_number,
             'serial_list' => $request->serial_number,
             'delivery_seller_id' => $request->seller_id,
             'reason_id' => $request->reason_id,
         );
+
         if (empty($request->id)) {
             $transfer = $this->transferService->create($data);
         } else {
@@ -272,23 +277,37 @@ class StockCardController extends Controller
 
     public function priceupdate(Request $request)
     {
+        $stockcardMovement = StockCardMovement::where('stock_card_id',$request->stock_card_id)->orderBy('id','desc')->first();
         $stockcardprice = new StockCardPrice();
         $stockcardprice->stock_card_id = $request->stock_card_id;
         $stockcardprice->user_id =  Auth::id();
         $stockcardprice->company_id = Auth::user()->company_id;
-        $stockcardprice->cost_price = $request->cost_price;
-        $stockcardprice->base_cost_price = $request->base_cost_price;
+        $stockcardprice->cost_price = $stockcardMovement->cost_price;
+        $stockcardprice->base_cost_price = $stockcardMovement->base_cost_price;
         $stockcardprice->sale_price = $request->sale_price;
         $stockcardprice->save();
 
         $stockcardmovement = StockCardMovement::where('stock_card_id',$request->stock_card_id)->where('type',1)->get();
         foreach ($stockcardmovement as $item)
         {
-            $item->cost_price = $request->cost_price;
-            $item->base_cost_price = $request->base_cost_price;
             $item->sale_price = $request->sale_price;
             $item->save();
         }
         return response()->json('Kayıt Güncellendi',200);
     }
+
+    public function singlepriceupdate(Request $request)
+    {
+
+
+        $stockcardmovement = StockCardMovement::where('id',$request->stock_card_id)->where('type',1)->get();
+        foreach ($stockcardmovement as $item)
+        {
+            $item->sale_price = $request->sale_price;
+            $item->save();
+        }
+        return response()->json('Kayıt Güncellendi',200);
+    }
+
+
 }

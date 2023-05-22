@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TechnicalService extends Model
 {
     use HasFactory;
-    protected $casts = ['version_id' => 'array','products' => 'array','accessory_category'=> 'array','physically_category'=> 'array','fault_category'=> 'array'];
+    protected $casts = ['products' => 'array','accessory_category'=> 'array','physically_category'=> 'array','fault_category'=> 'array'];
 
     protected $fillable = [
         'customer_id',
@@ -55,12 +55,9 @@ class TechnicalService extends Model
 
     public function version()
     {
-        $array = $this->version_id;
-         $names = collect($array)->map(function($name, $key) {
-             return Version::find($name)->name;
-        });
-        return $names->toJson();
+        return $this->hasOne(Version::class,'id','version_id');
     }
+
 
     public function delivery()
     {

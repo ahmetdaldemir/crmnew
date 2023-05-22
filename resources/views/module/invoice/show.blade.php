@@ -14,10 +14,7 @@
                                     <span
                                         class="app-brand-text demo text-body text-uppercase fw-bolder">{{is_null($invoice->account) ? 'Genel Cari':$invoice->account->fullname}}</span>
                                 </div>
-                                <p class="mb-1">{{is_null($invoice->account) ? 'Genel Cari':$invoice->account->phone1}}</p>
-                                <p class="mb-1">{{is_null($invoice->account) ? 'Genel Cari':$invoice->account->email}}</p>
-                                <p class="mb-0">{{is_null($invoice->account) ? 'Genel Cari':$invoice->account->address.'/'.$invoice->account->city->name .'/'.$invoice->account->town->name}}</p>
-                            </div>
+                             </div>
                             <div>
                                 <h4>#{{$invoice->number}}</h4>
                                 <div class="mb-2">
@@ -35,8 +32,10 @@
                                 <th>Ürün</th>
                                 <th>Seri Numarası</th>
                                 <th>Adet</th>
+                                @role('admin')
                                 <th>Alış Fiyatı</th>
                                 <th>Destekli Fiyat</th>
+                                @endrole
                                 <th>Satış Fiyatı</th>
                             </tr>
                             </thead>
@@ -54,8 +53,10 @@
                                                 ?>  /{{$item->stock->name}}</td>
                                         <td class="text-nowrap">{{$item->serial_number}}</td>
                                         <td class="text-nowrap">{{$item->quantity}}</td>
+                                         @role('admin')
                                         <td>{{$item->cost_price}}</td>
                                         <td>{{$item->base_cost_price}}</td>
+                                         @endrole
                                         <td>{{$item->sale_price}}</td>
                                     </tr>
                                      @else
@@ -73,18 +74,7 @@
                                         <span>{{$invoice->staff->name}}</span>
                                     </p>
                                 </td>
-                                <td class="text-end px-4 py-5">
-                                    <p class="mb-2">Ara Toplam:</p>
-                                    <p class="mb-2">İndirim:</p>
-                                    <p class="mb-2">KDV:</p>
-                                    <p class="mb-0">Toplam:</p>
-                                </td>
-                                <td class="px-4 py-5">
-                                    <p class="fw-semibold mb-2">1</p>
-                                    <p class="fw-semibold mb-2">1</p>
-                                    <p class="fw-semibold mb-2">1</p>
-                                    <p class="fw-semibold mb-0">{{$invoice->total_price}}</p>
-                                </td>
+
                             </tr>
                             </tbody>
                         </table>

@@ -58,4 +58,8 @@ class Phone extends BaseModel
     {
         return $this->hasOne(Color::class, 'id', 'color_id');
     }
+    public function customer(): HasOne
+    {
+        return $this->hasOne(Customer::class, 'id', 'customer_id');
+    }
 }

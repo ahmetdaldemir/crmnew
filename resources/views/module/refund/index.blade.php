@@ -31,7 +31,7 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
                     @foreach($stockcards as $stockcard)
-                         <tr>
+                        <tr>
                             <td><strong>{{$stockcard['name']}}</strong></td>
                             <td><strong>{{$stockcard['sku']}}</strong></td>
                             <td><strong>{{$stockcard['barcode']}}</strong></td>
@@ -73,10 +73,10 @@
                                    class="btn btn-icon btn-danger">
                                     <span class="bx bxs-trash"></span>
                                 </a>
-                                  <button type="button" onclick="priceModal({{$stockcard['id']}})"
-                                     class="btn btn-icon btn-success">
-                                      <span class="bx bxs-dollar-circle"></span>
-                                  </button>
+                                <button type="button" onclick="priceModal({{$stockcard['id']}})"
+                                        class="btn btn-icon btn-success">
+                                    <span class="bx bxs-dollar-circle"></span>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
@@ -151,7 +151,7 @@
             <form class="modal-content" id="priceForm">
                 @csrf
                 <input id="stockCardId" name="stock_card_id" type="hidden">
-                 <div class="modal-header">
+                <div class="modal-header">
                     <h5 class="modal-title" id="backDropModalTitle">Fiyat Değişiklik İşlemi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -173,7 +173,7 @@
             </form>
         </div>
     </div>
- @endsection
+@endsection
 
 @section('custom-js')
     <script>

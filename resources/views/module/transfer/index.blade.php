@@ -31,7 +31,7 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody class="table-border-bottom-0">
+                    <tbody class="table-border-bottom-0" style="font-size: 13px;">
                     @foreach($transfers as $transfer)
                         <tr>
                             <td><a href="{{route('transfer.show',['id'=>$transfer->id])}}">{{$transfer->number}}</a>
@@ -40,12 +40,13 @@
                             <td>{{\Carbon\Carbon::parse($transfer->created_at)->format('d-m-Y')}}</td>
                             <td>{{$transfer->seller($transfer->delivery_seller_id)->name}}</td>
                             <td>{{$transfer->user($transfer->user_id)->name}}</td>
-                            <td>{{$transfer->user($transfer->delivery_id)->name}}</td>
+                            <td>{{$transfer->user($transfer->comfirm_id)->name}}</td>
                             <td><span
                                     class="badge bg-label-{{\App\Models\Transfer::STATUS_COLOR[$transfer->is_status]}}">{{\App\Models\Transfer::STATUS[$transfer->is_status]}}</span>
                             </td>
                             <td>{{$transfer->comfirm_date}}</td>
                             <td>
+                                @if(empty($transfer->comfirm_date))
                                      <a onclick="return confirm('Onaylamak istediğinizden eminmisiniz?');"
                                        href="{{route('transfer.update',['id' => $transfer->id,'is_status' => 2])}}"
                                        class="btn btn-icon btn-success">
@@ -65,6 +66,7 @@
                                        class="btn btn-icon btn-primary">
                                         <span class="bx bx-edit-alt"></span>
                                     </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

@@ -67,17 +67,14 @@
                             </div>
 
                             <div>
-                                <label for="defaultFormControlInput" class="form-label">Kategori</label>
+                                <label for="defaultFormControlInput" class="form-label">Kategori {{$request->category}}</label>
                                 <select name="category_id" class="form-control">
                                     @foreach($categories as $category)
                                         @if(isset($request) && $request->category == $category->parent_id)
                                             <option
                                                 @if(isset($stockcards) && $stockcards->category->id == $category->id) selected
                                                 @endif  value="{{$category->id}}">{{$category->name}}</option>
-                                        @else
-                                            <option
-                                                @if(isset($stockcards) && $stockcards->category->id == $category->id) selected
-                                                @endif  value="{{$category->id}}">{{$category->name}}</option>
+
                                         @endif
                                     @endforeach
                                 </select>

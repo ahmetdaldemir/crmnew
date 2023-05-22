@@ -35,29 +35,40 @@
                             <td>{{$phone->version->name}}</td>
                             <td>{{\App\Models\Phone::TYPE[$phone->type]}}</td>
                             <td>{{$phone->memory}}</td>
-                            <td>{{$phone->color->id}}</td>
+                            <td>{{$phone->color->name}}</td>
                             <td>{{$phone->batery}}</td>
                             <td>{{$phone->warranty}}</td>
                             <td>{{$phone->seller->name}}</td>
                             <td>{{$phone->cost_price}} ₺</td>
                             <td>{{$phone->sale_price}} ₺</td>
                             <td>
-                                @if($phone->status == 0)
-                                <button class="btn btn-sm btn-success"><i class="bx bx-transfer"></i></button>
+
+                                @if($phone->status == 0 && $phone->is_confirm == 1)
+                                    <button class="btn btn-sm btn-success"><i class="bx bx-transfer"></i></button>
                                     <a href="{{route('phone.sale',['id' => $phone->id])}}"
                                        class="btn btn-sm btn-secondary"><i class="bx bx-shopping-bag"></i></a>
+
+
+
+                                    <a href="{{route('phone.edit',['id' => $phone->id])}}"
+                                       class="btn btn-sm btn-dribbble"><i class="bx bx-edit"></i></a>
+
                                 @endif
-                                <a href="{{route('phone.barcode',['id' => $phone->id])}}"
-                                   class="btn btn-sm btn-warning"><i class="bx bx-barcode"></i></a>
-                                <a href="{{route('phone.show',['id' => $phone->id])}}" class="btn btn-sm btn-dark"><i
-                                        class="bx bx-show"></i></a>
-                                <a href="{{route('phone.edit',['id' => $phone->id])}}"
-                                   class="btn btn-sm btn-dribbble"><i class="bx bx-edit"></i></a>
-                                @if($phone->status == 0)
-                                <a onclick="return confirm('Silmek istediğinizden eminmisiniz?')"
-                                   href="{{route('phone.delete',['id' => $phone->id])}}"
-                                   class="btn btn-sm btn-danger"><i class="bx bx-trash"></i></a>
+                                @if($phone->is_confirm == 0)
+                                    <a onclick="return confirm('Onaylamak istediğinizden eminmisiniz?')"
+                                       href="{{route('phone.confirm',['id' => $phone->id])}}"
+                                       class="btn btn-sm btn-success"><i class="bx bxl-ok-ru"></i></a>
+                                        <a onclick="return confirm('Silmek istediğinizden eminmisiniz?')"
+                                           href="{{route('phone.delete',['id' => $phone->id])}}"
+                                           class="btn btn-sm btn-danger"><i class="bx bx-trash"></i></a>
                                 @endif
+                                    <a target="_blank" href="{{route('phone.barcode',['id' => $phone->id])}}"
+                                       class="btn btn-sm btn-warning"><i class="bx bx-barcode"></i></a>
+                                    <a href="{{route('phone.show',['id' => $phone->id])}}"
+                                       class="btn btn-sm btn-dark"><i
+                                            class="bx bx-show"></i></a>
+                                    <a href="{{route('phone.printconfirm',['id' => $phone->id])}}"
+                                       class="btn btn-sm btn-danger"><i class="bx bx-printer"></i></a>
                             </td>
                         </tr>
                     @endforeach

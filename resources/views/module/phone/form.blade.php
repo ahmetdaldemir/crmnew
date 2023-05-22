@@ -16,9 +16,7 @@
                                     <select id="selectCustomer" class="w-100 select2" data-style="btn-default"
                                             name="customer_id" ng-init="getCustomers()">
                                         <option value="1" data-tokens="ketchup mustard">Genel Cari</option>
-                                        <option ng-repeat="customer in customers"
-                                                @if(isset($invoices) && '@{{customer.id}}' == $invoices->customer_id) selected
-                                                @endif data-value="@{{customer.id}}" value="@{{customer.id}}">
+                                        <option ng-repeat="customer in customers" ng-selected="customer.id == idNew" data-value="@{{customer.id}}" value="@{{customer.id}}">
                                             @{{customer.fullname}}
                                         </option>
                                     </select>
@@ -107,12 +105,6 @@
                 <div class="col-md-6">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <div>
-                                <label for="defaultFormControlInput" class="form-label">Barkod</label>
-                                <input type="text" class="form-control" id="barcode" name="barcode" value=""
-                                       required>
-
-                            </div>
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Alış Fiyatı</label>
                                 <input type="text" class="form-control" id="cost_price" name="cost_price" required>
@@ -220,6 +212,7 @@
                     $scope.getCustomers();
                     $(".customerinformation").html('<p className="mb-1">\'+data.address+\'</p>\n' + '<p className="mb-1">\'+data.phone1+\'</p>');
                     $('#selectCustomer option:selected').val(response.data.id);
+                    $scope.idNew = response.data.id;
                     var modalDiv = $("#editUser");
                     modalDiv.modal('hide');
                     modalDiv

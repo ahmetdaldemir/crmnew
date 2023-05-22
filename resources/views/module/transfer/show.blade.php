@@ -1,10 +1,28 @@
 @extends('layouts.admin')
 
 @section('content')
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printableArea, #printableArea * {
+                visibility: visible;
+            }
+
+            #printableArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width:100%
+            }
+        }
+    </style>
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row invoice-preview">
             <!-- Invoice -->
-            <div class="col-xl-9 col-md-8 col-12 mb-md-0 mb-4">
+            <div id="printableArea" class="col-xl-9 col-md-8 col-12 mb-md-0 mb-4">
                 <div class="card invoice-preview-card">
                     <div class="card-body">
                         <div
@@ -85,7 +103,7 @@
                 <div class="card">
                     <div class="card-body">
                         <a class="btn btn-label-secondary d-grid w-100 mb-3" target="_blank"
-                           href="#">
+                           href="#" onclick="printDiv()">
                             Print
                         </a>
                     </div>
@@ -95,3 +113,15 @@
     </div>
 
 @endsection
+
+<script>
+    function printDiv(){
+        var divName = 'printableArea';
+        var printContents = document.getElementById(divName).innerHTML;
+        w = window.open();
+        w.document.write(printContents);
+        w.document.write('<scr' + 'ipt type="text/javascript">' + 'window.onload = function() { window.print(); window.close(); };' + '</sc' + 'ript>');
+        w.document.close(); // necessary for IE >= 10
+        w.focus(); // necessary for IE >= 10
+    }
+ </script>

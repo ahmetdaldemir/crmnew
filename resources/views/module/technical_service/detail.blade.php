@@ -99,7 +99,7 @@
                                     <label for="defaultFormControlInput" class="form-label">Toplam Tutar</label>
                                     <input type="text" class="form-control" id="total_price"
                                            @if(isset($technical_services)) value="{{$technical_services->sumPrice()}}"
-                                           @endif  name="total_price" aria-describedby="total_price">
+                                           @endif  name="total_price" aria-describedby="total_price" readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="defaultFormControlInput" class="form-label">Müşteri Fiyatı</label>

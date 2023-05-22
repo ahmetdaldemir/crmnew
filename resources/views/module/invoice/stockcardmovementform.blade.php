@@ -231,11 +231,11 @@
                                 <td style="font-size: 13px;text-align: center">{{$invoice->totalCost()}} TL</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 13px">Toplam Dest. Sat. Turarı</td>
+                                <td style="font-size: 13px">Toplam Dest. Sat. Tutarı</td>
                                 <td style="font-size: 13px;text-align: center">{{$invoice->totalBaseCost()}} TL</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 13px">Toplam Satış Turarı</td>
+                                <td style="font-size: 13px">Toplam Satış Tutarı</td>
                                 <td style="font-size: 13px;text-align: center">{{$invoice->totalSale()}} TL</td>
                             </tr>
                         </table>
@@ -243,16 +243,16 @@
                     <div class="card-body">
                         <div>
                             <label class="form-label" for="fullname">Kredi Kartı</label>
-                            <input type="text" name="payment_type[credit_card]" id="credit_card"
+                            <input type="text" name="payment_type[credit_card]"  value="0"  id="credit_card"
                                    class="form-control">
                         </div>
                         <div>
                             <label class="form-label" for="fullname">Nakit</label>
-                            <input type="text" name="payment_type[cash]" id="money_order" class="form-control">
+                            <input type="text" name="payment_type[cash]" id="money_order"  value="0"  class="form-control">
                         </div>
                         <div>
                             <label class="form-label" for="fullname">Taksit</label>
-                            <input type="text" name="payment_type[installment]" id="installment"
+                            <input type="text" name="payment_type[installment]"  value="0"  id="installment"
                                    class="form-control">
                         </div>
                     </div>

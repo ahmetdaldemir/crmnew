@@ -70,20 +70,20 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <label for="defaultFormControlInput" class="form-label">Kredi Kartı</label>
-                                    <input type="number" class="form-control" id="credit_card" name="payment_type[credit_card]" value="" required>
+                                    <input type="number" class="form-control" id="credit_card" value="0" name="payment_type[credit_card]">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="defaultFormControlInput" class="form-label">Nakit</label>
-                                    <input type="number" class="form-control" id="cash" name="payment_type[cash]" required>
+                                    <input type="number" class="form-control" id="cash" value="0" name="payment_type[cash]">
 
                                 </div>
                                 <div class="col-md-3">
                                     <label for="defaultFormControlInput" class="form-label">Taksit</label>
-                                    <input type="number" class="form-control" id="installment" name="payment_type[installment]" required>
+                                    <input type="number" class="form-control" id="installment" value="0" name="payment_type[installment]">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="defaultFormControlInput" class="form-label">indirim</label>
-                                    <input type="number" class="form-control" id="discount_total" name="discount_total" required>
+                                    <input type="number" class="form-control" id="discount_total" name="discount_total" value="0" required>
                                 </div>
                             </div>
                         </div>

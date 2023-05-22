@@ -160,6 +160,7 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::post('sevk', [App\Http\Controllers\StockCardController::class, 'sevk'])->name('sevk');
         Route::get('list', [App\Http\Controllers\StockCardController::class, 'list'])->name('list');
         Route::post('priceupdate', [App\Http\Controllers\StockCardController::class, 'priceupdate'])->name('priceupdate');
+        Route::post('singlepriceupdate', [App\Http\Controllers\StockCardController::class, 'singlepriceupdate'])->name('singlepriceupdate');
     });
 
     Route::prefix('transfer')->name('transfer.')->middleware([])->group(function () {
@@ -203,6 +204,7 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::get('stockcardmovementform', [App\Http\Controllers\InvoiceController::class, 'stockcardmovementform'])->name('stockcardmovementform');
         Route::post('stockcardmovementstore', [App\Http\Controllers\InvoiceController::class, 'stockcardmovementstore'])->name('stockcardmovementstore');
         Route::get('stockmovementdelete', [App\Http\Controllers\InvoiceController::class, 'stockmovementdelete'])->name('stockmovementdelete');
+        Route::get('pdf', [App\Http\Controllers\InvoiceController::class, 'pdf'])->name('pdf');
 
     });
 
@@ -243,10 +245,12 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::post('store', [App\Http\Controllers\TechnicalServiceController::class, 'store'])->name('store');
         Route::post('update', [App\Http\Controllers\TechnicalServiceController::class, 'update'])->name('update');
         Route::get('detail', [App\Http\Controllers\TechnicalServiceController::class, 'detail'])->name('detail');
+        Route::get('payment', [App\Http\Controllers\TechnicalServiceController::class, 'payment'])->name('payment');
         Route::post('detailstore', [App\Http\Controllers\TechnicalServiceController::class, 'detailstore'])->name('detailstore');
         Route::get('detaildelete', [App\Http\Controllers\TechnicalServiceController::class, 'detaildelete'])->name('detaildelete');
+        Route::post('paymentcomplate', [App\Http\Controllers\TechnicalServiceController::class, 'paymentcomplate'])->name('paymentcomplate');
 
-        Route::post('print', [App\Http\Controllers\TechnicalServiceController::class, 'print'])->name('print');
+        Route::get('print', [App\Http\Controllers\TechnicalServiceController::class, 'print'])->name('print');
         Route::post('payment', [App\Http\Controllers\TechnicalServiceController::class, 'payment'])->name('payment');
         Route::post('sms', [App\Http\Controllers\TechnicalServiceController::class, 'sms'])->name('sms');
         Route::get('show', [App\Http\Controllers\TechnicalServiceController::class, 'show'])->name('show');
@@ -255,6 +259,8 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::get('categorydelete', [App\Http\Controllers\TechnicalServiceController::class, 'categorydelete'])->name('categorydelete');
         Route::get('covering', [App\Http\Controllers\TechnicalServiceController::class, 'covering'])->name('covering');
         Route::post('coveringstore', [App\Http\Controllers\TechnicalServiceController::class, 'coveringstore'])->name('coveringstore');
+        Route::get('coverprint', [App\Http\Controllers\TechnicalServiceController::class, 'coverprint'])->name('coverprint');
+        Route::get('coveredit', [App\Http\Controllers\TechnicalServiceController::class, 'coveredit'])->name('coveredit');
     });
 
     Route::prefix('settings')->name('settings.')->middleware([])->group(function () {
@@ -288,6 +294,8 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::get('show', [App\Http\Controllers\PhoneController::class, 'show'])->name('show');
         Route::get('sale', [App\Http\Controllers\PhoneController::class, 'sale'])->name('sale');
         Route::post('salestore', [App\Http\Controllers\PhoneController::class, 'salestore'])->name('salestore');
+        Route::get('confirm', [App\Http\Controllers\PhoneController::class, 'confirm'])->name('confirm');
+        Route::get('printconfirm', [App\Http\Controllers\PhoneController::class, 'printconfirm'])->name('printconfirm');
     });
 });
 /**  Custom **/

@@ -35,7 +35,7 @@
                             <div>
                                 <label for="defaultFormControlInput" class="form-label">Fiziksel Durumu</label>
                                 <div id="physical_condition" class="form-text">
-                                    <select class="form-select select2" name="physically_category[]">
+                                    <select class="form-select select2" name="physically_category[]" multiple>
                                         @foreach($categories_all as $item)
                                             @if($item->parent_id == "physically")
                                                 <option value="{{$item->id}}"> {{$item->name}}</option>
@@ -54,7 +54,7 @@
                                 <label for="defaultFormControlInput" class="form-label">Aksesuar</label>
 
                                 <div id="accessories" class="form-text">
-                                    <select class="form-select select2" name="accessory_category[]">
+                                    <select class="form-select select2" name="accessory_category[]" multiple>
                                         @foreach($categories_all as $item)
                                             @if($item->parent_id == "accessory")
                                                 <option value="{{$item->id}}"> {{$item->name}}</option>
@@ -145,8 +145,7 @@
                                 <label for="defaultFormControlInput" class="form-label">Teslim Alan Personel</label>
                                 <select id="brand_id" name="delivery_staff" class="select2 form-select">
                                     @foreach($users as $user)
-                                        <option
-                                            @if(isset($technical_services) && $technical_services->brand_id == $user->id) selected
+                                        <option @if(isset($technical_services) && $technical_services->brand_id == $user->id) selected
                                             @endif  value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
                                 </select>

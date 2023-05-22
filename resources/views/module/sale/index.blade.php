@@ -6,60 +6,67 @@
 
         <div class="card">
             <div class="card-body">
-                <form action="{{route('sale')}}" id="stockSearch" method="get">
+                <form action="{{route('sale.index')}}" class="row" id="stockSearch" method="get">
                     @csrf
-                    <div class="row g-3">
-                        <div class="col-md-3">
-                            <label class="form-label" for="multicol-username">Stok</label>
-                            <input type="text" class="form-control" placeholder="············" name="stockName">
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label" for="multicol-email">Marka</label>
+                    <div class="col-md-6 fv-plugins-icon-container">
+                        <label class="form-label" for="formValidationName">Başlangıç - Bitiş Tarihi</label>
+                        <input type="text" class="form-control flatpickr-input" name="daterange"
+                               placeholder="YYYY-MM-DD to YYYY-MM-DD" id="flatpickr-range" readonly="readonly">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label" for="multicol-username">Stok</label>
+                        <input type="text" class="form-control" placeholder="············" name="stockName">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-password-toggle">
+                            <label class="form-label" for="multicol-confirm-password">Seri Numarası</label>
                             <div class="input-group input-group-merge">
-                                <select type="text" name="brand" class="form-select" onchange="getVersion(this.value)" style="width: 100%">
+                                <input type="text" name="serialNumber" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label" for="multicol-email">Marka</label>
+                        <div class="input-group input-group-merge">
+                            <select type="text" name="brand" class="form-select" onchange="getVersion(this.value)"
+                                    style="width: 100%">
+                                <option value="">Tümü</option>
+                                @foreach($brands as $brand)
+                                    <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-password-toggle">
+                            <label class="form-label" for="multicol-password">Model</label>
+                            <div class="input-group input-group-merge">
+                                <select type="text" id="version_id" name="version" class="form-select"
+                                        style="width: 100%">
                                     <option value="">Tümü</option>
-                                    @foreach($brands as $brand)
-                                        <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-password-toggle">
+                            <label class="form-label" for="multicol-password">Kategori</label>
+                            <div class="input-group input-group-merge">
+                                <select type="text" name="category" class="form-select" style="width: 100%">
+                                    <option value="">Tümü</option>
+                                    @foreach($categories as $category)
+                                        @if($category->parent_id == 0)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-password-toggle">
-                                <label class="form-label" for="multicol-password">Model</label>
-                                <div class="input-group input-group-merge">
-                                    <select type="text" id="version_id" name="version" class="form-select" style="width: 100%">
-                                        <option value="">Tümü</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-password-toggle">
-                                <label class="form-label" for="multicol-password">Kategori</label>
-                                <div class="input-group input-group-merge">
-                                    <select type="text" name="category" class="form-select" style="width: 100%">
-                                        <option value="">Tümü</option>
-                                        @foreach($categories as $category)
-                                            @if($category->parent_id == 0)
-                                                <option value="{{$category->id}}">{{$category->name}}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-password-toggle">
-                                <label class="form-label" for="multicol-confirm-password">Seri Numarası</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="text" name="serialNumber" class="form-control">
-                                </div>
-                            </div>
-                        </div>
                     </div>
+
                     <div class="col-12 mt-4">
-                        <button  type="submit" class="btn btn-sm btn-outline-primary">Ara</button>
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Ara</button>
                     </div>
                 </form>
 
@@ -83,55 +90,73 @@
                     <tbody class="table-border-bottom-0">
                     @foreach($invoices as $invoice)
                         @if($invoice->type == 2)
-                            <?php $detail = json_decode($invoice->detail,true);  ?>
-                        <tr>
-                            <td><a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number??"#"}}</a> / {{\Carbon\Carbon::parse($invoice->created_at)->format('d-m-Y')}}</td>
-                            <td style="text-align: center;"><strong>{{$invoice->account->fullname ?? "Genel Cari"}}</strong></td>
-                            <td style="text-align: center;">@if(!empty($detail)) {{ \App\Models\StockCard::find($detail[0]['stock_card_id'])->name ?? "Silinmiş"}} @endif</td>
-                            <td style="text-align: center;">{{$invoice->staff->name}}</td>
-                            <td style="text-align: right;font-weight: 600">@if(!empty($detail)) {{ $detail[0]['sale_price']  ?? 0.00}} @endif ₺</td>
-                            <td style="text-align: right;font-weight: 600"> {{ $invoice->credit_card ??  0.00}}   ₺</td>
-                            <td style="text-align: right;font-weight: 600"> {{ $invoice->cash ??  0.00}}   ₺</td>
-                            <td style="text-align: right;font-weight: 600"> {{ $invoice->installment ??  0.00}}   ₺</td>
+                                <?php $detail = json_decode($invoice->detail, true); ?>
+                            <tr>
+                                <td>
+                                    <a href="{{route('invoice.show',['id' => $invoice->id])}}">#{{$invoice->number??"#"}}</a>
+                                    / {{\Carbon\Carbon::parse($invoice->created_at)->format('d-m-Y')}}</td>
+                                <td style="text-align: center;">
+                                    <strong>{{$invoice->account->fullname ?? "Genel Cari"}}</strong></td>
+                                <td style="text-align: center;">
+                                    @if($invoice->accounting_category_id == 9999999)
+                                        <?php $phone = \App\Models\Phone::with('brand')->where('invoice_id',$invoice->id)->first();
+                                             ?>
+                                    TELEFON
+                                    @endif
 
-                            <td style="text-align: center;">
-                                @if($invoice->is_status == 1)
-                                    <span data-bs-toggle="tooltip" data-bs-html="true"
-                                          data-bs-original-title="<span>Gönderilmedi<br> Fiyat: {{$invoice->total_price}}<br>
+
+                                    @if(!empty($detail)) {{ \App\Models\StockCard::find($detail[0]['stock_card_id'])->name ?? "Silinmiş"}}@endif</td>
+                                <td style="text-align: center;">{{$invoice->staff->name}}</td>
+                                <td style="text-align: right;font-weight: 600">@if(!empty($detail))
+                                        {{ $detail[0]['sale_price']  ?? 0.00}}
+                                    @endif ₺
+                                </td>
+                                <td style="text-align: right;font-weight: 600"> {{ $invoice->credit_card ??  0.00}}₺
+                                </td>
+                                <td style="text-align: right;font-weight: 600"> {{ $invoice->cash ??  0.00}} ₺</td>
+                                <td style="text-align: right;font-weight: 600"> {{ $invoice->installment ??  0.00}}₺
+                                </td>
+
+                                <td style="text-align: center;">
+                                    @if($invoice->is_status == 1)
+                                        <span data-bs-toggle="tooltip" data-bs-html="true"
+                                              data-bs-original-title="<span>Gönderilmedi<br> Fiyat: {{$invoice->total_price}}<br>
                                            Fatura Tarihi: {{\Carbon\Carbon::parse($invoice->create_date)->format('d-m-Y')}}</span>"
-                                          aria-describedby="tooltip472596"><span
-                                            class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30"><i
-                                                class="bx bx-paper-plane bx-xs"></i></span></span>
-                                @endif
-                                @if($invoice->is_status == 2)
-                                    <span data-bs-toggle="tooltip" data-bs-html="true"
-                                          aria-label="<span>Partial Payment<br> Balance: 0<br> Due Date: 09/25/2020</span>"
-                                          data-bs-original-title="<span>Partial Payment<br> Balance: 0<br> Due Date: 09/25/2020</span>"
-                                          aria-describedby="tooltip478233"><span
-                                            class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30"><i
-                                                class="bx bx-adjust bx-xs"></i></span></span>
-                                @endif
+                                              aria-describedby="tooltip472596"><span
+                                                class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30"><i
+                                                    class="bx bx-paper-plane bx-xs"></i></span></span>
+                                    @endif
+                                    @if($invoice->is_status == 2)
+                                        <span data-bs-toggle="tooltip" data-bs-html="true"
+                                              aria-label="<span>Partial Payment<br> Balance: 0<br> Due Date: 09/25/2020</span>"
+                                              data-bs-original-title="<span>Partial Payment<br> Balance: 0<br> Due Date: 09/25/2020</span>"
+                                              aria-describedby="tooltip478233"><span
+                                                class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30"><i
+                                                    class="bx bx-adjust bx-xs"></i></span></span>
+                                    @endif
 
-                                @if($invoice->is_status == 3)
-                                    <span data-bs-toggle="tooltip" data-bs-html="true"
-                                          aria-label="<span>Past Due<br> Balance: 0<br> Due Date: 08/01/2020</span>"
-                                          data-bs-original-title="<span>Past Due<br> Balance: 0<br> Due Date: 08/01/2020</span>"
-                                          aria-describedby="tooltip774099"><span
-                                            class="badge badge-center rounded-pill bg-label-danger w-px-30 h-px-30"><i
-                                                class="bx bx-info-circle bx-xs"></i></span></span>
-                                @endif
+                                    @if($invoice->is_status == 3)
+                                        <span data-bs-toggle="tooltip" data-bs-html="true"
+                                              aria-label="<span>Past Due<br> Balance: 0<br> Due Date: 08/01/2020</span>"
+                                              data-bs-original-title="<span>Past Due<br> Balance: 0<br> Due Date: 08/01/2020</span>"
+                                              aria-describedby="tooltip774099"><span
+                                                class="badge badge-center rounded-pill bg-label-danger w-px-30 h-px-30"><i
+                                                    class="bx bx-info-circle bx-xs"></i></span></span>
+                                    @endif
 
 
-                            </td>
-                            <td>
-                                <a title="Düzenle" href="{{route('invoice.salesedit',['id' => $invoice->id])}}"  class="btn btn-icon btn-primary">
-                                    <span class="bx bx-edit-alt"></span>
-                                </a>
-                                <a title="Sil" href="{{route('sale.delete',['id' => $invoice->id])}}" class="btn btn-icon btn-danger">
-                                    <span class="bx bxs-trash"></span>
-                                </a>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>
+                                    <a title="Düzenle" href="{{route('invoice.salesedit',['id' => $invoice->id])}}"
+                                       class="btn btn-icon btn-primary">
+                                        <span class="bx bx-edit-alt"></span>
+                                    </a>
+                                    <a title="Sil" href="{{route('sale.delete',['id' => $invoice->id])}}"
+                                       class="btn btn-icon btn-danger">
+                                        <span class="bx bxs-trash"></span>
+                                    </a>
+                                </td>
+                            </tr>
                         @endif
                     @endforeach
                     </tbody>
@@ -192,6 +217,8 @@
 @endsection
 
 @section('custom-js')
+    <script src="{{asset('assets/js/forms-pickers.js')}}"></script>
+
     <script>
 
         function openModal(id) {

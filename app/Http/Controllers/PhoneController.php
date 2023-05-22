@@ -26,15 +26,15 @@ class PhoneController extends Controller
 
     protected function index()
     {
-        $data['phones'] = Phone::all()->sortByDesc('id');
+        $data['phones'] = Phone::where('company_id',Auth::user()->company_id)->orderBy('id','desc')->get();
         return view('module.phone.index', $data);
     }
 
     protected function create()
     {
-        $data['brands'] = Brand::all();
-        $data['colors'] = Color::all();
-        $data['sellers'] = Seller::all();
+        $data['brands'] = Brand::where('company_id',Auth::user()->company_id)->get();
+        $data['colors'] = Color::where('company_id',Auth::user()->company_id)->get();
+        $data['sellers'] = Seller::where('company_id',Auth::user()->company_id)->get();
         $data['citys'] = City::all();
         return view('module.phone.form', $data);
     }
@@ -93,7 +93,7 @@ class PhoneController extends Controller
                 'seller_id' => $request->seller_id,
                 'quantity' => $request->quantity,
                 'type' => $request->type,
-                'barcode' => $request->barcode,
+                'barcode' => 'PH'.rand(1111111,9999999),
                 'description' => $request->description,
                 'cost_price' => $request->cost_price,
                 'sale_price' => $request->sale_price,
@@ -114,6 +114,20 @@ class PhoneController extends Controller
         return $this->brandService->update($request->id, $data);
     }
 
+    protected function confirm(Request $request)
+    {
+        $phone =  Phone::find($request->id);
+        $phone->is_confirm = 1;
+        $phone->save();
+        return  redirect()->back();
+    }
+
+    protected function printconfirm(Request $request)
+    {
+        $data['phone'] = Phone::find($request->id);
+        return view('module.phone.printconfirm', $data);
+    }
+
     public function salestore(Request $request)
     {
 
@@ -128,9 +142,9 @@ class PhoneController extends Controller
             'type' => 2,
             'number' =>   null,
             'create_date' => date('Y-m-d'),
-            'credit_card' => $request->payment_type['credit_card'],
-            'cash' => $request->payment_type['cash'],
-            'installment' => $request->payment_type['installment'],
+            'credit_card' => $request->payment_type['credit_card']??0,
+            'cash' => $request->payment_type['cash']??0,
+            'installment' => $request->payment_type['installment']??0,
             'description' => $request->description ?? null,
             'is_status' => 1,
             'total_price' => $request->payment_type['credit_card'] + $request->payment_type['cash'] + $request->payment_type['installment'],
@@ -161,12 +175,12 @@ class PhoneController extends Controller
         $safe->user_id = Auth::user()->id;
         $safe->seller_id = Auth::user()->seller_id;
         $safe->type = "in";
-        $safe->incash = $request->payment_type['cash'];
+        $safe->incash = $request->payment_type['cash']??0;
         $safe->outcash ="0";
-        $safe->amount =	 $request->payment_type['cash'] + $request->payment_type['credit_card']  + $request->payment_type['installment'];
+        $safe->amount =	 $request->payment_type['cash']??0 + $request->payment_type['credit_card']??0  + $request->payment_type['installment']??0;
         $safe->invoice_id = $invoiceID->id;
-        $safe->credit_card = $request->payment_type['credit_card'];
-        $safe->installment = $request->payment_type['installment'];
+        $safe->credit_card = $request->payment_type['credit_card']??0;
+        $safe->installment = $request->payment_type['installment']??0;
         $safe->description = "TELEFON";
         $safe->save();
 
@@ -174,5 +188,7 @@ class PhoneController extends Controller
         $phone->invoice_id = $invoiceID->id;
         $phone->status = 1;
         $phone->save();
+
+        return redirect()->back();
     }
 }

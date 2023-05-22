@@ -1,3 +1,30 @@
+<div class="modal fade" id="smsCoverModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+        <div class="modal-content p-3 p-md-5">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="text-center mb-4">
+                    <h3>Yeni Mesaj Gönder</h3>
+                </div>
+                <form action="javascript():;" method="post" id="smsCoverForm" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id"/>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-md-9">
+                                <textarea class="form-control"></textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <button onclick="smsCoverSend()" type="button" class="btn btn-danger btn-buy-now">Gönder</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="smsModal" tabindex="-1" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
@@ -12,15 +39,15 @@
                     <input type="hidden" name="id"/>
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-md-9">
+                            <div class="form-group col-md-12">
                                 <select class="form-control">
                                     @foreach($sms as $item)
                                         <option value="{{$item->id}}">{{$item->display_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <button onclick="smsSend()" type="button" class="btn btn-danger btn-buy-now">Gönder</button>
+                            <div class="col-md-12 mt-3">
+                                <button onclick="smsSend()" type="button" class="btn btn-danger btn-buy-now" style="width: 100%;">Gönder</button>
                             </div>
                         </div>
 

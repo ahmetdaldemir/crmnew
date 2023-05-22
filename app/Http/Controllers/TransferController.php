@@ -10,6 +10,7 @@ use App\Services\Seller\SellerService;
 use App\Services\StockCard\StockCardService;
 use App\Services\Transfer\TransferService;
 use App\Services\User\UserService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -101,13 +102,13 @@ class TransferController extends Controller
     protected function update(Request $request)
     {
         $transfer = $this->transferService->find($request->id);
+
         if ($transfer->serial_list) {
+
             foreach ($transfer->serial_list as $key => $value) {
-                foreach ($value as $item) {
-                    StockCardMovement::where('serial_number', $item)->update(['seller_id' => $transfer->delivery_seller_id]);
-                }
+                StockCardMovement::where('serial_number', $value)->update(['seller_id' => $transfer->delivery_seller_id]);
             }
-            $data = array('is_status' => $request->is_status);
+            $data = array('is_status' => $request->is_status,'comfirm_id' => Auth::user()->id,'comfirm_date' => Carbon::now());
             $this->transferService->update($request->id, $data);
             return redirect()->back();
         }
