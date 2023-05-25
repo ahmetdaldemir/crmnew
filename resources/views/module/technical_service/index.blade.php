@@ -135,7 +135,7 @@
                                             <i class="fab fa-angular fa-lg text-danger me-3"></i><strong>{{$technical_service->seller->name??"bulunamadı"}}
                                         </td>
                                         <td>{{$technical_service->customer->fullname ?? "Silinmiş"}}</td>
-                                        <td>{{$technical_service->brand->name}} / {{$technical_service->version->name}}</td>
+                                        <td>{{$technical_service->brand->name??"Bulunamadı"}} / {{$technical_service->version->name??"Bulunamadı"}}</td>
                                         <td><span
                                                 class="badge bg-label-primary me-1">{{$technical_service->process_type}}</span>
                                         </td>

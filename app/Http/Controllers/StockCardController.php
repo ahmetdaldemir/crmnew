@@ -21,6 +21,7 @@ use App\Services\StockCard\StockCardService;
 use App\Services\Transfer\TransferService;
 use App\Services\Version\VersionService;
 use App\Services\Warehouse\WarehouseService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -77,7 +78,7 @@ class StockCardController extends Controller
                     'sku' => $item->sku,
                     'barcode' => $item->barcode,
                     'is_status' => $item->is_status,
-                    'category' => Category::find($item->category_id)->name ?? "Bulunamadı",
+                    'category' => $this->category($item->category_id) ?? "Bulunamadı",
                     'quantity' => (new \App\Models\StockCard)->quantityId($item->id),
                     'brand' => Brand::find($item->brand_id)->name ?? "Bulunamadı",
                     'version' => $this->version($item->version_id) ?? [],
@@ -88,11 +89,29 @@ class StockCardController extends Controller
             }
             $data['stockcards'] = $data;
         }
+
         $data['sellers'] = $this->sellerService->get();
         $data['brands'] = $this->brandService->get();
         $data['categories'] = $this->categoryService->get();
         $data['reasons'] = $this->reasonService->get();
         return view('module.stockcard.index', $data);
+    }
+
+    public function category($categories)
+    {
+        if (gettype($categories) == 'array') {
+            $json = $categories;
+        } else {
+            $json = json_decode($categories, TRUE);
+        }
+        foreach ($json as $item) {
+            $category[] = Category::when($item, function ($query) use ($item) {
+                $query->where('id', $item);
+            })->first()->name ?? "Bulunamadı";
+        }
+
+
+        return $category;
     }
 
     public function version($versions)
@@ -117,11 +136,45 @@ class StockCardController extends Controller
         $data['brands'] = $this->brandService->get();
         $data['versions'] = $this->versionService->get();
         $data['categories'] = $this->categoryService->get();
+       // $a = $this->categoryService->getList($request->category);
+        // $data['categoriestest'] = $this->getNestedItems($a);
+        //dd($data['categoriestest']);
         $data['fakeproducts'] = StockCard::select('name')->distinct()->get();
         $data['units'] = Unit::Unit()->value;
         $data['request'] = $request;
         return view('module.stockcard.form', $data);
     }
+
+    function getNestedItems($input, $level = array()){
+
+        $a = [];
+
+        if(!empty($input))
+        {
+            foreach ($input as $item)
+            {
+                if(gettype($item) == 'array')
+                {
+                    $a[] = $item['name'].">";
+                }
+
+                if(is_array($item))
+                {
+                     $this->getNestedItems($item['list']);
+                }else{
+                    if(gettype($item) == 'array')
+                    {
+                        $a[] = $item['name'].">";
+                    }
+                }
+            }
+
+        }
+
+        return $a;
+    }
+
+
 
     protected function edit(Request $request)
     {
@@ -154,9 +207,8 @@ class StockCardController extends Controller
             return response()->json("Seri Numarası Bulunamadı Veya Stok Yetersiz", 400);
         }
 
-        $transfer = Transfer::whereJsonContains('serial_list',$request->serial_number)->whereNull('comfirm_id')->whereNull('comfirm_date')->first();
-        if($transfer)
-        {
+        $transfer = Transfer::whereJsonContains('serial_list', $request->serial_number)->whereNull('comfirm_id')->whereNull('comfirm_date')->first();
+        if ($transfer) {
             return response()->json("Transferi kabul edilmemiş", 400);
         }
         $stock = ['stock_card_id' => $request->stock_card_id];
@@ -169,18 +221,16 @@ class StockCardController extends Controller
             'main_seller_id' => Auth::user()->seller_id,
             'delivery_id' => User::where('seller_id', $request->seller_id)->first()->id ?? 1,
             'description' => $request->description,
-            'number' => $request->number ?? rand(333333,999999),
+            'number' => $request->number ?? rand(333333, 999999),
             'stocks' => $request->serial_number,
             'serial_list' => $request->serial_number,
             'delivery_seller_id' => $request->seller_id,
             'reason_id' => $request->reason_id,
+
         );
 
-        if (empty($request->id)) {
-            $transfer = $this->transferService->create($data);
-        } else {
-            $transfer = $this->transferService->update($request->id, $data);
-        }
+        $transfer = $this->transferService->create($data);
+
         return response()->json($transfer, 200);
 
     }
@@ -250,9 +300,11 @@ class StockCardController extends Controller
     {
         $categorylist = Category::where('id', $request->category_id)->orWhere('parent_id', $request->category_id)->get()->pluck('id')->toArray();
         $stockcardsList = StockCard::whereIn('category_id', $categorylist);
+
         if ($request->filled('brand')) {
             $stockcardsList->where('brand_id', $request->brand);
         }
+
         if ($request->filled('version')) {
             $stockcardsList->whereJsonContains('version_id', $request->version);
         }
@@ -262,9 +314,13 @@ class StockCardController extends Controller
         }
 
         $s = $stockcardsList->get()->pluck('id')->toArray();
+
         $t = StockCardMovement::whereIn('stock_card_id', $s);
         if ($request->filled('serialNumber')) {
             $t->where('serial_number', 'like', '%' . $request->serialNumber . '%');
+        }
+        if ($request->filled('seller')) {
+            $t->where('seller_id', $request->seller);
         }
         $data['stockcards'] = $t->groupBy('serial_number')->having(DB::raw('count(serial_number)'), 1)->get();
         $data['category'] = $request->category_id;
@@ -277,37 +333,64 @@ class StockCardController extends Controller
 
     public function priceupdate(Request $request)
     {
-        $stockcardMovement = StockCardMovement::where('stock_card_id',$request->stock_card_id)->orderBy('id','desc')->first();
+        $stockcardMovement = StockCardMovement::where('stock_card_id', $request->stock_card_id)->orderBy('id', 'desc')->first();
         $stockcardprice = new StockCardPrice();
         $stockcardprice->stock_card_id = $request->stock_card_id;
-        $stockcardprice->user_id =  Auth::id();
+        $stockcardprice->user_id = Auth::id();
         $stockcardprice->company_id = Auth::user()->company_id;
         $stockcardprice->cost_price = $stockcardMovement->cost_price;
         $stockcardprice->base_cost_price = $stockcardMovement->base_cost_price;
         $stockcardprice->sale_price = $request->sale_price;
         $stockcardprice->save();
 
-        $stockcardmovement = StockCardMovement::where('stock_card_id',$request->stock_card_id)->where('type',1)->get();
-        foreach ($stockcardmovement as $item)
-        {
+        $stockcardmovement = StockCardMovement::where('stock_card_id', $request->stock_card_id)->where('type', 1)->get();
+        foreach ($stockcardmovement as $item) {
             $item->sale_price = $request->sale_price;
             $item->save();
         }
-        return response()->json('Kayıt Güncellendi',200);
+        return response()->json('Kayıt Güncellendi', 200);
     }
 
     public function singlepriceupdate(Request $request)
     {
 
 
-        $stockcardmovement = StockCardMovement::where('id',$request->stock_card_id)->where('type',1)->get();
-        foreach ($stockcardmovement as $item)
-        {
+        $stockcardmovement = StockCardMovement::where('id', $request->stock_card_id)->where('type', 1)->get();
+        foreach ($stockcardmovement as $item) {
             $item->sale_price = $request->sale_price;
             $item->save();
         }
-        return response()->json('Kayıt Güncellendi',200);
+        return response()->json('Kayıt Güncellendi', 200);
     }
 
+    public function singleserialprint(Request $request)
+    {
+        $movements = StockCardMovement::find($request->id);
+
+
+        $data[] = array(
+            'title' => 'Barkod',
+            'id' => $movements->id,
+            'serial_number' => $movements->serial_number,
+            'sale_price' => $movements->sale_price,
+            'brand_name' => $movements->stockcard()->brand->name,
+            'name' => $movements->stockcard()->name,
+            'version' => $this->getVersionMap($movements->stockcard()->version()),
+        );
+
+
+        $pdf = PDF::loadView('module.stockcard.print', ['data' => $data]);
+
+        return $pdf->download('codesolutionstuff.pdf');
+
+    }
+
+    public function getVersionMap($map)
+    {
+        $datas = json_decode($map, TRUE);
+        foreach ($datas as $mykey => $myValue) {
+            return "$myValue,";
+        }
+    }
 
 }

@@ -350,8 +350,25 @@ class InvoiceController extends Controller
 
     public function serialprint(Request $request)
     {
+        $data = [];
         $movements = $this->stockCardService->getInvoiceForSerial($request->id);
-        return view('module.stockcard.print', compact('movements'));
+        foreach ($movements as $item)
+        {
+            $data[] = [
+                'title' => 'Welcome to CodeSolutionStuff.com',
+                'id' => $item->id,
+                'serial_number' => $item->serial_number,
+                'sale_price' => $item->sale_price,
+                'brand_name' => $item->stockcard()->brand->name,
+                'name' => $item->stockcard()->name,
+                'version'=>$this->getVersionMap($item->stockcard()->version()),
+            ];
+        }
+
+
+        $pdf = PDF::loadView('module.stockcard.print', ['data' => $data]);
+
+        return $pdf->download('codesolutionstuff.pdf');
     }
 
     public function sales(Request $request)
@@ -368,7 +385,7 @@ class InvoiceController extends Controller
         $data['safes'] = $this->safeService->all();
         $data['taxs'] = ['0' => '%0', '1' => '%1', '8' => '%8', '18' => '%18'];
         $data['request'] = $request;
-        $product = $this->stockCardService->getStockData($request);
+         $product = $this->stockCardService->getStockData($request);
         if (empty($product['stock_card'])) {
             return redirect()->back();
         }
@@ -605,10 +622,10 @@ class InvoiceController extends Controller
     }
 
 
-    public function pdf()
+    public function pdf(Request $request)
     {
         $data = [];
-        $movements = $this->stockCardService->getInvoiceForSerial(139);
+        $movements = $this->stockCardService->getInvoiceForSerial($request->id);
         foreach ($movements as $item)
         {
             $data[] = [

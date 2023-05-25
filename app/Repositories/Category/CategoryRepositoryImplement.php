@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Auth;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Category;
 
-class CategoryRepositoryImplement extends Eloquent implements CategoryRepository{
+class CategoryRepositoryImplement extends Eloquent implements CategoryRepository
+{
 
     /**
-    * Model class to be used in this repository for the common methods inside Eloquent
-    * Don't remove or change $this->model variable name
-    * @property Model|mixed $model;
-    */
+     * Model class to be used in this repository for the common methods inside Eloquent
+     * Don't remove or change $this->model variable name
+     * @property Model|mixed $model;
+     */
     protected Category $model;
 
     public function __construct(Category $model)
@@ -22,6 +23,35 @@ class CategoryRepositoryImplement extends Eloquent implements CategoryRepository
 
     public function get()
     {
-        return $this->model->where('company_id',Auth::user()->company_id)->get();
+        return $this->model->where('company_id', Auth::user()->company_id)->get();
     }
+
+    public function getList($category_id = 2)
+    {
+        $categories = $this->model->where('company_id', Auth::user()->company_id)->where('parent_id', $category_id)->get();
+
+        foreach ($categories as $category) {
+            $data[] = [
+                'category_id' => $category->id,
+                'name' => $category->name,
+                'list' => $this->getCategory($category->id)
+            ];
+        }
+        return $data;
+    }
+
+    public function getCategory($category_id)
+    {
+
+        $x =  $this->model->where('parent_id', $category_id)->first();
+        if($x)
+        {
+            return  [
+                    'category_id' => $x->id,
+                    'name' => $x->name,
+                    'list' => $this->getCategory($x->id)
+                ];
+        }
+    }
+
 }

@@ -161,6 +161,7 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::get('list', [App\Http\Controllers\StockCardController::class, 'list'])->name('list');
         Route::post('priceupdate', [App\Http\Controllers\StockCardController::class, 'priceupdate'])->name('priceupdate');
         Route::post('singlepriceupdate', [App\Http\Controllers\StockCardController::class, 'singlepriceupdate'])->name('singlepriceupdate');
+        Route::get('singleserialprint', [App\Http\Controllers\StockCardController::class, 'singleserialprint'])->name('singleserialprint');
     });
 
     Route::prefix('transfer')->name('transfer.')->middleware([])->group(function () {
@@ -296,6 +297,7 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::post('salestore', [App\Http\Controllers\PhoneController::class, 'salestore'])->name('salestore');
         Route::get('confirm', [App\Http\Controllers\PhoneController::class, 'confirm'])->name('confirm');
         Route::get('printconfirm', [App\Http\Controllers\PhoneController::class, 'printconfirm'])->name('printconfirm');
+        Route::get('list', [App\Http\Controllers\PhoneController::class, 'list'])->name('list');
     });
 });
 /**  Custom **/

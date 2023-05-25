@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Safe;
 use App\Services\Safe\SafeService;
 use App\Services\Seller\SellerService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,8 +26,9 @@ class SafeController extends Controller
         if($request->filled('daterange'))
         {
             $daterange = explode("to",$request->daterange);
-
             $query->whereBetween('created_at',[trim($daterange[0]), trim($daterange[1])]);
+        }else{
+            $query->whereDate('created_at',Carbon::today());
         }
         if($request->filled('seller'))
         {

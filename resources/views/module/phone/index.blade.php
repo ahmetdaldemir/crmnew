@@ -11,10 +11,76 @@
                     <a href="{{route('phone.create')}}" class="btn btn-primary float-end">Yeni Telefon Ekle</a>
                 </div>
             </div>
+            <div class="card-body">
+                <form action="{{route('phone.list')}}" id="stockSearch" method="get">
+                    @csrf
+                    <div class="row g-3">
+                        <div class="col-md-2">
+                            <label class="form-label" for="multicol-email">Marka</label>
+                            <div class="input-group input-group-merge">
+                                <select type="text" name="brand" class="form-select" onchange="getVersion(this.value)" style="width: 100%">
+                                    <option value="">Tümü</option>
+                                    @foreach($brands as $brand)
+                                        <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-password-toggle">
+                                <label class="form-label" for="multicol-password">Model</label>
+                                <div class="input-group input-group-merge">
+                                    <select type="text" id="version_id" name="version" class="form-select" style="width: 100%">
+                                        <option value="">Tümü</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-password-toggle">
+                                <label class="form-label" for="multicol-password">Renk</label>
+                                <div class="input-group input-group-merge">
+                                    <select type="text" name="color" class="form-select" style="width: 100%">
+                                        <option value="">Tümü</option>
+                                        @foreach($colors as $color)
+                                            <option value="{{$color->id}}">{{$color->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-password-toggle">
+                                <label class="form-label" for="multicol-password">Şube</label>
+                                <div class="input-group input-group-merge">
+                                    <select type="text" name="seller" class="form-select" style="width: 100%">
+                                        <option value="">Tümü</option>
+                                        @foreach($sellers as $seller)
+                                            <option value="{{$seller->id}}">{{$seller->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-password-toggle">
+                                <label class="form-label" for="multicol-confirm-password">Seri Numarası</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" name="barcode" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <button   type="submit" class="btn btn-sm btn-outline-primary">Ara</button>
+                    </div>
+                </form>
+            </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                     <tr>
+                        <th>Barkod</th>
                         <th>Marka</th>
                         <th>Model</th>
                         <th>Tipi</th>
@@ -31,6 +97,7 @@
                     <tbody class="table-border-bottom-0">
                     @foreach($phones as $phone)
                         <tr>
+                            <td>{{$phone->barcode}}</td>
                             <td>{{$phone->brand->name}}</td>
                             <td>{{$phone->version->name}}</td>
                             <td>{{\App\Models\Phone::TYPE[$phone->type]}}</td>

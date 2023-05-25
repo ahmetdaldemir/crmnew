@@ -79,4 +79,9 @@ class CategoryServiceImplement extends Service implements CategoryService{
             return [];
         }
     }
+
+    public function getList($category_id)
+    {
+        return $this->mainRepository->getList($category_id)??[];
+    }
 }

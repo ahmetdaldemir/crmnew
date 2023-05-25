@@ -225,7 +225,7 @@
                                     <label for="nameBackdrop" class="form-label">Serial Number</label>
                                     <input type="text" id="serialBackdrop" class="form-control"
                                            placeholder="Seri Numarası"
-                                           name="serial_number">
+                                           name="serial_number[]">
                                 </div>
                             </div>
                             <div class="row g-2">
@@ -325,6 +325,7 @@
                         buttonsStyling: !1
                     });
                     $("#backDropModal").modal('hide');
+                    window.location.reload();
                 },
                 error: function (request, status, error) {
                     Swal.fire({

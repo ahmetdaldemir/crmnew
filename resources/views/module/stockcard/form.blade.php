@@ -8,7 +8,7 @@
         <form action="{{route('stockcard.store')}}" method="post">
             @csrf
             <input type="hidden" name="id" @if(isset($stockcards)) value="{{$stockcards->id}}" @endif />
-            <div class="card">
+             <div class="card">
                 <h5 class="card-header">Stok Kart Bilgileri</h5>
                 <div class="card-body">
                     <div class="row">
@@ -67,18 +67,36 @@
                             </div>
 
                             <div>
-                                <label for="defaultFormControlInput" class="form-label">Kategori {{$request->category}}</label>
-                                <select name="category_id" class="form-control">
-                                    @foreach($categories as $category)
-                                        @if(isset($request) && $request->category == $category->parent_id)
-                                            <option
-                                                @if(isset($stockcards) && $stockcards->category->id == $category->id) selected
-                                                @endif  value="{{$category->id}}">{{$category->name}}</option>
+                                <label for="defaultFormControlInput" class="form-label">Kategori </label>
 
-                                        @endif
-                                    @endforeach
-                                </select>
+                                <ul class="tree">
 
+
+                                        <ul>
+                                            @foreach($categories as $categorya)
+                                                @if($categorya->parent_id == $request->category)
+                                                        <li class="">
+                                                            <input type="radio" name="category_id" value="{{$categorya->id}}">
+                                                            <label>{{$categorya->name}}</label>
+                                                        </li>
+                                                    @foreach($categories as $categoryaa)
+                                                        @if($categoryaa->parent_id == $categorya->id)
+                                                            <li class=""><div style="    float: left;
+                                                            line-height: 1.5;
+                                                            margin-left: 11px;
+                                                            padding-right: 10px;
+                                                        }"> --</div>
+                                                                <input type="radio" name="category_id" value="{{$categoryaa->id}}">
+                                                                <label>{{$categoryaa->name}}</label>
+                                                            </li>
+
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
+                                        </ul>
+
+                                </ul>
                             </div>
 
                         </div>
@@ -124,6 +142,99 @@
         </form>
         <hr class="my-5">
     </div>
+    <style>
+        .controls {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            z-index: 1;
+            padding: 6px 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        button {
+            border: 0px;
+            color: #e13300;
+            margin: 4px;
+            padding: 4px 12px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        button.active,
+        button.active:hover {
+            background: #e13300;
+            color: #fff;
+        }
+
+        button:hover {
+            background: #efefef;
+        }
+
+        input[type=checkbox] {
+            vertical-align: middle !important;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: lighter;
+            color: #fff;
+            text-align: center;
+            display: block;
+            padding: 40px 0px;
+            margin-top: 40px;
+        }
+
+        .tree {
+            margin: 2% auto;
+            width: 80%;
+        }
+
+        .tree ul {
+            margin: 4px auto;
+            margin-left: 6px;
+            border-left: 1px dashed #dfdfdf;
+        }
+
+
+        .tree li {
+            padding: 12px 18px;
+            cursor: pointer;
+            vertical-align: middle;
+            background: #fff;
+        }
+
+        .tree li:first-child {
+            border-radius: 3px 3px 0 0;
+        }
+
+        .tree li:last-child {
+            border-radius: 0 0 3px 3px;
+        }
+
+        .tree .active,
+        .active li {
+            background: #efefef;
+        }
+
+        .tree label {
+            cursor: pointer;
+        }
+
+        .tree input[type=checkbox] {
+            margin: -2px 6px 0 0px;
+        }
+
+        .has > label {
+            color: #000;
+        }
+
+        .tree .total {
+            color: #e13300;
+        }
+    </style>
 @endsection
 
 @section('custom-js')
@@ -172,5 +283,34 @@
             })
         });
     </script>
+<script>
+    $(document).on('click', '.tree label', function(e) {
+        $(this).next('ul').fadeToggle();
+        e.stopPropagation();
+    });
 
+    $(document).on('change', '.tree input[type=checkbox]', function(e) {
+        $(this).siblings('ul').find("input[type='checkbox']").prop('checked', this.checked);
+        $(this).parentsUntil('.tree').children("input[type='checkbox']").prop('checked', this.checked);
+        e.stopPropagation();
+    });
+
+    $(document).on('click', 'button', function(e) {
+        switch ($(this).text()) {
+            case 'Collepsed':
+                $('.tree ul').fadeOut();
+                break;
+            case 'Expanded':
+                $('.tree ul').fadeIn();
+                break;
+            case 'Checked All':
+                $(".tree input[type='checkbox']").prop('checked', true);
+                break;
+            case 'Unchek All':
+                $(".tree input[type='checkbox']").prop('checked', false);
+                break;
+            default:
+        }
+    });
+</script>
 @endsection

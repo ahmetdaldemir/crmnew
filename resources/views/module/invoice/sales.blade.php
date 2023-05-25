@@ -122,15 +122,15 @@
                                                 <p class="mb-2 repeater-title">Destekli Maliyet</p>
                                                 <input type="text" class="form-control invoice-item-price"
                                                        name="base_cost_price"
-                                                       value="{{$product['stock_card_price']['base_cost_price'] ?? $product['stock_card_movement']['base_cost_price']}}"
+                                                       value="{{$product['stock_card_movement']['base_cost_price'] ?? $product['stock_card_movement']['base_cost_price']}}"
                                                        readonly/>
                                             </div>
                                             @endrole
                                             <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                 <p class="mb-2 repeater-title">Satış Fiyatı</p>
                                                 <input type="text" class="form-control invoice-item-price invoice-item-sales-price"
-                                                       name="sale_price" data-sales="{{$product['stock_card_price']['sale_price']?? $product['stock_card_movement']['sale_price']}}"
-                                                       value="{{$product['stock_card_price']['sale_price']?? $product['stock_card_movement']['sale_price']}}"
+                                                       name="sale_price" data-sales="{{$product['stock_card_movement']['sale_price']?? $product['stock_card_movement']['sale_price']}}"
+                                                       value="{{$product['stock_card_movement']['sale_price']?? $product['stock_card_movement']['sale_price']}}"
                                                        readonly/>
                                             </div>
 

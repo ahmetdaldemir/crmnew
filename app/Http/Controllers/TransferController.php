@@ -87,6 +87,7 @@ class TransferController extends Controller
             'number' => $request->number??null,
             'stocks' => array_unique($request->sevkList),
             'serial_list' => array_unique($request->sevkList),
+            'comfirm_id' => 1,
             'delivery_seller_id' => $request->delivery_seller_id,
         );
 

@@ -298,7 +298,20 @@ class StockCardServiceImplement extends Service implements StockCardService
         }
         return $data;
     }
+    public function category($categories)
+    {
+        $category=[];
+        if (gettype($categories) == 'array') {
+            $json = $categories;
+        } else {
+            $json = json_decode($categories, TRUE);
+        }
 
+        foreach ($json as $item) {
+            $category[] = Category::find($item)->name ?? "Bulunamadı";
+        }
+        return implode(",",$category);
+    }
     public function version($versions)
     {
 

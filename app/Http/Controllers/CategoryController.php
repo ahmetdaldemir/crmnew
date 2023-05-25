@@ -41,7 +41,7 @@ class CategoryController extends Controller
 
     protected function store(Request $request)
     {
-        $data = array('name' => $request->name,'parent_id' => $request->parent_id,'company_id' => Auth::user()->company_id,'user_id' => Auth::id());
+         $data = array('name' => $request->name,'parent_id' => $request->parent_id,'company_id' => Auth::user()->company_id,'user_id' => Auth::id());
         if(empty($request->id))
         {
             $this->categoryService->create($data);

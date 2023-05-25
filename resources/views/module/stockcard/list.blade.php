@@ -115,6 +115,9 @@
                             </td>
                             <td>{{$stockcard->seller->name}}</td>
                             <td>
+                                <a title="Seri Numarası Yazdır" target="_blank" href="{{route('stockcard.singleserialprint',['id' => $stockcard->id])}}" class="btn btn-icon btn-primary">
+                                    <span class="bx bx-barcode-reader"></span>
+                                </a>
                                 <button type="button" title="Sevk Et" onclick="openModal('{{$stockcard->serial_number}}')"
                                         class="btn btn-icon btn-success">
                                     <span class="bx bx-transfer"></span>
@@ -288,6 +291,7 @@
                         buttonsStyling: !1
                     });
                     $("#priceModal").modal('hide');
+                    window.location.reload();
                 },
                 error: function (request, status, error) {
                     Swal.fire({

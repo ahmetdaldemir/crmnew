@@ -6,6 +6,8 @@
             @csrf
             <input name="company_id" type="hidden" value="{{\Illuminate\Support\Facades\Auth::user()->company_id}}">
             <input name="user_id" type="hidden" value="{{\Illuminate\Support\Facades\Auth::user()->id}}">
+            <input type="hidden"   name="quantity" value="1">
+
             <div class="row">
                 <div class="col-md-6 mb-md-0 mb-4">
                     <div class="card mb-4">
@@ -64,11 +66,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div>
-                                <label for="defaultFormControlInput" class="form-label">Adet</label>
-                                <input type="text" class="form-control" id="quantity" name="quantity" value="1"
-                                       required>
-                            </div>
+
                         </div>
                     </div>
                 </div>

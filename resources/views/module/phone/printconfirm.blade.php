@@ -56,10 +56,10 @@
         <table style="width: 700px;margin-top: 20px;margin-bottom: 30px">
             <tr>
                 <td>Tarih : {{\Carbon\Carbon::parse($phone->created_at)->format('d-m-Y')}}</td>
-                <td>Adı Soyadı {{$phone->customer->fullname}}</td>
+                <td>Adı Soyadı {{$phone->customer->fullname??"Genel Müşteri"}}</td>
             </tr>
             <tr>
-                <td>GSM {{$phone->customer->phone1}}</td>
+                <td>GSM {{$phone->customer->phone1??"000 000 00 00"}}</td>
                 <td>İmza :</td>
             </tr>
             <tr>
