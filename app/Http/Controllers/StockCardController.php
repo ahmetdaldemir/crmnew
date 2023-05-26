@@ -40,6 +40,9 @@ class StockCardController extends Controller
     private FakeProductService $fakeProductService;
     private TransferService $transferService;
 
+    protected $a;
+    protected $x;
+
     public function __construct(StockCardService   $stockcardService,
                                 SellerService      $sellerService,
                                 WarehouseService   $warehouseService,
@@ -62,6 +65,8 @@ class StockCardController extends Controller
         $this->reasonService = $reasonService;
         $this->fakeProductService = $fakeProductService;
         $this->transferService = $transferService;
+        $this->a = [];
+        $this->x = [];
     }
 
     protected function index(Request $request)
@@ -136,45 +141,38 @@ class StockCardController extends Controller
         $data['brands'] = $this->brandService->get();
         $data['versions'] = $this->versionService->get();
         $data['categories'] = $this->categoryService->get();
-       // $a = $this->categoryService->getList($request->category);
-        // $data['categoriestest'] = $this->getNestedItems($a);
-        //dd($data['categoriestest']);
+      //  $a = $this->categoryService->getList($request->category);
+        // $this->categoryTree($request->category);
+        //dd($this->a);
         $data['fakeproducts'] = StockCard::select('name')->distinct()->get();
         $data['units'] = Unit::Unit()->value;
         $data['request'] = $request;
         return view('module.stockcard.form', $data);
     }
 
-    function getNestedItems($input, $level = array()){
 
-        $a = [];
+    function categoryTree($parent_id, $sub_mark = '>', $name = "")
+    {
 
-        if(!empty($input))
-        {
-            foreach ($input as $item)
-            {
-                if(gettype($item) == 'array')
-                {
-                    $a[] = $item['name'].">";
-                }
-
-                if(is_array($item))
-                {
-                     $this->getNestedItems($item['list']);
-                }else{
-                    if(gettype($item) == 'array')
-                    {
-                        $a[] = $item['name'].">";
-                    }
-                }
-            }
-
+        $query = Category::where('parent_id', $parent_id)->get();
+        foreach ($query as $row) {
+            $this->a[] = $row->name . $sub_mark;
+            $this->categoryNest($parent_id, $row->id);
         }
 
-        return $a;
     }
 
+    public function categoryNest($x_id, $parent_id)
+    {
+        $query = Category::where('parent_id', $parent_id)->first();
+        if ($query) {
+            $this->categoryTree($query->id);
+        } else {
 
+            $this->x[] = $this->a;
+            $this->categoryTree($x_id);
+        }
+    }
 
     protected function edit(Request $request)
     {
@@ -296,10 +294,39 @@ class StockCardController extends Controller
         return view('module.stockcard.show', $data);
     }
 
+    public function walk_recursive_remove(array $array, callable $callback)
+    {
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                $array[$k] = $this->walk_recursive_remove($v, $callback);
+            } else {
+                if ($callback($v, $k)) {
+                    unset($array[$k]);
+                }
+            }
+        }
+        return $array;
+    }
+
+    function array_column_recursive(array $haystack, $needle)
+    {
+        $found = [];
+        array_walk_recursive($haystack, function ($value, $key) use (&$found, $needle) {
+            if ($key == $needle)
+                $found[] = $value;
+        });
+        return $found;
+    }
+
+
     public function list(Request $request)
     {
-        $categorylist = Category::where('id', $request->category_id)->orWhere('parent_id', $request->category_id)->get()->pluck('id')->toArray();
-        $stockcardsList = StockCard::whereIn('category_id', $categorylist);
+        //  $categorylist = Category::where('id', $request->category_id)->orWhere('parent_id', $request->category_id)->get()->pluck('id')->toArray();
+        $xxxx = $this->categoryService->getAllParentList($request->category_id);
+        $ids = $this->array_column_recursive($xxxx, 'id');
+
+        $stockcardsList = StockCard::whereIn('category_id', $ids);
+
 
         if ($request->filled('brand')) {
             $stockcardsList->where('brand_id', $request->brand);
@@ -322,7 +349,7 @@ class StockCardController extends Controller
         if ($request->filled('seller')) {
             $t->where('seller_id', $request->seller);
         }
-        $data['stockcards'] = $t->groupBy('serial_number')->having(DB::raw('count(serial_number)'), 1)->get();
+        $data['stockcards'] = $t->groupBy('serial_number')->having(DB::raw('count(serial_number)'), 1)->orderBy('id', 'desc')->get();
         $data['category'] = $request->category_id;
         $data['sellers'] = $this->sellerService->get();
         $data['colors'] = $this->colorService->get();

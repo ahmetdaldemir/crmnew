@@ -77,7 +77,7 @@
 
 
                             <hr class="my-4 mx-n4">
-                            <div class="row">
+                            <div class="row" style="display: none">
                                 <div class="col-md-4">
                                     <label class="form-label" for="fullname">Kredi Kartı</label>
                                     <input type="text" name="payment_type[credit_card]"  value="0"  id="credit_card"
@@ -125,7 +125,6 @@
                     </div>
                     <div class="card bg-secondary text-white mb-3  mb-4 ">
                         <div class="card-body">
-
                             <p class="mb-2"><i class="bx bx-money bx-md me-1"></i> Ödeme Durumu</p>
                             <select name="paymentStatus" id="paymentStatus" class="form-select mb-4">
                                 <option value="unpaid">Ödenecek</option>

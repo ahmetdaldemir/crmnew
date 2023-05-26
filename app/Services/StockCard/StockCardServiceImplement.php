@@ -279,7 +279,7 @@ class StockCardServiceImplement extends Service implements StockCardService
         }
 
         // $stocks =  array_merge((array)$stock->get(), (array)$stock1->get());
-        $stocks = $stock->get();
+        $stocks = $stock->orderBy('id','desc')->get();
         foreach ($stocks as $item) {
             $data[] = array(
                 'id' => $item->id,

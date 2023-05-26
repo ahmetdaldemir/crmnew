@@ -7,7 +7,7 @@
                 <div class="card invoice-preview-card">
                     <div class="card-body">
                         <form id="invoiceForm" method="post" class="form-repeater source-item">
-                            <input type="hidden" name="id" @if(isset($invoices)) value="{{$invoices->id}}" @endif />
+                            <input type="hidden" name="id" @if(isset($invoice_id)) value="{{$invoice_id}}" @endif />
                             <input type="hidden" name="type" value="1"/>
                             <div class="row p-sm-3 p-0">
                                 <div class="col-md-6 mb-md-0 mb-4">
@@ -15,8 +15,7 @@
                                         <label for="selectCustomer" class="form-label">Cari Seçiniz</label>
                                         <div class="col-md-9">
                                             <select id="selectCustomer" class="w-100 select2"
-                                                    data-style="btn-default" name="customer_id" ng-init="getCustomers()"
-                                                    onchange="getCustomer(this.value)">
+                                                    data-style="btn-default" name="customer_id" ng-init="getCustomers()">
                                                 <option value="1" data-tokens="ketchup mustard">Genel Cari</option>
                                                 <option ng-repeat="customer in customers"
                                                         ng-if="customer.type == 'account'"
@@ -82,9 +81,9 @@
                                 @csrf
                                 <input name="invoice_id" value="{{$invoice_id}}" type="hidden" />
                                 <div class="pt-0 pt-md-4">
-                                    <div class="d-flex border rounded position-relative pe-0">
+                                    <div class="border rounded position-relative pe-0">
                                         <div class="row w-100 m-0 p-3">
-                                            <div class="col-md-5 col-12 mb-md-0 mb-3 ps-md-0">
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                 <p class="mb-2 repeater-title">Stok</p>
                                                 <select name="stock_card_id"
                                                         class="form-select item-details select2 mb-2">
@@ -103,7 +102,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                 <p class="mb-2 repeater-title">Seri No</p>
                                                 <input type="text" class="form-control" name="serial"
                                                        placeholder="11111111"/>
@@ -117,98 +116,80 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
-                                                <p class="mb-2 repeater-title">Maliyet</p>
-                                                <input type="text" class="form-control invoice-item-price"
-                                                       name="cost_price"/>
-                                            </div>
-                                            <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
-                                                <p class="mb-2 repeater-title">Destekli Maliyet</p>
-                                                <input type="text" class="form-control invoice-item-price"
-                                                       name="base_cost_price"/>
-                                            </div>
-                                            <div class="col-md-2 col-12 mb-md-0 mb-3 ps-md-0">
-                                                <p class="mb-2 repeater-title">Satış Fiyatı</p>
-                                                <input type="text" class="form-control invoice-item-price"
-                                                       name="sale_price"/>
-                                            </div>
-                                            <div class="col-md-2 col-12 mb-md-0 mb-3">
-                                                <p class="mb-2 repeater-title">Adet</p>
-                                                <input type="number" class="form-control invoice-item-qty"
-                                                       name="quantity" min="1" max="50">
-                                            </div>
-                                            <div class="col-md-4 col-12 mb-md-0 mb-3 ps-md-0">
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
                                                 <p class="mb-2 repeater-title">Neden</p>
                                                 <select name="reason_id"
                                                         class="form-select item-details select2 mb-2">
                                                     @foreach($reasons as $reason)
                                                         @if($reason->type == 5)
-                                                        <option value="{{$reason->id}}">{{$reason->name}}</option>
+                                                            <option value="{{$reason->id}}">{{$reason->name}}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
-                                            <i class="bx bx-x fs-4 text-muted cursor-pointer"
-                                               data-repeater-delete=""></i>
-                                            <div class="dropdown">
-                                                <i class="bx bx-cog bx-xs text-muted cursor-pointer more-options-dropdown"
-                                                   role="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                   data-bs-auto-close="outside" aria-expanded="false">
-                                                </i>
-                                                <div class="dropdown-menu dropdown-menu-end w-px-300 p-3"
-                                                     aria-labelledby="dropdownMenuButton">
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <p class="mb-2 repeater-title">Maliyet</p>
+                                                <input type="text" class="form-control invoice-item-price"
+                                                       name="cost_price"/>
+                                            </div>
 
-                                                    <div class="row g-3">
-                                                        <div class="col-12">
-                                                            <p class="mb-2 repeater-title">Açıklama</p>
-                                                            <textarea class="form-control" rows="2"
-                                                                      name="description"></textarea>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <label for="discountInput"
-                                                                   class="form-label">İndirim (%)</label>
-                                                            <input type="number" class="form-control"
-                                                                   id="discountInput"
-                                                                   min="0" max="100" name="discount">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label for="taxInput1" class="form-label">Şube</label>
-                                                            <select name="seller_id" id="taxInput1"
-                                                                    class="form-select tax-select">
-                                                                @foreach($sellers as $seller)
-                                                                    <option
-                                                                        value="{{$seller->id}}">{{$seller->name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label for="taxInput2" class="form-label">Depo</label>
-                                                            <select name="warehouse_id" id="taxInput2"
-                                                                    class="form-select tax-select">
-                                                                @foreach($warehouses as $warehouse)
-                                                                    <option
-                                                                        value="{{$warehouse->id}}">{{$warehouse->name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label for="taxInput1" class="form-label">KDV</label>
-                                                            <select name="tax" id="taxInput1"
-                                                                    class="form-select tax-select">
-                                                                <option value="0">0%</option>
-                                                                <option value="1">1%</option>
-                                                                <option value="8">10%</option>
-                                                                <option value="18" selected>18%</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="dropdown-divider my-3"></div>
-                                                    <button type="button"
-                                                            class="btn btn-label-primary btn-apply-changes">Uygulama
-                                                    </button>
-                                                </div>
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <p class="mb-2 repeater-title">Destekli Maliyet</p>
+                                                <input type="text" class="form-control invoice-item-price"
+                                                       name="base_cost_price"/>
+                                            </div>
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <p class="mb-2 repeater-title">Satış Fiyatı</p>
+                                                <input type="text" class="form-control invoice-item-price"
+                                                       name="sale_price"/>
+                                            </div>
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <p class="mb-2 repeater-title">Adet</p>
+                                                <input type="number" class="form-control invoice-item-qty"
+                                                       name="quantity" min="1" max="50">
+                                            </div>
+
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <label for="discountInput"
+                                                       class="form-label">İndirim (%)</label>
+                                                <input type="number" class="form-control"
+                                                       id="discountInput"
+                                                       min="0" max="100" value="0" name="discount">
+                                            </div>
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <label for="taxInput1" class="form-label">Şube</label>
+                                                <select name="seller_id" id="taxInput1"
+                                                        class="form-select tax-select">
+                                                    @foreach($sellers as $seller)
+                                                        <option
+                                                            value="{{$seller->id}}">{{$seller->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <label for="taxInput2" class="form-label">Depo</label>
+                                                <select name="warehouse_id" id="taxInput2"
+                                                        class="form-select tax-select">
+                                                    @foreach($warehouses as $warehouse)
+                                                        <option
+                                                            value="{{$warehouse->id}}">{{$warehouse->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <label for="taxInput1" class="form-label">KDV</label>
+                                                <select name="tax" id="taxInput1"
+                                                        class="form-select tax-select">
+                                                    <option value="0">0%</option>
+                                                    <option value="1">1%</option>
+                                                    <option value="8">10%</option>
+                                                    <option value="18" selected>18%</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-12 col-12 mb-md-0 mb-3 ps-md-0">
+                                                <p class="mb-2 repeater-title">Açıklama</p>
+                                                <textarea class="form-control" rows="2"
+                                                          name="description"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -239,6 +220,22 @@
                                 <td style="font-size: 13px;text-align: center">{{$invoice->totalSale()}} TL</td>
                             </tr>
                         </table>
+                    </div>
+                    <div class="card-body" style="display: none">
+                        <div>
+                            <label class="form-label" for="fullname">Kredi Kartı</label>
+                            <input type="text" name="payment_type[credit_card]"  value="0"  id="credit_card"
+                                   class="form-control">
+                        </div>
+                        <div>
+                            <label class="form-label" for="fullname">Nakit</label>
+                            <input type="text" name="payment_type[cash]" id="money_order"  value="0"  class="form-control">
+                        </div>
+                        <div>
+                            <label class="form-label" for="fullname">Taksit</label>
+                            <input type="text" name="payment_type[installment]"  value="0"  id="installment"
+                                   class="form-control">
+                        </div>
                     </div>
                     <div class="card-body">
                         <div>

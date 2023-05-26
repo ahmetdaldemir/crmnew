@@ -54,4 +54,30 @@ class CategoryRepositoryImplement extends Eloquent implements CategoryRepository
         }
     }
 
+    public function getParentList($category_id)
+    {
+        $categories = $this->model->where('company_id', Auth::user()->company_id)->where('parent_id', $category_id)->get();
+
+        foreach ($categories as $category) {
+            $data[] = [
+                'id' => $category->id,
+                'list' => $this->getParentCategory($category->id)
+            ];
+        }
+        return $data;
+    }
+
+    public function getParentCategory($category_id)
+    {
+
+        $x =  $this->model->where('parent_id', $category_id)->first();
+        if($x)
+        {
+            return  [
+                'id' => $x->id,
+                'list' => $this->getCategory($x->id)
+            ];
+        }
+    }
+
 }

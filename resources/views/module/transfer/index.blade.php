@@ -40,7 +40,14 @@
                             <td>{{\Carbon\Carbon::parse($transfer->created_at)->format('d-m-Y')}}</td>
                             <td>{{$transfer->seller($transfer->delivery_seller_id)->name}}</td>
                             <td>{{$transfer->user($transfer->user_id)->name}}</td>
-                            <td>//</td><?php //$transfer->user($transfer->comfirm_id)->name=="Nulunamr"}} ?>
+                            <td>
+                                <?php
+                                    if(!is_null($transfer->comfirm_date) and !is_null($transfer->comfirm_id))
+                                    {
+                                      echo  $transfer->user($transfer->comfirm_id)->name;
+                                    }
+                                    ?>
+                            </td>
                             <td><span
                                     class="badge bg-label-{{\App\Models\Transfer::STATUS_COLOR[$transfer->is_status]}}">{{\App\Models\Transfer::STATUS[$transfer->is_status]}}</span>
                             </td>
