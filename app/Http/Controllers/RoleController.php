@@ -49,4 +49,9 @@ class RoleController extends Controller
         return redirect()->route('role.index');
     }
 
+    public function permisson(Request $request)
+    {
+        $data['permissions'] = $this->roleService->find($request->id);
+        return view('module.role.permission',$data);
+    }
 }

@@ -49,11 +49,25 @@ class UserController extends Controller
 
     protected function store(Request $request)
     {
-        $data = array('name' => $request->name, 'email' => $request->email,
-            'company_id' => Auth::user()->company_id,
-            'user_id' => Auth::user()->id,
-            'seller_id' =>$request->seller_id,
-            'is_status' => 1,'password' => bcrypt($request->password));
+        if($request->filled('password'))
+        {
+            $data = array(
+                'name' => $request->name, 'email' => $request->email,
+                'company_id' => Auth::user()->company_id,
+                'user_id' => Auth::user()->id,
+                'seller_id' =>$request->seller_id,
+                'is_status' => 1,
+                'password' => bcrypt($request->password));
+        }else{
+            $data = array(
+                'name' => $request->name, 'email' => $request->email,
+                'company_id' => Auth::user()->company_id,
+                'user_id' => Auth::user()->id,
+                'seller_id' =>$request->seller_id,
+                'is_status' => 1,
+                'password' => bcrypt($request->password));
+        }
+
         if (empty($request->id)) {
             $this->userService->create($data);
             $user_id = $this->userService->lastInsertId();

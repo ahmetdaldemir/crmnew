@@ -69,6 +69,7 @@ class PhoneController extends Controller
 
     protected function create()
     {
+        $this->authorize('create-phone');
         $data['brands'] = Brand::where('company_id', Auth::user()->company_id)->get();
         $data['colors'] = Color::where('company_id', Auth::user()->company_id)->get();
         $data['sellers'] = Seller::where('company_id', Auth::user()->company_id)->get();
@@ -78,6 +79,8 @@ class PhoneController extends Controller
 
     protected function edit(Request $request)
     {
+        $this->authorize('create-phone');
+
         $data['phone'] = Phone::find($request->id);
         $data['brands'] = Brand::all();
         $data['colors'] = Color::all();
@@ -120,6 +123,8 @@ class PhoneController extends Controller
 
     protected function store(Request $request)
     {
+        $this->authorize('create-phone');
+
         Phone::updateOrCreate(
             ['imei' => $request->imei],
             [

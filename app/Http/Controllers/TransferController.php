@@ -43,12 +43,14 @@ class TransferController extends Controller
 
     protected function index()
     {
+        $this->authorize('view-all-dispatches');
         $data['transfers'] = $this->transferService->all();
         return view('module.transfer.index', $data);
     }
 
     protected function create()
     {
+        $this->authorize('create-dispatch');
         $data['sellers'] = $this->sellerService->get();
         $data['stocks'] = $this->stockCardService->all();
         $data['reasons'] = $this->reasonService->get();
@@ -77,6 +79,7 @@ class TransferController extends Controller
 
     protected function store(Request $request)
     {
+        $this->authorize('create-dispatch');
         $data = array(
             'company_id' => Auth::user()->company_id,
             'user_id' => Auth::user()->id,
@@ -102,6 +105,9 @@ class TransferController extends Controller
 
     protected function update(Request $request)
     {
+
+        $this->authorize('accept-dispatch');
+
         $transfer = $this->transferService->find($request->id);
 
         if ($transfer->serial_list) {

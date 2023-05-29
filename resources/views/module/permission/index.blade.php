@@ -2,35 +2,40 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Role /</span> Role listesi</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">permission /</span> permission listesi</h4>
 
         <div class="card">
             <div class="card-header">
-                <a href="{{route('role.create')}}" class="btn btn-primary float-end">Yeni Role Ekle</a>
+                <a href="{{route('permission.create')}}" class="btn btn-primary float-end">Yeni permission Ekle</a>
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Adı</th>
+                        <th>Kod</th>
+                        <th>Guard</th>
+                        <th>Role</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    @foreach($roles as $role)
+                    @foreach($permissions as $permission)
                         <tr>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                <strong>{{$role->name}}</strong></td>
+                                <strong>{{$permission->title}}</strong></td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                <strong>{{$permission->name}}</strong></td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                <strong>{{$permission->guard_name}}</strong></td>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                <strong>{{$permission->role}}</strong></td>
                             <td>
-                                <a href="{{route('role.permission',['id' => $role->id])}}"
+                                <a href="{{route('permission.delete',['id' => $permission->id])}}"
                                    class="btn btn-icon btn-primary">
                                     <span class="bx bxs-trash"></span>
                                 </a>
-                                <a href="{{route('role.delete',['id' => $role->id])}}"
-                                   class="btn btn-icon btn-primary">
-                                    <span class="bx bxs-trash"></span>
-                                </a>
-                                <a href="{{route('role.edit',['id' => $role->id])}}"
+                                <a href="{{route('permission.edit',['id' => $permission->id])}}"
                                    class="btn btn-icon btn-primary">
                                     <span class="bx bx-edit-alt"></span>
                                 </a>

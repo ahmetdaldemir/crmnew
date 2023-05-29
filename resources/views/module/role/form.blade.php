@@ -10,7 +10,7 @@
                 <input type="hidden" name="id" @if(isset($roles)) value="{{$roles->id}}" @endif />
             <div class="card-body">
                 <div>
-                    <label for="defaultFormControlInput" class="form-label">Firma Adı</label>
+                    <label for="defaultFormControlInput" class="form-label">Rol Adı</label>
                     <input type="text" class="form-control" id="name"  @if(isset($roles)) value="{{$roles->name}}" @endif  name="name" aria-describedby="name">
                     <div id="name" class="form-text">
                         We'll never share your details with anyone else.

@@ -55,8 +55,16 @@ Route::middleware(['companies','activity'])->group(function () {
         Route::get('create', [App\Http\Controllers\RoleController::class, 'create'])->name('create');
         Route::post('store', [App\Http\Controllers\RoleController::class, 'store'])->name('store');
         Route::post('update', [App\Http\Controllers\RoleController::class, 'update'])->name('update');
+        Route::get('permisson', [App\Http\Controllers\RoleController::class, 'permisson'])->name('permisson');
     });
-
+    Route::prefix('permission')->name('permission.')->middleware([])->group(function () {
+        Route::get('/', [App\Http\Controllers\PermissionController::class, 'index'])->name('index');
+        Route::get('edit', [App\Http\Controllers\PermissionController::class, 'edit'])->name('edit');
+        Route::get('delete', [App\Http\Controllers\PermissionController::class, 'delete'])->name('delete');
+        Route::get('create', [App\Http\Controllers\PermissionController::class, 'create'])->name('create');
+        Route::post('store', [App\Http\Controllers\PermissionController::class, 'store'])->name('store');
+        Route::post('update', [App\Http\Controllers\PermissionController::class, 'update'])->name('update');
+    });
 
     Route::prefix('user')->name('user.')->middleware([])->group(function () {
         Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('index');
