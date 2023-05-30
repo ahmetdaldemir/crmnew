@@ -48,7 +48,9 @@
                             <thead>
                             <tr>
                                 <th>Seri No</th>
-                                <th>Ürün</th>
+                                <th>Stok Adı</th>
+                                <th>Marka</th>
+                                <th>Model</th>
                                 <th>Adet</th>
 
                             </tr>
@@ -62,6 +64,16 @@
                                         <tr>
                                             <td>{{$value}}</td>
                                             <td class="text-nowrap">{{$stock_card_moveement->stock->name ?? "Stok Kartı Bulunmayan Seri Eklediniz"}}</td>
+                                            <td class="text-nowrap">{{$stock_card_moveement->stock->brand->name ?? "Stok Kartı Bulunmayan Seri Eklediniz"}}</td>
+                                            <td class="text-nowrap">
+                                                <?php
+
+                                                    $names = collect($stock_card_moveement->stock->version_id)->map(function ($name, $key) {
+                                                         return App\Models\Version::find($name)->name ?? "Belirtilmedi";
+                                                    });
+                                                    echo $names->toJson();
+                                                    ?>
+                                              </td>
                                             <td class="text-nowrap">1</td>
                                         </tr>
                                     @else

@@ -407,7 +407,6 @@ class StockCardController extends Controller
 
 
         $pdf = PDF::loadView('module.stockcard.print', ['data' => $data]);
-
         return $pdf->download('codesolutionstuff.pdf');
 
     }

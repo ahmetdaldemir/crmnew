@@ -92,9 +92,8 @@ class StockCard extends BaseModel
     public function version()
     {
         $array = $this->version_id;
-
         $names = collect($array)->map(function ($name, $key) {
-            return Version::find($name)->name ?? "Belirtilmedi";
+             return Version::find($name)->name ?? "Belirtilmedi";
         });
         return $names->toJson();
         //return $this->hasOne(Version::class, 'id', 'version_id');
